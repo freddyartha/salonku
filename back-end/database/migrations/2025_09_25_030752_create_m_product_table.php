@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('m_product', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_salon')->constrained('m_salon')->onDelete('cascade');
-            $table->foreignId('id_supplier')->constrained('m_supplier')->onDelete('cascade')->allowNull();
+            $table->foreignId('id_supplier')->nullable()->constrained('m_supplier')->onDelete('set null');
             $table->string('brand');
             $table->string('nama');
             $table->string('ukuran')->nullable();
