@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('m_user', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_salon')->constrained('m_salon')->onDelete('cascade');
-            $table->string('id_user_firebase');
+            $table->string('id_user_firebase')->unique();
             $table->integer('level'); // 1: owner, 2: Karyawan
             $table->string('nama');
             $table->string('email');

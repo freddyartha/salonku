@@ -3,7 +3,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TrServiceManagement extends Model
+class ServiceManagement extends Model
 {
     protected $table = 'tr_service_management';
 
