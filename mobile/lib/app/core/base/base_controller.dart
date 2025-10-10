@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:get/get.dart';
-import 'package:mobile/app/services/error_handler_service.dart';
+import 'package:salonku/app/services/error_handler_service.dart';
 
 import '../../data/models/result.dart';
 

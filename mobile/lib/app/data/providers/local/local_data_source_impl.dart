@@ -1,7 +1,7 @@
 import 'package:get_storage/get_storage.dart';
-import 'package:mobile/app/core/constants/storage_key.dart';
-import 'package:mobile/app/data/models/auth_model.dart';
-import 'package:mobile/app/data/models/user_model.dart';
+import 'package:salonku/app/core/constants/storage_key.dart';
+import 'package:salonku/app/data/models/auth_model.dart';
+import 'package:salonku/app/data/models/user_model.dart';
 
 import 'local_data_source.dart';
 
@@ -9,8 +9,8 @@ class LocalDataSourceImpl extends LocalDataSource {
   late GetStorage _box;
 
   Future<LocalDataSource> init() async {
-    await GetStorage.init('SuperAppPref');
-    _box = GetStorage('SuperAppPref');
+    await GetStorage.init('salonKuPref');
+    _box = GetStorage('salonKuPref');
     return this;
   }
 
@@ -92,5 +92,16 @@ class LocalDataSourceImpl extends LocalDataSource {
     await _box.write(StorageKey.cachedUserNameKey, user?.name);
     await _box.write(StorageKey.cachedUserPhoneKey, user?.phoneNumber);
     await _box.write(StorageKey.cachedUserAvatarKey, user?.avatarUrl);
+  }
+
+  @override
+  Future<void> cacheAppTheme(bool isDark) async {
+    await _box.write(StorageKey.cachedAppTheme, isDark);
+  }
+
+  @override
+  bool getAppTheme() {
+    final isDark = _box.read(StorageKey.cachedAppTheme);
+    return isDark ?? false;
   }
 }

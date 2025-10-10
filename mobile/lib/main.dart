@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:mobile/app/common/lang/translation_service.dart';
-import 'package:mobile/app/config/environment.dart';
-import 'package:mobile/app/config/initial_binding.dart';
+import 'package:salonku/app/common/app_themes.dart';
+import 'package:salonku/app/common/lang/translation_service.dart';
+import 'package:salonku/app/config/environment.dart';
+import 'package:salonku/app/config/initial_binding.dart';
+import 'package:salonku/app/core/base/theme_controller.dart';
 
 import 'app/routes/app_pages.dart';
 
@@ -22,21 +23,21 @@ void main() async {
   // configLoading();
   await Firebase.initializeApp();
   runApp(
-    GetMaterialApp(
-      title: "SalonKu",
-      theme: ThemeData(
-        textTheme: GoogleFonts.quicksandTextTheme(ThemeData.light().textTheme),
-        scaffoldBackgroundColor: Colors.white,
-        listTileTheme: ListTileThemeData(tileColor: Colors.white),
+    Obx(
+      () => GetMaterialApp(
+        title: "salonKu",
+        theme: AppThemes.lightTheme,
+        darkTheme: AppThemes.darkTheme,
+        themeMode: ThemeController.instance.themeMode.value,
+        initialRoute: AppPages.INITIAL,
+        getPages: AppPages.routes,
+        locale: TranslationService.locale,
+        translations: TranslationService(),
+        fallbackLocale: TranslationService.locale,
+        debugShowCheckedModeBanner: false,
+        initialBinding: InitialBinding(),
+        // builder: EasyLoading.init(),
       ),
-      initialRoute: AppPages.INITIAL,
-      getPages: AppPages.routes,
-      locale: TranslationService.locale,
-      translations: TranslationService(),
-      fallbackLocale: TranslationService.locale,
-      debugShowCheckedModeBanner: EnvironmentConfig.enableDebugMode,
-      initialBinding: InitialBinding(),
-      // builder: EasyLoading.init(),
     ),
   );
 }

@@ -3,8 +3,8 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' as gt;
-import 'package:mobile/app/data/models/auth_model.dart';
-import 'package:mobile/app/routes/app_pages.dart';
+import 'package:salonku/app/data/models/auth_model.dart';
+import 'package:salonku/app/routes/app_pages.dart';
 
 import '../../../../core/constants/api_constants.dart';
 import '../../../../core/device/device_info.dart';

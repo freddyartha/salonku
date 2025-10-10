@@ -2,13 +2,13 @@ import 'dart:developer' as developer;
 
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-import 'package:mobile/app/data/providers/local/local_data_source.dart';
-import 'package:mobile/app/data/providers/local/local_data_source_impl.dart';
-import 'package:mobile/app/data/providers/network/dio_client.dart';
-import 'package:mobile/app/services/auth_service.dart';
-import 'package:mobile/app/services/base_api_service.dart';
-import 'package:mobile/app/services/error_handler_service.dart';
-import 'package:mobile/app/services/notification_service.dart';
+import 'package:salonku/app/data/providers/local/local_data_source.dart';
+import 'package:salonku/app/data/providers/local/local_data_source_impl.dart';
+import 'package:salonku/app/data/providers/network/dio_client.dart';
+import 'package:salonku/app/services/auth_service.dart';
+import 'package:salonku/app/services/base_api_service.dart';
+import 'package:salonku/app/services/error_handler_service.dart';
+import 'package:salonku/app/services/notification_service.dart';
 
 // ===== COMPLETE INITIAL BINDING =====
 // config/initial_binding.dart
@@ -29,11 +29,11 @@ class InitialBinding extends Bindings {
     // ===== PHASE 3: NETWORK SERVICES (API Related) =====
     _initNetworkServices();
 
-    // ===== PHASE 4: API PROVIDERS (Lazy Loaded) =====
-    _initApiProviders();
+    // // ===== PHASE 4: API PROVIDERS (Lazy Loaded) =====
+    // _initApiProviders();
 
-    // ===== PHASE 5: REPOSITORIES (Business Logic) =====
-    _initRepositories();
+    // // ===== PHASE 5: REPOSITORIES (Business Logic) =====
+    // _initRepositories();
 
     developer.log(
       '✅ All dependencies initialized successfully',
@@ -122,29 +122,29 @@ class InitialBinding extends Bindings {
   }
 
   // ===== PHASE 4: API PROVIDERS (Lazy Loaded) =====
-  void _initApiProviders() {
-    developer.log(
-      '🔌 Phase 4: Registering API providers...',
-      name: 'INITIAL_BINDING',
-    );
+  // void _initApiProviders() {
+  //   developer.log(
+  //     '🔌 Phase 4: Registering API providers...',
+  //     name: 'INITIAL_BINDING',
+  //   );
 
-    // Get.lazyPut<AuthProvider>(() => AuthProvider(), fenix: true);
-    // Get.lazyPut<UserProvider>(() => UserProvider(), fenix: true);
-    // Get.lazyPut<OtpProvider>(() => OtpProvider(), fenix: true);
+  //   // Get.lazyPut<AuthProvider>(() => AuthProvider(), fenix: true);
+  //   // Get.lazyPut<UserProvider>(() => UserProvider(), fenix: true);
+  //   // Get.lazyPut<OtpProvider>(() => OtpProvider(), fenix: true);
 
-    developer.log('✓ API Providers registered', name: 'INITIAL_BINDING');
-  }
+  //   developer.log('✓ API Providers registered', name: 'INITIAL_BINDING');
+  // }
 
-  // ===== PHASE 5: REPOSITORIES (Business Logic) =====
-  void _initRepositories() {
-    developer.log(
-      '🏗️ Phase 5: Registering repositories...',
-      name: 'INITIAL_BINDING',
-    );
+  // // ===== PHASE 5: REPOSITORIES (Business Logic) =====
+  // void _initRepositories() {
+  //   developer.log(
+  //     '🏗️ Phase 5: Registering repositories...',
+  //     name: 'INITIAL_BINDING',
+  //   );
 
-    // Init Repository
-    // Get.lazyPut<AuthRepository>(() => AuthRepositoryImpl(), fenix: true);
+  //   // Init Repository
+  //   // Get.lazyPut<AuthRepository>(() => AuthRepositoryImpl(), fenix: true);
 
-    developer.log('✓ Repositories registered', name: 'INITIAL_BINDING');
-  }
+  //   developer.log('✓ Repositories registered', name: 'INITIAL_BINDING');
+  // }
 }

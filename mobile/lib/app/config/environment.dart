@@ -7,7 +7,7 @@ class EnvironmentConfig {
 
   // Initialize environment configuration
   static Future<void> init() async {
-    await dotenv.load(fileName: '.env');
+    await dotenv.load(fileName: 'conf/.env');
     _current = dotenv.env['ENV'] == "dev"
         ? Environment.development
         : Environment.production;

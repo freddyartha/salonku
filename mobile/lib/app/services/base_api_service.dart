@@ -2,11 +2,11 @@ import 'dart:developer' as developer;
 
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' hide Response;
-import 'package:mobile/app/core/exceptions/api_exceptions.dart';
-import 'package:mobile/app/core/exceptions/network_exceptions.dart';
-import 'package:mobile/app/data/models/result.dart';
-import 'package:mobile/app/data/providers/network/mapper/http_exception_mapper.dart';
-import 'package:mobile/app/data/providers/network/parser/api_response_parser.dart';
+import 'package:salonku/app/core/exceptions/api_exceptions.dart';
+import 'package:salonku/app/core/exceptions/network_exceptions.dart';
+import 'package:salonku/app/data/models/result.dart';
+import 'package:salonku/app/data/providers/network/mapper/http_exception_mapper.dart';
+import 'package:salonku/app/data/providers/network/parser/api_response_parser.dart';
 
 class BaseApiService extends GetxService {
   Future<Result<T>> executeRequest<T>(

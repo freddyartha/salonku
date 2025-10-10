@@ -7,4 +7,5 @@ class StorageKey {
   static String cachedIsShowOnboardingKey = 'CACHED_IS_SHOW_ONBOARDING';
   static String cachedAccessTokenKey = 'CACHED_ACCESS_TOKEN';
   static String cachedRefreshTokenKey = 'CACHED_REFRESH_TOKEN';
+  static String cachedAppTheme = 'CACHED_APP_THEME';
 }

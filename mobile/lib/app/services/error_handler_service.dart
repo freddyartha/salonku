@@ -3,10 +3,10 @@ import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mobile/app/core/exceptions/api_exceptions.dart';
-import 'package:mobile/app/core/exceptions/network_exceptions.dart';
-import 'package:mobile/app/data/providers/local/local_data_source.dart';
-import 'package:mobile/app/routes/app_pages.dart';
+import 'package:salonku/app/core/exceptions/api_exceptions.dart';
+import 'package:salonku/app/core/exceptions/network_exceptions.dart';
+import 'package:salonku/app/data/providers/local/local_data_source.dart';
+import 'package:salonku/app/routes/app_pages.dart';
 
 class ErrorHandlerService extends GetxService {
   static ErrorHandlerService get to => Get.find();

@@ -1,8 +1,9 @@
 import 'package:get/get.dart';
-import 'package:mobile/app/data/models/auth_model.dart';
-import 'package:mobile/app/data/models/user_model.dart';
+import 'package:salonku/app/data/models/auth_model.dart';
+import 'package:salonku/app/data/models/user_model.dart';
 
 abstract class LocalDataSource extends GetxService {
+  //getter
   bool getIsShowOnboarding();
 
   String getUserName();
@@ -19,6 +20,9 @@ abstract class LocalDataSource extends GetxService {
 
   UserModel? get userData;
 
+  bool getAppTheme();
+
+  //setter
   Future<void> cacheIsShowOnboarding(bool value);
 
   Future<void> cacheAuth(AuthModel data);
@@ -26,4 +30,6 @@ abstract class LocalDataSource extends GetxService {
   Future<void> cacheUser(UserModel? user);
 
   Future<void> clearAllCache();
+
+  Future<void> cacheAppTheme(bool isDark);
 }

@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' hide Response;
-import 'package:mobile/app/data/mapper/general_http_exception_mapper.dart';
-import 'package:mobile/app/services/base_api_service.dart';
-import 'package:mobile/app/services/error_handler_service.dart';
+import 'package:salonku/app/data/mapper/general_http_exception_mapper.dart';
+import 'package:salonku/app/services/base_api_service.dart';
+import 'package:salonku/app/services/error_handler_service.dart';
 import '../../data/models/result.dart';
 import '../../data/providers/network/mapper/http_exception_mapper.dart';
 import '../../data/providers/network/parser/api_response_parser.dart';

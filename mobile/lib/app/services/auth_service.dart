@@ -1,10 +1,10 @@
 import 'dart:developer' as developer;
 
 import 'package:get/get.dart';
-import 'package:mobile/app/data/providers/local/local_data_source.dart';
-import 'package:mobile/app/data/models/auth_model.dart';
-import 'package:mobile/app/data/models/user_model.dart';
-import 'package:mobile/app/routes/app_pages.dart';
+import 'package:salonku/app/data/models/auth_model.dart';
+import 'package:salonku/app/data/models/user_model.dart';
+import 'package:salonku/app/data/providers/local/local_data_source.dart';
+import 'package:salonku/app/routes/app_pages.dart';
 
 class AuthService extends GetxService {
   static AuthService get to => Get.find();
