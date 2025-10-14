@@ -1,4 +1,4 @@
-# salonKu
+# SalonKu
 
 A new Flutter project.
 

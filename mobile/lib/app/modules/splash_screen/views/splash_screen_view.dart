@@ -8,15 +8,13 @@ class SplashScreenView extends GetView<SplashScreenController> {
   const SplashScreenView({super.key});
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('SplashScreenView'),
-        centerTitle: true,
-      ),
-      body: const Center(
-        child: Text(
-          'SplashScreenView is working',
-          style: TextStyle(fontSize: 20),
+    return Container(
+      color: Colors.white,
+      child: Center(
+        child: Image.asset(
+          'assets/images/loading.gif',
+          width: Get.width * 0.4,
+          fit: BoxFit.contain,
         ),
       ),
     );

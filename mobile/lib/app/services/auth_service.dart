@@ -85,11 +85,12 @@ class AuthService extends GetxService {
 
   void checkLoginStatus() {
     if (Get.currentRoute == Routes.SPLASH_SCREEN) {
-      if (isAuthenticated) {
-        Get.offAllNamed(Routes.HOME);
-      } else {
-        Get.offAllNamed(Routes.LOGIN);
-      }
+      Get.offAllNamed(Routes.BASE);
+      // if (isAuthenticated) {
+      //   Get.offAllNamed(Routes.BASE);
+      // } else {
+      //   Get.offAllNamed(Routes.LOGIN);
+      // }
     }
   }
 
@@ -223,7 +224,7 @@ class AuthService extends GetxService {
           Get.offAllNamed(Routes.LOGIN);
           break;
         case NavigationType.home:
-          Get.offAllNamed(Routes.HOME);
+          Get.offAllNamed(Routes.BASE);
           break;
       }
     } catch (e) {
@@ -238,7 +239,7 @@ class AuthService extends GetxService {
       final target = await determineInitialRoute();
 
       if (target.type == NavigationType.home) {
-        Get.offAllNamed(Routes.HOME);
+        Get.offAllNamed(Routes.BASE);
       } else {
         // User needs additional setup
         navigateToAppropriateScreen();
@@ -248,7 +249,7 @@ class AuthService extends GetxService {
         '❌ Login success navigation error: $e',
         name: 'AUTH_SERVICE',
       );
-      Get.offAllNamed(Routes.HOME);
+      Get.offAllNamed(Routes.BASE);
     }
   }
 

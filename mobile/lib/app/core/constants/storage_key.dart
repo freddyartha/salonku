@@ -8,4 +8,7 @@ class StorageKey {
   static String cachedAccessTokenKey = 'CACHED_ACCESS_TOKEN';
   static String cachedRefreshTokenKey = 'CACHED_REFRESH_TOKEN';
   static String cachedAppTheme = 'CACHED_APP_THEME';
+
+  //locale
+  static String cachedLocaleKey = 'CACHED_LOCALE';
 }

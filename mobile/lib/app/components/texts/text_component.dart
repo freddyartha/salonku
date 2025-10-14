@@ -51,7 +51,7 @@ class TextComponent extends StatelessWidget {
           child: Text(
             value ?? "",
             maxLines: maxLines,
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.quicksand(
               textStyle: TextStyle(
                 fontSize: fontSize,
                 fontWeight: fontWeight,

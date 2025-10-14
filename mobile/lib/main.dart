@@ -25,7 +25,7 @@ void main() async {
   runApp(
     Obx(
       () => GetMaterialApp(
-        title: "salonKu",
+        title: "SalonKu",
         theme: AppThemes.lightTheme,
         darkTheme: AppThemes.darkTheme,
         themeMode: ThemeController.instance.themeMode.value,
@@ -33,7 +33,7 @@ void main() async {
         getPages: AppPages.routes,
         locale: TranslationService.locale,
         translations: TranslationService(),
-        fallbackLocale: TranslationService.locale,
+        fallbackLocale: TranslationService.fallBackLocale,
         debugShowCheckedModeBanner: false,
         initialBinding: InitialBinding(),
         // builder: EasyLoading.init(),

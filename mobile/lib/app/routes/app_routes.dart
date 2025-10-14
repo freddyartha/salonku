@@ -8,6 +8,10 @@ abstract class Routes {
   static const HOME = _Paths.HOME;
   static const LOGIN = _Paths.LOGIN;
   static const SPLASH_SCREEN = _Paths.SPLASH_SCREEN;
+  static const BASE = _Paths.BASE;
+  static const PROFILE = _Paths.PROFILE;
+  static const SETTINGS = _Paths.SETTINGS;
+  static const PROFILE_CHANGE_LANGUAGE = _Paths.PROFILE_CHANGE_LANGUAGE;
 }
 
 abstract class _Paths {
@@ -15,4 +19,8 @@ abstract class _Paths {
   static const HOME = '/home';
   static const LOGIN = '/login';
   static const SPLASH_SCREEN = '/splash-screen';
+  static const BASE = '/base';
+  static const PROFILE = '/profile';
+  static const SETTINGS = '/settings';
+  static const PROFILE_CHANGE_LANGUAGE = '/profile-change-language';
 }
