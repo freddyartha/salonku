@@ -23,21 +23,23 @@ void main() async {
   // configLoading();
   await Firebase.initializeApp();
   runApp(
-    Obx(
-      () => GetMaterialApp(
-        title: "SalonKu",
-        theme: AppThemes.lightTheme,
-        darkTheme: AppThemes.darkTheme,
-        themeMode: ThemeController.instance.themeMode.value,
-        initialRoute: AppPages.INITIAL,
-        getPages: AppPages.routes,
-        locale: TranslationService.locale,
-        translations: TranslationService(),
-        fallbackLocale: TranslationService.fallBackLocale,
-        debugShowCheckedModeBanner: false,
-        initialBinding: InitialBinding(),
-        // builder: EasyLoading.init(),
-      ),
+    GetX<ThemeController>(
+      init: ThemeController(),
+      builder: (themeController) {
+        return GetMaterialApp(
+          title: "SalonKu",
+          theme: AppThemes.lightTheme,
+          darkTheme: AppThemes.darkTheme,
+          themeMode: themeController.themeMode.value,
+          locale: TranslationService.locale,
+          translations: TranslationService(),
+          fallbackLocale: TranslationService.fallBackLocale,
+          initialRoute: AppPages.INITIAL,
+          getPages: AppPages.routes,
+          debugShowCheckedModeBanner: false,
+          initialBinding: InitialBinding(),
+        );
+      },
     ),
   );
 }

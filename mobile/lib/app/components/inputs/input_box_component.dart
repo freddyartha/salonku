@@ -3,7 +3,7 @@ import 'package:salonku/app/common/app_colors.dart';
 import 'package:salonku/app/common/font_size.dart';
 import 'package:salonku/app/common/font_weight.dart';
 import 'package:salonku/app/components/texts/text_component.dart';
-import 'package:salonku/app/core/base/theme_controller.dart';
+import 'package:salonku/app/extension/theme_extension.dart';
 
 class InputBoxComponent extends StatelessWidget {
   final String? label;
@@ -41,7 +41,6 @@ class InputBoxComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeMode themeMode = ThemeController.instance.themeMode.value;
     return Column(
       children: [
         Visibility(
@@ -81,25 +80,17 @@ class InputBoxComponent extends StatelessWidget {
                     borderRadius: BorderRadius.circular(
                       borderRadius == null ? 15 : borderRadius!.x,
                     ),
-                    color: themeMode == ThemeMode.light
-                        ? AppColors.lightText.withValues(
-                            alpha: editable == true ? .1 : .7,
-                          )
-                        : AppColors.darkText.withValues(
-                            alpha: editable == true ? .1 : .7,
-                          ),
+                    color: context.text.withValues(
+                      alpha: editable == true ? .1 : .7,
+                    ),
                     border: errorMessage != null
                         ? Border.all(
                             color: AppColors.danger.withValues(alpha: .5),
                           )
                         : Border.all(
-                            color: themeMode == ThemeMode.light
-                                ? AppColors.lightText.withValues(
-                                    alpha: editable == true ? .1 : .3,
-                                  )
-                                : AppColors.darkText.withValues(
-                                    alpha: editable == true ? .1 : .3,
-                                  ),
+                            color: context.text.withValues(
+                              alpha: editable == true ? .1 : .3,
+                            ),
                           ),
                   ),
                   padding: childrenSizeBox != null
@@ -117,9 +108,7 @@ class InputBoxComponent extends StatelessWidget {
                                 child: TextComponent(
                                   value: childText ?? '',
                                   fontSize: FontSizes.normal,
-                                  fontColor: themeMode == ThemeMode.light
-                                      ? AppColors.lightText
-                                      : AppColors.darkText,
+                                  fontColor: context.text,
                                 ),
                               ),
                             ),

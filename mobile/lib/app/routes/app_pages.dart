@@ -8,8 +8,6 @@ import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
-import '../modules/profile_change_language/bindings/profile_change_language_binding.dart';
-import '../modules/profile_change_language/views/profile_change_language_view.dart';
 import '../modules/settings/bindings/settings_binding.dart';
 import '../modules/settings/views/settings_view.dart';
 import '../modules/splash_screen/bindings/splash_screen_binding.dart';
@@ -54,11 +52,6 @@ class AppPages {
       name: _Paths.SETTINGS,
       page: () => const SettingsView(),
       binding: SettingsBinding(),
-    ),
-    GetPage(
-      name: _Paths.PROFILE_CHANGE_LANGUAGE,
-      page: () => const ProfileChangeLanguageView(),
-      binding: ProfileChangeLanguageBinding(),
     ),
   ];
 }

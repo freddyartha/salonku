@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:salonku/app/common/app_colors.dart';
 import 'package:salonku/app/components/images/image_component.dart';
-import 'package:salonku/app/core/base/theme_controller.dart';
+
+import 'package:salonku/app/extension/theme_extension.dart';
 
 import '../controllers/base_controller.dart';
 
@@ -11,9 +12,8 @@ class BaseView extends GetView<BaseController> {
   const BaseView({super.key});
   @override
   Widget build(BuildContext context) {
-    final ThemeController themeController = ThemeController.instance;
-    return Obx(
-      () => Scaffold(
+    return Obx(() {
+      return Scaffold(
         body: controller.pages[controller.selectedId.value](),
         bottomNavigationBar: SafeArea(
           child: Row(
@@ -23,9 +23,7 @@ class BaseView extends GetView<BaseController> {
                 padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(50),
-                  color: themeController.themeMode.value == ThemeMode.dark
-                      ? AppColors.darkAccent
-                      : AppColors.lightAccent,
+                  color: context.accent,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -38,16 +36,7 @@ class BaseView extends GetView<BaseController> {
                       child: Container(
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color:
-                              isSelected &&
-                                  themeController.themeMode.value ==
-                                      ThemeMode.dark
-                              ? AppColors.darkContrast
-                              : isSelected &&
-                                    themeController.themeMode.value ==
-                                        ThemeMode.light
-                              ? AppColors.lightContrast
-                              : null,
+                          color: isSelected ? context.contrast : null,
                         ),
                         padding: EdgeInsets.all(isSelected ? 10 : 15),
                         child: ImageComponent(
@@ -55,12 +44,9 @@ class BaseView extends GetView<BaseController> {
                           height: isSelected ? 40 : 30,
                           width: isSelected ? 40 : 30,
                           boxFit: BoxFit.contain,
-                          color:
-                              themeController.themeMode.value ==
-                                      ThemeMode.dark ||
-                                  isSelected
+                          color: context.isLight && isSelected
                               ? AppColors.darkText
-                              : AppColors.lightText,
+                              : context.text,
                         ),
                       ),
                     );
@@ -70,7 +56,7 @@ class BaseView extends GetView<BaseController> {
             ],
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

@@ -1,5 +1,7 @@
 const Map<String, String> enUS = {
   "app_name": "SalonKu",
-  "change_language": "Change Language",
-  "change_mode": "Change Theme",
+  "change_language": "Language",
+  "change_mode": "Theme",
+  "sign_out": "Sign Out",
+  "delete_account": "Delete Account",
 };

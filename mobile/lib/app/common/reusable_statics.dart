@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:salonku/app/common/app_colors.dart';
+import 'package:get/get.dart';
 import 'package:salonku/app/common/radiuses.dart';
-import 'package:salonku/app/core/base/theme_controller.dart';
+import 'package:salonku/app/extension/theme_extension.dart';
 import 'package:uuid/uuid.dart';
 
 enum Penilaian { empty, buruk, baik, luarBiasa }
@@ -34,12 +34,8 @@ class ReusableStatics {
     required Future<void> Function() onRefresh,
     required Widget child,
   }) => RefreshIndicator(
-    color: ThemeController.instance.themeMode.value == ThemeMode.light
-        ? AppColors.lightPrimary
-        : AppColors.darkPrimary,
-    backgroundColor: ThemeController.instance.themeMode.value == ThemeMode.light
-        ? AppColors.lightContrast
-        : AppColors.darkContrast,
+    color: Get.context?.primary,
+    backgroundColor: Get.context?.contrast,
     onRefresh: onRefresh,
     child: child,
   );

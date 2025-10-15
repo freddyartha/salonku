@@ -7,25 +7,27 @@ import 'package:salonku/app/core/core.dart';
 
 class TranslationService extends Translations {
   static final _box = GetStorage();
+  static final localeId = Locale("id", "ID");
+  static final localeEn = Locale("en", "US");
+
   static Locale get locale {
     String? localeCode = _box.read(StorageKey.cachedLocaleKey);
     if (localeCode != null && localeCode == "id") {
-      return Locale(localeCode, localeCode.toUpperCase());
+      return localeId;
     } else if (localeCode != null && localeCode == "en") {
-      return Locale(localeCode, localeCode.toUpperCase());
+      return localeEn;
     } else {
-      return Get.deviceLocale ?? const Locale("id", "ID");
+      return Get.deviceLocale ?? localeId;
     }
   }
 
-  static final fallBackLocale = Get.deviceLocale ?? const Locale("id", "ID");
+  static final fallBackLocale = Get.deviceLocale ?? localeId;
 
   @override
   Map<String, Map<String, String>> get keys => {"id_ID": idID, "en_US": enUS};
 
-  static void changeLocale(String langCode) {
-    final locale = Locale(langCode, langCode.toUpperCase());
+  static void changeLocale(Locale locale) {
     Get.updateLocale(locale);
-    _box.write(StorageKey.cachedLocaleKey, langCode);
+    _box.write(StorageKey.cachedLocaleKey, locale.languageCode);
   }
 }

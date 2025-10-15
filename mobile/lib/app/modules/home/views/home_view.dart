@@ -6,7 +6,8 @@ import 'package:salonku/app/common/font_size.dart';
 import 'package:salonku/app/common/font_weight.dart';
 import 'package:salonku/app/components/images/image_component.dart';
 import 'package:salonku/app/components/texts/text_component.dart';
-import 'package:salonku/app/core/base/theme_controller.dart';
+
+import 'package:salonku/app/extension/theme_extension.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -14,7 +15,6 @@ class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
   @override
   Widget build(BuildContext context) {
-    final ThemeController themeController = ThemeController.instance;
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -27,11 +27,7 @@ class HomeView extends GetView<HomeController> {
                   Container(
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      border: Border.all(
-                        color: themeController.themeMode.value == ThemeMode.dark
-                            ? AppColors.darkAccent
-                            : AppColors.lightAccent,
-                      ),
+                      border: Border.all(color: context.accent),
                     ),
                     clipBehavior: Clip.hardEdge,
                     margin: EdgeInsets.only(right: 20),

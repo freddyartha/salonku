@@ -1,29 +1,24 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:salonku/app/core/base/theme_controller.dart';
+
 import 'package:salonku/app/models/menu_item_model.dart';
-import 'package:salonku/app/routes/app_pages.dart';
 
 class ProfileController extends GetxController {
-  final ThemeController themeController = ThemeController.instance;
-  final List<MenuItemModel> menuItemList = [];
+  final List<MenuItemModel> settingAccountList = [];
 
   @override
   void onInit() {
-    menuItemList.addAll([
+    settingAccountList.addAll([
       MenuItemModel(
-        title: "change_mode".tr,
         id: 1,
-        imageLocation: themeController.themeMode.value == ThemeMode.dark
-            ? "assets/images/png/dark_mode.png"
-            : "assets/images/png/light_mode.png",
-        onTab: themeController.toggleTheme,
+        title: "sign_out",
+        imageLocation: "assets/images/png/sign_out.png",
+        onTab: () {},
       ),
       MenuItemModel(
-        id: 2,
-        title: "change_language".tr,
-        imageLocation: "assets/images/png/language.png",
-        onTab: () => Get.toNamed(Routes.PROFILE_CHANGE_LANGUAGE),
+        id: 1,
+        title: "delete_account",
+        imageLocation: "assets/images/png/delete_account.png",
+        onTab: () {},
       ),
     ]);
     super.onInit();

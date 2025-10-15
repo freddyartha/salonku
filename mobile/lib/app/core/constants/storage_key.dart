@@ -11,4 +11,7 @@ class StorageKey {
 
   //locale
   static String cachedLocaleKey = 'CACHED_LOCALE';
+
+  //theme
+  static String cachedThemeKey = 'CACHED_THEME';
 }

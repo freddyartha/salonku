@@ -2,13 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-import 'package:salonku/app/common/app_colors.dart';
 import 'package:salonku/app/common/currency_input_formater.dart';
 import 'package:salonku/app/common/font_size.dart';
 import 'package:salonku/app/common/input_formatter.dart';
 import 'package:salonku/app/common/radiuses.dart';
 import 'package:salonku/app/components/inputs/input_box_component.dart';
-import 'package:salonku/app/core/base/theme_controller.dart';
+import 'package:salonku/app/extension/theme_extension.dart';
 
 enum InputTextType {
   text,
@@ -29,7 +28,7 @@ class InputTextController extends ChangeNotifier {
 
   InputTextController({this.type = InputTextType.text, this.onTap});
 
-  bool _required = false;
+  final bool _required = false;
   bool _showPassword = false;
   final InputTextType type;
 
@@ -161,17 +160,10 @@ class _InputTextState extends State<InputTextComponent> {
 
   @override
   Widget build(BuildContext context) {
-    widget.controller._required = widget.required;
-    ThemeMode themeMode = ThemeController.instance.themeMode.value;
-
     final decoration = InputDecoration(
       contentPadding: const EdgeInsets.all(10),
       filled: true,
-      fillColor: themeMode == ThemeMode.light
-          ? AppColors.lightContrast.withValues(
-              alpha: widget.editable ? .03 : .1,
-            )
-          : AppColors.darkText.withValues(alpha: widget.editable ? .03 : .1),
+      fillColor: context.accent2.withValues(alpha: widget.editable ? .03 : .1),
       hintText: widget.placeHolder,
       hintStyle: const TextStyle(fontSize: FontSizes.normal),
       isDense: true,
@@ -184,30 +176,19 @@ class _InputTextState extends State<InputTextComponent> {
         borderRadius: BorderRadius.all(
           widget.borderRadius ?? Radius.circular(Radiuses.regular),
         ),
-        borderSide: BorderSide(
-          color: themeMode == ThemeMode.light
-              ? AppColors.lightContrast
-              : AppColors.darkContrast,
-          width: .1,
-        ),
+        borderSide: BorderSide(color: context.contrast, width: .1),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.all(
           widget.borderRadius ?? Radius.circular(Radiuses.regular),
         ),
         borderSide: BorderSide(
-          color: themeMode == ThemeMode.light
-              ? AppColors.lightContrast
-              : AppColors.darkContrast,
+          color: context.contrast,
           width: widget.editable ? .1 : .3,
         ),
       ),
       prefixText: widget.prefixText,
-      prefixStyle: TextStyle(
-        color: themeMode == ThemeMode.light
-            ? AppColors.lightText.withValues(alpha: 0.6)
-            : AppColors.darkText.withValues(alpha: 0.6),
-      ),
+      prefixStyle: TextStyle(color: context.text.withValues(alpha: 0.6)),
       suffixIconConstraints: const BoxConstraints(minHeight: 30, minWidth: 30),
       prefixIcon: widget.prefixIcon,
       suffixIcon: widget.controller.type == InputTextType.password
@@ -221,10 +202,7 @@ class _InputTextState extends State<InputTextComponent> {
                 widget.controller._showPassword
                     ? Icons.visibility_off
                     : Icons.visibility,
-                color: themeMode == ThemeMode.light
-                    ? AppColors.lightText.withValues(alpha: 0.6)
-                    : AppColors.darkText.withValues(alpha: 0.6),
-
+                color: context.text.withValues(alpha: 0.6),
                 size: 14,
               ),
             )
@@ -246,11 +224,7 @@ class _InputTextState extends State<InputTextComponent> {
       onSaved: widget.controller.onSaved,
       onTap: widget.controller.onTap,
       onFieldSubmitted: widget.controller.onFieldSubmitted,
-      style: TextStyle(
-        color: themeMode == ThemeMode.light
-            ? AppColors.lightText.withValues(alpha: 0.6)
-            : AppColors.darkText.withValues(alpha: 0.6),
-      ),
+      style: TextStyle(color: context.text.withValues(alpha: 0.6)),
       inputFormatters:
           widget.controller.type == InputTextType.number ||
               widget.controller.type == InputTextType.ktp ||

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:salonku/app/common/app_colors.dart';
 import 'package:salonku/app/common/font_size.dart';
-import 'package:salonku/app/core/base/theme_controller.dart';
+import 'package:salonku/app/extension/theme_extension.dart';
 
 class TextComponent extends StatelessWidget {
   final String? value;
@@ -37,11 +36,7 @@ class TextComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textColor =
-        fontColor ??
-        (ThemeController.instance.themeMode.value == ThemeMode.light
-            ? AppColors.lightText
-            : AppColors.darkText);
+    final textColor = fontColor ?? context.text;
     return Container(
       margin: margin,
       child: InkWell(

@@ -4,7 +4,7 @@ import 'package:salonku/app/common/app_colors.dart';
 import 'package:salonku/app/common/font_size.dart';
 import 'package:salonku/app/common/radiuses.dart';
 import 'package:salonku/app/components/texts/text_component.dart';
-import 'package:salonku/app/core/base/theme_controller.dart';
+import 'package:salonku/app/extension/theme_extension.dart';
 
 class ButtonComponent extends StatefulWidget {
   final Function() onTap;
@@ -18,7 +18,7 @@ class ButtonComponent extends StatefulWidget {
   final bool isMultilineText;
   final String? icon;
   final bool isSvg;
-  final Color borderColor;
+  final Color? borderColor;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
   final double? iconSize;
@@ -33,7 +33,7 @@ class ButtonComponent extends StatefulWidget {
     this.buttonColor,
     this.fontWeight = FontWeight.normal,
     this.fontSize = FontSizes.h6,
-    this.borderColor = Colors.transparent,
+    this.borderColor,
     this.width,
     this.isMultilineText = false,
     this.icon,
@@ -53,11 +53,7 @@ class ButtonComponent extends StatefulWidget {
 class _ButtonComponentState extends State<ButtonComponent> {
   @override
   Widget build(BuildContext context) {
-    final btnColor =
-        widget.buttonColor ??
-        (ThemeController.instance.themeMode.value == ThemeMode.light
-            ? AppColors.lightContrast
-            : AppColors.darkContrast);
+    final btnColor = widget.buttonColor ?? context.contrast;
 
     return GestureDetector(
       onTap: widget.onTap,
@@ -67,7 +63,7 @@ class _ButtonComponentState extends State<ButtonComponent> {
         padding: widget.padding ?? const EdgeInsets.all(10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(widget.borderRadius),
-          border: Border.all(color: widget.borderColor),
+          border: Border.all(color: widget.borderColor ?? Colors.transparent),
           color: btnColor,
         ),
         child: Row(

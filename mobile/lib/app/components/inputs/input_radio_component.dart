@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:salonku/app/common/app_colors.dart';
 import 'package:salonku/app/common/reusable_statics.dart';
 import 'package:salonku/app/components/texts/text_component.dart';
-import 'package:salonku/app/core/base/theme_controller.dart';
+import 'package:salonku/app/extension/theme_extension.dart';
 import 'input_box_component.dart';
 
 enum CheckboxPosition { left, right }
@@ -129,7 +129,6 @@ class _InputRadioComponentState extends State<InputRadioComponent> {
 
   @override
   Widget build(BuildContext context) {
-    ThemeMode themeMode = ThemeController.instance.themeMode.value;
     return InputBoxComponent(
       label: widget.label,
       isRequired: widget.required,
@@ -158,9 +157,7 @@ class _InputRadioComponentState extends State<InputRadioComponent> {
                       child: Radio<RadioButtonItem>(
                         value: e,
                         activeColor: widget.editable == true
-                            ? themeMode == ThemeMode.light
-                                  ? AppColors.lightContrast
-                                  : AppColors.darkContrast
+                            ? context.contrast
                             : AppColors.mute,
                         groupValue: widget.controller._value,
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -207,9 +204,7 @@ class _InputRadioComponentState extends State<InputRadioComponent> {
                       padding: const EdgeInsets.only(left: 12),
                       child: Radio<RadioButtonItem>(
                         value: e,
-                        activeColor: themeMode == ThemeMode.light
-                            ? AppColors.lightContrast
-                            : AppColors.darkContrast,
+                        activeColor: context.contrast,
                         groupValue: widget.controller._value,
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         visualDensity: const VisualDensity(

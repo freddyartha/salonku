@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:salonku/app/common/app_colors.dart';
 import 'package:salonku/app/common/font_size.dart';
-import 'package:salonku/app/core/base/theme_controller.dart';
+
+import 'package:salonku/app/extension/theme_extension.dart';
 
 class RichTextItem {
   final String text;
@@ -39,11 +39,7 @@ class RichTextComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textColor =
-        fontColor ??
-        (ThemeController.instance.themeMode.value == ThemeMode.light
-            ? AppColors.lightText
-            : AppColors.darkText);
+    final textColor = fontColor ?? context.text;
     return Container(
       margin: margin,
       child: Text.rich(
@@ -52,7 +48,7 @@ class RichTextComponent extends StatelessWidget {
               .map(
                 (e) => TextSpan(
                   text: e.text,
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.quicksand(
                     textStyle: TextStyle(
                       fontSize: e.fontSize ?? fontSize,
                       fontWeight: e.fontWeight ?? fontWeight,

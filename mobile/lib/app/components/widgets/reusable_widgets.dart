@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:salonku/app/common/app_colors.dart';
 import 'package:salonku/app/common/font_size.dart';
+import 'package:salonku/app/common/radiuses.dart';
+import 'package:salonku/app/components/buttons/button_component.dart';
+import 'package:salonku/app/components/images/image_component.dart';
 import 'package:salonku/app/components/texts/text_component.dart';
-import 'package:salonku/app/core/base/theme_controller.dart';
+
+import 'package:salonku/app/extension/theme_extension.dart';
 
 enum NotifType { success, warning }
 
 class ReusableWidgets {
-  static final ThemeController themeController = ThemeController.instance;
   static PreferredSizeWidget generalAppBarWidget({
     required String title,
     required Color textColor,
@@ -53,212 +58,212 @@ class ReusableWidgets {
   //   );
   // }
 
-  // static Future<bool?> dialogConfirmation({
-  //   String? title,
-  //   String? message,
-  //   IconData? icon,
-  //   Widget? content,
-  //   String? textConfirm,
-  //   String? textCancel,
-  //   bool isWithBatal = false,
-  //   bool barrierDissmisible = true,
-  //   bool onlyShowConfirm = false,
-  //   Color? iconColor,
-  // }) async {
-  //   return await Get.dialog<bool?>(
-  //     PopScope(
-  //       canPop: false,
-  //       onPopInvokedWithResult: (didPop, result) {
-  //         if (didPop) return;
-  //         Get.back(result: false);
-  //       },
-  //       child: AlertDialog(
-  //         contentPadding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-  //         actionsPadding: EdgeInsets.zero,
-  //         backgroundColor: Colors.white,
-  //         shape: RoundedRectangleBorder(
-  //           borderRadius: BorderRadius.circular(Radiuses.regular),
-  //         ),
-  //         content: Column(
-  //           crossAxisAlignment: CrossAxisAlignment.center,
-  //           mainAxisSize: MainAxisSize.min,
-  //           children: [
-  //             Visibility(
-  //               visible: icon != null,
-  //               child: Padding(
-  //                 padding: const EdgeInsets.only(bottom: 25),
-  //                 child: Icon(icon, size: 100, color: iconColor),
-  //               ),
-  //             ),
-  //             Visibility(
-  //               visible: title != null,
-  //               child: Column(
-  //                 children: [
-  //                   TextComponent(
-  //                     value: title ?? "",
-  //                     fontSize: FontSizes.h6,
-  //                     fontWeight: FontWeight.w600,
-  //                     textAlign: TextAlign.center,
-  //                   ),
-  //                   const SizedBox(height: 8),
-  //                 ],
-  //               ),
-  //             ),
-  //             Visibility(
-  //               visible: message != null,
-  //               child: TextComponent(
-  //                 value: message,
-  //                 textAlign: TextAlign.center,
-  //                 fontWeight: title != null ? FontWeight.w400 : FontWeight.w500,
-  //               ),
-  //             ),
-  //             Visibility(
-  //               visible: content != null,
-  //               child: content ?? Container(),
-  //             ),
-  //           ],
-  //         ),
-  //         actions: [
-  //           IntrinsicHeight(
-  //             child: Padding(
-  //               padding: const EdgeInsets.fromLTRB(16, 25, 16, 12),
-  //               child: onlyShowConfirm
-  //                   ? ButtonComponent(
-  //                       text: textConfirm ?? "submit".tr,
-  //                       isMultilineText: true,
-  //                       borderRadius: Radiuses.small,
-  //                       onTap: () {
-  //                         Get.back(result: true);
-  //                       },
-  //                     )
-  //                   : isWithBatal
-  //                   ? Column(
-  //                       crossAxisAlignment: CrossAxisAlignment.stretch,
-  //                       children: [
-  //                         Flexible(
-  //                           child: ButtonComponent(
-  //                             text: textConfirm ?? "submit".tr,
-  //                             isMultilineText: true,
-  //                             onTap: () {
-  //                               Get.back(result: true);
-  //                             },
-  //                           ),
-  //                         ),
-  //                         const SizedBox(height: 12),
-  //                         Flexible(
-  //                           child: ButtonComponent(
-  //                             text: textCancel ?? "batal".tr,
-  //                             isMultilineText: true,
-  //                             borderColor: AppColors.grayText,
-  //                             btnColor: AppColors.white,
-  //                             textColor: AppColors.black,
-  //                             borderRadius: Radiuses.small,
-  //                             onTap: () {
-  //                               Get.back(result: false);
-  //                             },
-  //                           ),
-  //                         ),
-  //                         const SizedBox(height: 12),
-  //                         Flexible(
-  //                           child: ButtonComponent(
-  //                             text: "batal".tr,
-  //                             isMultilineText: true,
-  //                             borderColor: AppColors.grayText,
-  //                             btnColor: AppColors.white,
-  //                             textColor: AppColors.black,
-  //                             borderRadius: Radiuses.small,
-  //                             onTap: Get.back,
-  //                           ),
-  //                         ),
-  //                       ],
-  //                     )
-  //                   : Row(
-  //                       crossAxisAlignment: CrossAxisAlignment.stretch,
-  //                       children: [
-  //                         Flexible(
-  //                           child: ButtonComponent(
-  //                             text: textCancel ?? "batal".tr,
-  //                             isMultilineText: true,
-  //                             borderColor: AppColors.grayText,
-  //                             btnColor: AppColors.white,
-  //                             textColor: AppColors.black,
-  //                             borderRadius: Radiuses.small,
-  //                             onTap: () {
-  //                               Get.back(result: false);
-  //                             },
-  //                           ),
-  //                         ),
-  //                         const SizedBox(width: 12),
-  //                         Flexible(
-  //                           child: ButtonComponent(
-  //                             text: textConfirm ?? "submit".tr,
-  //                             borderRadius: Radiuses.small,
-  //                             isMultilineText: true,
-  //                             onTap: () {
-  //                               Get.back(result: true);
-  //                             },
-  //                           ),
-  //                         ),
-  //                       ],
-  //                     ),
-  //             ),
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //     barrierDismissible: barrierDissmisible,
-  //   );
-  // }
+  static Future<bool?> dialogConfirmation({
+    String? title,
+    String? message,
+    IconData? icon,
+    Widget? content,
+    String? textConfirm,
+    String? textCancel,
+    bool isWithBatal = false,
+    bool barrierDissmisible = true,
+    bool onlyShowConfirm = false,
+    Color? iconColor,
+  }) async {
+    return await Get.dialog<bool?>(
+      PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (didPop, result) {
+          if (didPop) return;
+          Get.back(result: false);
+        },
+        child: AlertDialog(
+          contentPadding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+          actionsPadding: EdgeInsets.zero,
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(Radiuses.regular),
+          ),
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Visibility(
+                visible: icon != null,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 25),
+                  child: Icon(icon, size: 100, color: iconColor),
+                ),
+              ),
+              Visibility(
+                visible: title != null,
+                child: Column(
+                  children: [
+                    TextComponent(
+                      value: title ?? "",
+                      fontSize: FontSizes.h6,
+                      fontWeight: FontWeight.w600,
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 8),
+                  ],
+                ),
+              ),
+              Visibility(
+                visible: message != null,
+                child: TextComponent(
+                  value: message,
+                  textAlign: TextAlign.center,
+                  fontWeight: title != null ? FontWeight.w400 : FontWeight.w500,
+                ),
+              ),
+              Visibility(
+                visible: content != null,
+                child: content ?? Container(),
+              ),
+            ],
+          ),
+          actions: [
+            IntrinsicHeight(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 25, 16, 12),
+                child: onlyShowConfirm
+                    ? ButtonComponent(
+                        text: textConfirm ?? "submit".tr,
+                        isMultilineText: true,
+                        borderRadius: Radiuses.small,
+                        onTap: () {
+                          Get.back(result: true);
+                        },
+                      )
+                    : isWithBatal
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Flexible(
+                            child: ButtonComponent(
+                              text: textConfirm ?? "submit".tr,
+                              isMultilineText: true,
+                              onTap: () {
+                                Get.back(result: true);
+                              },
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          Flexible(
+                            child: ButtonComponent(
+                              text: textCancel ?? "batal".tr,
+                              isMultilineText: true,
+                              borderColor: Get.context?.contrast,
+                              buttonColor: Get.context?.accent,
+                              textColor: AppColors.darkText,
+                              borderRadius: Radiuses.small,
+                              onTap: () {
+                                Get.back(result: false);
+                              },
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          Flexible(
+                            child: ButtonComponent(
+                              text: "batal".tr,
+                              isMultilineText: true,
+                              borderColor: Get.context?.contrast,
+                              buttonColor: Get.context?.accent,
+                              textColor: AppColors.darkText,
+                              borderRadius: Radiuses.small,
+                              onTap: Get.back,
+                            ),
+                          ),
+                        ],
+                      )
+                    : Row(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Flexible(
+                            child: ButtonComponent(
+                              text: textCancel ?? "batal".tr,
+                              isMultilineText: true,
+                              borderColor: Get.context?.contrast,
+                              buttonColor: Get.context?.accent,
+                              textColor: AppColors.darkText,
+                              borderRadius: Radiuses.small,
+                              onTap: () {
+                                Get.back(result: false);
+                              },
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Flexible(
+                            child: ButtonComponent(
+                              text: textConfirm ?? "submit".tr,
+                              borderRadius: Radiuses.small,
+                              isMultilineText: true,
+                              onTap: () {
+                                Get.back(result: true);
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      barrierDismissible: barrierDissmisible,
+    );
+  }
 
-  // static Future<bool> dialogWarning(
-  //   String? message, {
-  //   showButton = false,
-  //   String? text,
-  //   Function()? function,
-  //   bool barrierDissmisible = true,
-  // }) async {
-  //   return await Get.dialog(
-  //     PopScope(
-  //       canPop: false,
-  //       onPopInvokedWithResult: (didPop, result) {
-  //         if (didPop) return;
-  //         Get.back(result: true);
-  //       },
-  //       child: AlertDialog(
-  //         shape: RoundedRectangleBorder(
-  //           borderRadius: BorderRadius.circular(Radiuses.regular),
-  //         ),
-  //         backgroundColor: AppColors.white,
-  //         content: Column(
-  //           mainAxisSize: MainAxisSize.min,
-  //           children: [
-  //             const Icon(
-  //               Icons.warning_amber_rounded,
-  //               color: AppColors.red,
-  //               size: 60,
-  //             ),
-  //             const Padding(padding: EdgeInsets.all(7)),
-  //             Text(
-  //               textAlign: TextAlign.center,
-  //               message ?? "-",
-  //               style: const TextStyle(color: AppColors.black),
-  //             ),
-  //             showButton
-  //                 ? Container(
-  //                     margin: const EdgeInsets.only(top: 20),
-  //                     child: ButtonComponent(
-  //                       onTap: function!,
-  //                       text: text ?? "ok".tr,
-  //                     ),
-  //                   )
-  //                 : SizedBox(),
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //     barrierDismissible: barrierDissmisible,
-  //   );
-  // }
+  static Future<bool> dialogWarning(
+    String? message, {
+    showButton = false,
+    String? text,
+    Function()? function,
+    bool barrierDissmisible = true,
+  }) async {
+    return await Get.dialog(
+      PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (didPop, result) {
+          if (didPop) return;
+          Get.back(result: true);
+        },
+        child: AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(Radiuses.regular),
+          ),
+          backgroundColor: Get.context?.accent,
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(
+                Icons.warning_amber_rounded,
+                color: AppColors.danger,
+                size: 60,
+              ),
+              const Padding(padding: EdgeInsets.all(7)),
+              Text(
+                textAlign: TextAlign.center,
+                message ?? "-",
+                style: const TextStyle(color: AppColors.darkText),
+              ),
+              showButton
+                  ? Container(
+                      margin: const EdgeInsets.only(top: 20),
+                      child: ButtonComponent(
+                        onTap: function!,
+                        text: text ?? "ok".tr,
+                      ),
+                    )
+                  : SizedBox(),
+            ],
+          ),
+        ),
+      ),
+      barrierDismissible: barrierDissmisible,
+    );
+  }
 
   // static Future<bool> dialogWithWidget({
   //   showButton = false,
@@ -297,7 +302,7 @@ class ReusableWidgets {
   //                       text: textCancel ?? "cancel".tr,
   //                       textColor: AppColors.red,
   //                       borderColor: AppColors.red,
-  //                       btnColor: AppColors.white,
+  //                       buttonColor: AppColors.white,
   //                     ),
   //                   ),
   //                 ],
@@ -308,7 +313,7 @@ class ReusableWidgets {
   //                       text: textConfirm ?? "ok".tr,
   //                       textColor: AppColors.darkBlue,
   //                       borderColor: AppColors.darkBlue,
-  //                       btnColor: AppColors.white,
+  //                       buttonColor: AppColors.white,
   //                     ),
   //                   ),
   //                 ],
@@ -458,121 +463,121 @@ class ReusableWidgets {
   //   );
   // }
 
-  // static Future<bool?> confirmationBottomSheet({
-  //   required List<Widget> children,
-  //   String? title,
-  //   String? textConfirm,
-  //   String? textCancel,
-  //   Color confirmColor = AppColors.primary,
-  //   bool withImage = false,
-  // }) {
-  //   return Get.bottomSheet<bool>(
-  //     isScrollControlled: true,
-  //     enableDrag: false,
-  //     PopScope(
-  //       canPop: false,
-  //       onPopInvokedWithResult: (didPop, result) {
-  //         if (didPop) return;
-  //         Get.back(result: null);
-  //       },
-  //       child: Container(
-  //         decoration: BoxDecoration(
-  //           color: AppColors.white,
-  //           borderRadius: BorderRadius.circular(25),
-  //         ),
-  //         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-  //         child: SafeArea(
-  //           child: Column(
-  //             mainAxisSize: MainAxisSize.min,
-  //             children: [
-  //               Row(
-  //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                 children: [
-  //                   TextComponent(
-  //                     value: title ?? "",
-  //                     fontWeight: FontWeight.w600,
-  //                     fontSize: FontSizes.h6,
-  //                     margin: EdgeInsets.only(right: 10),
-  //                   ),
-  //                   Container(
-  //                     margin: EdgeInsets.only(bottom: 10),
-  //                     height: 40,
-  //                     child: GestureDetector(
-  //                       onTap: () => Get.back(result: false),
-  //                       child: Container(
-  //                         padding: EdgeInsets.all(5),
-  //                         decoration: BoxDecoration(
-  //                           borderRadius: BorderRadius.circular(100),
-  //                           color: AppColors.black.withValues(alpha: 0.06),
-  //                         ),
-  //                         child: Icon(Icons.close, size: 30),
-  //                       ),
-  //                     ),
-  //                   ),
-  //                 ],
-  //               ),
-  //               ListView(
-  //                 padding: const EdgeInsets.symmetric(horizontal: 10),
-  //                 shrinkWrap: true,
-  //                 physics: ClampingScrollPhysics(),
-  //                 children: [
-  //                   Column(
-  //                     crossAxisAlignment: CrossAxisAlignment.start,
-  //                     children: [
-  //                       withImage
-  //                           ? Center(
-  //                               child: ImageComponent(
-  //                                 localUrl: "assets/images/question.png",
-  //                                 height: 150,
-  //                                 width: Get.width,
-  //                                 boxFit: BoxFit.fitHeight,
-  //                                 margin: EdgeInsets.only(bottom: 20),
-  //                               ),
-  //                             )
-  //                           : SizedBox(height: 15),
-  //                       ...children,
-  //                       const SizedBox(height: 30),
-  //                       Row(
-  //                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                         spacing: 20,
-  //                         children: [
-  //                           Expanded(
-  //                             child: ButtonComponent(
-  //                               text: textCancel ?? "cancel".tr,
-  //                               isMultilineText: true,
-  //                               borderColor: AppColors.grayText,
-  //                               btnColor: AppColors.white,
-  //                               textColor: AppColors.black,
-  //                               borderRadius: Radiuses.regular,
-  //                               onTap: () {
-  //                                 Get.back(result: false);
-  //                               },
-  //                             ),
-  //                           ),
-  //                           Expanded(
-  //                             child: ButtonComponent(
-  //                               text: textConfirm ?? "ok".tr,
-  //                               borderRadius: Radiuses.regular,
-  //                               btnColor: confirmColor,
-  //                               isMultilineText: true,
-  //                               onTap: () {
-  //                                 Get.back(result: true);
-  //                               },
-  //                             ),
-  //                           ),
-  //                         ],
-  //                       ),
-  //                     ],
-  //                   ),
-  //                 ],
-  //               ),
-  //             ],
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
+  static Future<bool?> confirmationBottomSheet({
+    required List<Widget> children,
+    String? title,
+    String? textConfirm,
+    String? textCancel,
+    Color? confirmColor,
+    bool withImage = false,
+  }) {
+    return Get.bottomSheet<bool>(
+      isScrollControlled: true,
+      enableDrag: false,
+      PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (didPop, result) {
+          if (didPop) return;
+          Get.back(result: null);
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: Get.context?.accent,
+            borderRadius: BorderRadius.circular(25),
+          ),
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          child: SafeArea(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextComponent(
+                      value: title ?? "",
+                      fontWeight: FontWeight.w600,
+                      fontSize: FontSizes.h6,
+                      margin: EdgeInsets.only(right: 10),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(bottom: 10),
+                      height: 40,
+                      child: GestureDetector(
+                        onTap: () => Get.back(result: false),
+                        child: Container(
+                          padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            color: Get.context?.text,
+                          ),
+                          child: Icon(Icons.close, size: 30),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                ListView(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  shrinkWrap: true,
+                  physics: ClampingScrollPhysics(),
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        withImage
+                            ? Center(
+                                child: ImageComponent(
+                                  localUrl: "assets/images/question.png",
+                                  height: 150,
+                                  width: Get.width,
+                                  boxFit: BoxFit.fitHeight,
+                                  margin: EdgeInsets.only(bottom: 20),
+                                ),
+                              )
+                            : SizedBox(height: 15),
+                        ...children,
+                        const SizedBox(height: 30),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          spacing: 20,
+                          children: [
+                            Expanded(
+                              child: ButtonComponent(
+                                text: textCancel ?? "cancel".tr,
+                                isMultilineText: true,
+                                borderColor: Get.context?.contrast,
+                                buttonColor: Get.context?.accent,
+                                textColor: AppColors.darkText,
+                                borderRadius: Radiuses.regular,
+                                onTap: () {
+                                  Get.back(result: false);
+                                },
+                              ),
+                            ),
+                            Expanded(
+                              child: ButtonComponent(
+                                text: textConfirm ?? "ok".tr,
+                                borderRadius: Radiuses.regular,
+                                buttonColor: confirmColor,
+                                isMultilineText: true,
+                                onTap: () {
+                                  Get.back(result: true);
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 
   // static Future<bool?> customBottomSheet({
   //   required List<Widget> children,
@@ -1107,7 +1112,7 @@ class ReusableWidgets {
   //       child: ButtonComponent(
   //         onTap: editOnTap,
   //         text: "edit".tr,
-  //         btnColor: AppColors.primary,
+  //         buttonColor: AppColors.primary,
   //         icon: "assets/images/edit.png",
   //         isSvg: false,
   //         iconSize: 25,
@@ -1129,7 +1134,7 @@ class ReusableWidgets {
   //           if (result == true) deleteOnTap();
   //         },
   //         text: "delete".tr,
-  //         btnColor: AppColors.red,
+  //         buttonColor: AppColors.red,
   //         icon: "assets/images/delete.png",
   //         isSvg: false,
   //         iconSize: 25,
