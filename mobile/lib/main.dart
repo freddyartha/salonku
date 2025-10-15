@@ -8,7 +8,8 @@ import 'package:salonku/app/common/app_themes.dart';
 import 'package:salonku/app/common/lang/translation_service.dart';
 import 'package:salonku/app/config/environment.dart';
 import 'package:salonku/app/config/initial_binding.dart';
-import 'package:salonku/app/core/base/theme_controller.dart';
+import 'package:salonku/app/core/controllers/auth_controller.dart';
+import 'package:salonku/app/core/controllers/theme_controller.dart';
 
 import 'app/routes/app_pages.dart';
 
@@ -22,6 +23,7 @@ void main() async {
   //easyloading
   // configLoading();
   await Firebase.initializeApp();
+  AuthController.instance;
   runApp(
     GetX<ThemeController>(
       init: ThemeController(),

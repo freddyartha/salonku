@@ -371,97 +371,97 @@ class ReusableWidgets {
   //   );
   // }
 
-  // static Future<bool?> notifBottomSheet({
-  //   required String subtitle,
-  //   List<Widget>? children,
-  //   String? title,
-  //   NotifType notifType = NotifType.warning,
-  // }) {
-  //   if (Get.isBottomSheetOpen == true) {
-  //     Get.back();
-  //   }
-  //   return Get.bottomSheet<bool>(
-  //     enableDrag: false,
-  //     PopScope(
-  //       canPop: false,
-  //       onPopInvokedWithResult: (didPop, result) {
-  //         if (didPop) return;
-  //         Get.back(result: false);
-  //       },
-  //       child: Container(
-  //         decoration: BoxDecoration(
-  //           color: AppColors.white,
-  //           borderRadius: BorderRadius.circular(25),
-  //         ),
-  //         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-  //         child: SafeArea(
-  //           child: Column(
-  //             mainAxisSize: MainAxisSize.min,
+  static Future<bool?> notifBottomSheet({
+    required String subtitle,
+    List<Widget>? children,
+    String? title,
+    NotifType notifType = NotifType.warning,
+  }) {
+    if (Get.isBottomSheetOpen == true) {
+      Get.back();
+    }
+    return Get.bottomSheet<bool>(
+      enableDrag: false,
+      PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (didPop, result) {
+          if (didPop) return;
+          Get.back(result: false);
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: Get.context?.accent,
+            borderRadius: BorderRadius.circular(25),
+          ),
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          child: SafeArea(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
 
-  //             children: [
-  //               Row(
-  //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                 children: [
-  //                   TextComponent(
-  //                     value:
-  //                         title ??
-  //                         (notifType == NotifType.success
-  //                             ? "success".tr
-  //                             : "error".tr),
-  //                     fontWeight: FontWeight.w600,
-  //                     fontSize: FontSizes.h6,
-  //                     margin: EdgeInsets.only(right: 10),
-  //                   ),
-  //                   Container(
-  //                     margin: EdgeInsets.only(bottom: 10),
-  //                     height: 40,
-  //                     child: GestureDetector(
-  //                       onTap: () => Get.back(result: false),
-  //                       child: Container(
-  //                         padding: EdgeInsets.all(5),
-  //                         decoration: BoxDecoration(
-  //                           borderRadius: BorderRadius.circular(100),
-  //                           color: AppColors.black.withValues(alpha: 0.06),
-  //                         ),
-  //                         child: Icon(Icons.close, size: 30),
-  //                       ),
-  //                     ),
-  //                   ),
-  //                 ],
-  //               ),
-  //               ListView(
-  //                 padding: const EdgeInsets.symmetric(horizontal: 10),
-  //                 shrinkWrap: true,
-  //                 physics: ClampingScrollPhysics(),
-  //                 children: [
-  //                   Column(
-  //                     children: [
-  //                       ImageComponent(
-  //                         localUrl: notifType == NotifType.warning
-  //                             ? "assets/images/error.png"
-  //                             : "assets/images/success.png",
-  //                         height: 150,
-  //                         width: Get.width,
-  //                         boxFit: BoxFit.fitHeight,
-  //                         margin: EdgeInsets.only(bottom: 20),
-  //                       ),
-  //                       TextComponent(
-  //                         value: subtitle,
-  //                         textAlign: TextAlign.center,
-  //                       ),
-  //                       if (children != null) ...children,
-  //                       const SizedBox(height: 20),
-  //                     ],
-  //                   ),
-  //                 ],
-  //               ),
-  //             ],
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextComponent(
+                      value:
+                          title ??
+                          (notifType == NotifType.success
+                              ? "success".tr
+                              : "error".tr),
+                      fontWeight: FontWeight.w600,
+                      fontSize: FontSizes.h6,
+                      margin: EdgeInsets.only(right: 10),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(bottom: 10),
+                      height: 40,
+                      child: GestureDetector(
+                        onTap: () => Get.back(result: false),
+                        child: Container(
+                          padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            color: Get.context?.text.withValues(alpha: 0.06),
+                          ),
+                          child: Icon(Icons.close, size: 30),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                ListView(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  shrinkWrap: true,
+                  physics: ClampingScrollPhysics(),
+                  children: [
+                    Column(
+                      children: [
+                        ImageComponent(
+                          localUrl: notifType == NotifType.warning
+                              ? "assets/images/error.png"
+                              : "assets/images/success.png",
+                          height: 150,
+                          width: Get.width,
+                          boxFit: BoxFit.fitHeight,
+                          margin: EdgeInsets.only(bottom: 20),
+                        ),
+                        TextComponent(
+                          value: subtitle,
+                          textAlign: TextAlign.center,
+                        ),
+                        if (children != null) ...children,
+                        const SizedBox(height: 20),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 
   static Future<bool?> confirmationBottomSheet({
     required List<Widget> children,

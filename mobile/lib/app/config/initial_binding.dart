@@ -74,10 +74,10 @@ class InitialBinding extends Bindings {
     // Wait a bit then trigger full auth initialization
     Future.delayed(Duration(milliseconds: 100), () {
       try {
-        if (Get.isRegistered<AuthService>()) {
-          final authService = Get.find<AuthService>();
-          authService.completeInitialization(); // New method we'll add
-        }
+        // if (Get.isRegistered<AuthService>()) {
+        // final authService = Get.find<AuthService>();
+        //   authService.completeInitialization(); // New method we'll add
+        // }
       } catch (e) {
         developer.log(
           'Error triggering auth full init: $e',

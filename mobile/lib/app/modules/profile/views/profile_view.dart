@@ -8,7 +8,7 @@ import 'package:salonku/app/common/radiuses.dart';
 import 'package:salonku/app/components/buttons/button_component.dart';
 import 'package:salonku/app/components/images/image_component.dart';
 import 'package:salonku/app/components/texts/text_component.dart';
-import 'package:salonku/app/core/base/theme_controller.dart';
+import 'package:salonku/app/core/controllers/theme_controller.dart';
 
 import 'package:salonku/app/extension/theme_extension.dart';
 
@@ -21,7 +21,7 @@ class ProfileView extends GetView<ProfileController> {
     return Scaffold(
       body: SafeArea(
         child: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.fromLTRB(20, 0, 20, 80),
           shrinkWrap: true,
           physics: ClampingScrollPhysics(),
           children: [

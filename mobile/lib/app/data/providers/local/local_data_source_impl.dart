@@ -59,7 +59,7 @@ class LocalDataSourceImpl extends LocalDataSource {
   @override
   bool getIsShowOnboarding() {
     final isShowOnboarding = _box.read(StorageKey.cachedIsShowOnboardingKey);
-    return isShowOnboarding ?? false;
+    return isShowOnboarding ?? true;
   }
 
   @override
