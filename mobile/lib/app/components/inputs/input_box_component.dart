@@ -51,6 +51,7 @@ class InputBoxComponent extends StatelessWidget {
               children: [
                 TextComponent(
                   value: label ?? '-',
+                  fontColor: labelColor,
                   fontSize: FontSizes.h6,
                   fontWeight: FontWeights.semiBold,
                 ),

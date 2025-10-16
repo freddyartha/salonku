@@ -161,7 +161,7 @@ class _InputTextState extends State<InputTextComponent> {
   @override
   Widget build(BuildContext context) {
     final decoration = InputDecoration(
-      contentPadding: const EdgeInsets.all(10),
+      contentPadding: const EdgeInsets.all(15),
       filled: true,
       fillColor: context.accent2.withValues(alpha: widget.editable ? .03 : .1),
       hintText: widget.placeHolder,
@@ -169,18 +169,18 @@ class _InputTextState extends State<InputTextComponent> {
       isDense: true,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.all(
-          widget.borderRadius ?? Radius.circular(Radiuses.regular),
+          widget.borderRadius ?? Radius.circular(Radiuses.large),
         ),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.all(
-          widget.borderRadius ?? Radius.circular(Radiuses.regular),
+          widget.borderRadius ?? Radius.circular(Radiuses.large),
         ),
         borderSide: BorderSide(color: context.contrast, width: .1),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.all(
-          widget.borderRadius ?? Radius.circular(Radiuses.regular),
+          widget.borderRadius ?? Radius.circular(Radiuses.large),
         ),
         borderSide: BorderSide(
           color: context.contrast,
@@ -203,7 +203,7 @@ class _InputTextState extends State<InputTextComponent> {
                     ? Icons.visibility_off
                     : Icons.visibility,
                 color: context.text.withValues(alpha: 0.6),
-                size: 14,
+                size: 15,
               ),
             )
           : widget.suffixIcon,
@@ -224,7 +224,7 @@ class _InputTextState extends State<InputTextComponent> {
       onSaved: widget.controller.onSaved,
       onTap: widget.controller.onTap,
       onFieldSubmitted: widget.controller.onFieldSubmitted,
-      style: TextStyle(color: context.text.withValues(alpha: 0.6)),
+      style: TextStyle(color: context.text),
       inputFormatters:
           widget.controller.type == InputTextType.number ||
               widget.controller.type == InputTextType.ktp ||

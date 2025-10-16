@@ -438,11 +438,14 @@ class ReusableWidgets {
                       children: [
                         ImageComponent(
                           localUrl: notifType == NotifType.warning
-                              ? "assets/images/error.png"
-                              : "assets/images/success.png",
+                              ? "assets/images/png/error.png"
+                              : "assets/images/png/success.png",
                           height: 150,
                           width: Get.width,
                           boxFit: BoxFit.fitHeight,
+                          color: notifType == NotifType.warning
+                              ? AppColors.danger
+                              : AppColors.info,
                           margin: EdgeInsets.only(bottom: 20),
                         ),
                         TextComponent(

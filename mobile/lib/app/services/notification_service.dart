@@ -7,7 +7,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:salonku/app/data/models/notification_model.dart';
-import 'package:salonku/app/services/auth_service.dart';
 
 Future<void> handleNotificationRouting(String? payload) async {
   if (payload == null || payload.isEmpty) return;
@@ -168,7 +167,6 @@ class NotificationService extends GetxService {
       await _localNotifications?.cancel(
         launchDetails?.notificationResponse?.id ?? 0,
       );
-      Get.find<AuthService>().checkLoginStatus();
     }
   }
 

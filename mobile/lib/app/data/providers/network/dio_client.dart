@@ -31,7 +31,7 @@ class DioClient {
 
     // Add interceptors
     dio.interceptors.addAll([
-      AuthInterceptor(dio),
+      AuthInterceptor(),
       if (EnvironmentConfig.enableLogging) _createLoggingInterceptor(),
     ]);
 

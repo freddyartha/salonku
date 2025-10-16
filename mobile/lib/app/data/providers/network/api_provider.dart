@@ -3,13 +3,13 @@ import 'dart:developer' as developer;
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:get/get.dart' hide Response, MultipartFile, FormData;
+import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:get/get.dart' hide Response, MultipartFile, FormData;
 
 import '../../../config/environment.dart';
 import '../../../core/constants/api_constants.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/device/device_info.dart';
-import '../local/local_data_source.dart';
 import 'dio_client.dart';
 
 abstract class ApiProvider {
@@ -18,14 +18,13 @@ abstract class ApiProvider {
   // ===== HEADER GETTERS =====
 
   /// Get Authorization headers (Bearer token)
-  Map<String, String> get authHeaders {
+  Future<Map<String, String>> getAuthHeaders() async {
     try {
-      if (Get.isRegistered<LocalDataSource>()) {
-        final token = Get.find<LocalDataSource>().getAccessToken();
-        if (token.isNotEmpty && token.isNotEmpty) {
-          print(token);
-          return {ApiConstants.headerAuthorization: 'Bearer $token'};
-        }
+      final user = FirebaseAuth.instance.currentUser;
+      final token = await user?.getIdToken();
+
+      if (token != null && token.isNotEmpty) {
+        return {ApiConstants.headerAuthorization: 'Bearer $token'};
       }
     } catch (e) {
       developer.log('Error getting auth headers: $e', name: 'API_PROVIDER');
@@ -487,7 +486,8 @@ abstract class ApiProvider {
 
     // Add auth headers if required
     if (requiresAuth) {
-      headers.addAll(authHeaders);
+      var result = await getAuthHeaders();
+      headers.addAll(result);
     }
 
     // Add custom headers (override existing)

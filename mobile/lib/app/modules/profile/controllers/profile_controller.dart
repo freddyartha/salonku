@@ -1,8 +1,10 @@
 import 'package:get/get.dart';
+import 'package:salonku/app/core/controllers/auth_controller.dart';
 
 import 'package:salonku/app/models/menu_item_model.dart';
 
 class ProfileController extends GetxController {
+  final authCon = AuthController.instance;
   final List<MenuItemModel> settingAccountList = [];
 
   @override
@@ -12,7 +14,7 @@ class ProfileController extends GetxController {
         id: 1,
         title: "sign_out",
         imageLocation: "assets/images/png/sign_out.png",
-        onTab: () {},
+        onTab: () async => authCon.signOut(),
       ),
       MenuItemModel(
         id: 1,

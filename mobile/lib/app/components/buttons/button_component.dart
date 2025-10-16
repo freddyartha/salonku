@@ -37,8 +37,8 @@ class ButtonComponent extends StatefulWidget {
     this.width,
     this.isMultilineText = false,
     this.icon,
-    this.isSvg = true,
-    this.borderRadius = Radiuses.regular,
+    this.isSvg = false,
+    this.borderRadius = Radiuses.large,
     this.padding,
     this.margin,
     this.iconSize,
@@ -88,19 +88,21 @@ class _ButtonComponentState extends State<ButtonComponent> {
               widget.leading!,
               SizedBox(width: 5),
             ],
-            Flexible(
-              flex: widget.isMultilineText ? 1 : 0,
-              child: TextComponent(
-                value: widget.text,
-                fontColor: widget.textColor ?? AppColors.darkText,
-                fontSize: widget.fontSize,
-                fontWeight: widget.fontWeight,
-                textAlign: TextAlign.center,
-                margin: widget.icon != null
-                    ? const EdgeInsets.only(left: 10)
-                    : EdgeInsets.zero,
+            if (widget.text.isNotEmpty) ...[
+              Flexible(
+                flex: widget.isMultilineText ? 1 : 0,
+                child: TextComponent(
+                  value: widget.text,
+                  fontColor: widget.textColor ?? AppColors.darkText,
+                  fontSize: widget.fontSize,
+                  fontWeight: widget.fontWeight,
+                  textAlign: TextAlign.center,
+                  margin: widget.icon != null
+                      ? const EdgeInsets.only(left: 10)
+                      : EdgeInsets.zero,
+                ),
               ),
-            ),
+            ],
             if (widget.trailing != null) ...[
               SizedBox(width: 5),
               widget.trailing!,

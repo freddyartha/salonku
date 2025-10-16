@@ -9,14 +9,14 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:salonku/app/components/widgets/reusable_widgets.dart';
+import 'package:salonku/app/core/base/base_controller.dart';
 import 'package:salonku/app/data/providers/local/local_data_source.dart';
+import 'package:salonku/app/data/repositories/contract/user_salon_repository_contract.dart';
 import 'package:salonku/app/routes/app_pages.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
-class AuthController extends GetxController {
-  static AuthController instance = Get.isRegistered<AuthController>()
-      ? Get.find<AuthController>()
-      : Get.put(AuthController());
+class AuthController extends BaseController {
+  static AuthController instance = Get.find();
 
   final box = GetStorage();
   final _auth = FirebaseAuth.instance;
@@ -25,6 +25,10 @@ class AuthController extends GetxController {
 
   late Rx<User?> firebaseUser;
   String? notificationToken;
+
+  final UserSalonRepositoryContract _userSalonRepositoryContract;
+  final LocalDataSource _localDataSource;
+  AuthController(this._userSalonRepositoryContract, this._localDataSource);
 
   @override
   void onInit() async {
@@ -45,11 +49,28 @@ class AuthController extends GetxController {
     } else {
       if (user != null) {
         await requestNotificationPermission();
-        Get.offAllNamed(Routes.BASE);
+        await _getUserSalon(user.uid);
       } else {
         Get.offAllNamed(Routes.LOGIN);
       }
     }
+  }
+
+  Future<void> _getUserSalon(String userFirebaseId) async {
+    await handleRequest(
+      () => _userSalonRepositoryContract.getUserSalonByFirebaseId(
+        userFirebaseId: userFirebaseId,
+      ),
+      onSuccess: (res) {
+        _localDataSource.cacheUser(res);
+        Get.offAllNamed(Routes.BASE);
+      },
+      showErrorSnackbar: false,
+      onError: () {
+        Get.offAllNamed(Routes.REGISTER);
+        ReusableWidgets.notifBottomSheet(subtitle: error.value?.message ?? "");
+      },
+    );
   }
 
   Future<bool> requestNotificationPermission() async {
@@ -77,9 +98,13 @@ class AuthController extends GetxController {
     await EasyLoading.show();
     try {
       var r = await _signInWithCredentialGoogle(isLinkingUser);
-      box.write('apple_login', null);
+      _localDataSource.cacheIsLoginApple(false);
       if (r == null) {
         await EasyLoading.dismiss();
+      }
+    } on GoogleSignInException catch (e) {
+      if (e.code != GoogleSignInExceptionCode.canceled) {
+        ReusableWidgets.notifBottomSheet(subtitle: e.description ?? "");
       }
     } catch (e) {
       ReusableWidgets.notifBottomSheet(subtitle: e.toString());
@@ -90,12 +115,11 @@ class AuthController extends GetxController {
   Future<UserCredential?> _signInWithCredentialGoogle(
     bool isLinkingUser,
   ) async {
-    _googleSignIn.initialize();
+    await _googleSignIn.initialize();
     final googleSignInAccount = await _googleSignIn.authenticate();
     GoogleSignInAuthentication googleSignInAuthentication =
         googleSignInAccount.authentication;
     AuthCredential credential = GoogleAuthProvider.credential(
-      // accessToken: googleSignInAuthentication,
       idToken: googleSignInAuthentication.idToken,
     );
 
@@ -193,11 +217,48 @@ class AuthController extends GetxController {
     await EasyLoading.show();
     try {
       await _signInWithCredentialApple(isLinkingUser);
-      box.write('apple_login', true);
+      _localDataSource.cacheIsLoginApple(true);
     } on SignInWithAppleAuthorizationException catch (e) {
       if (e.code != AuthorizationErrorCode.canceled) {
         ReusableWidgets.notifBottomSheet(subtitle: e.message);
       }
+      await EasyLoading.dismiss();
+    }
+  }
+
+  Future<void> signUpWithPassword(String email, String pass) async {
+    if (EasyLoading.isShow) await EasyLoading.dismiss();
+    await EasyLoading.show();
+
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: pass,
+      );
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case 'email-already-in-use':
+          ReusableWidgets.notifBottomSheet(
+            subtitle:
+                "Email sudah digunakan. Silakan gunakan email lain atau coba login.",
+          );
+          break;
+        case 'invalid-email':
+          ReusableWidgets.notifBottomSheet(
+            subtitle: "Format email tidak valid. Silakan periksa kembali.",
+          );
+          break;
+        default:
+          ReusableWidgets.notifBottomSheet(
+            subtitle: "Ada kendala, silakan coba beberapa saat lagi.",
+          );
+          break;
+      }
+    } catch (e) {
+      ReusableWidgets.notifBottomSheet(
+        subtitle: "Ada kendala, silakan coba beberapa saat lagi.",
+      );
+    } finally {
       await EasyLoading.dismiss();
     }
   }
@@ -208,6 +269,7 @@ class AuthController extends GetxController {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: pass);
     } catch (e) {
+      print(e.toString());
       if (e.toString().toLowerCase().contains("no user record") ||
           e.toString().toLowerCase().contains("malformed")) {
         ReusableWidgets.notifBottomSheet(subtitle: "wrong_credential".tr);
@@ -234,7 +296,7 @@ class AuthController extends GetxController {
     UserCredential? userCredential;
     try {
       //jangan lupa tambahkan delete notif tokennya
-      if (box.read('apple_login') == true) {
+      if (_localDataSource.getIsLoginApple() == true) {
         userCredential = await _signInWithCredentialApple(false);
       } else {
         userCredential = await _signInWithCredentialGoogle(false);

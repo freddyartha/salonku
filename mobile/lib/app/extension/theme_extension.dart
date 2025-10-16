@@ -17,9 +17,9 @@ extension ThemeContextExtension on BuildContext {
   bool get isLight => brightness == Brightness.light;
 
   /// Warna
-  Color get primary => color.primary;
+  Color get primary => theme.scaffoldBackgroundColor;
   Color get accent => color.secondary;
   Color get accent2 => color.surface;
-  Color get contrast => color.surfaceBright;
+  Color get contrast => color.primary;
   Color get text => color.onSurface;
 }
