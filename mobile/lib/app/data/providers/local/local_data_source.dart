@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:salonku/app/data/models/user_model.dart';
+import 'package:salonku/app/models/user_model.dart';
 
 abstract class LocalDataSource extends GetxService {
   //getter

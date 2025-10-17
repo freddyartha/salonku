@@ -61,8 +61,7 @@ class LoginView extends GetView<LoginController> {
                           textAlign: TextAlign.center,
                         ),
                         TextComponent(
-                          value:
-                              "Masuk dulu untuk menikmati semua fitur-fitur aplikasi SalonKU",
+                          value: "login_prompt".tr,
                           textAlign: TextAlign.center,
                           margin: EdgeInsetsGeometry.symmetric(vertical: 20),
                         ),
@@ -110,7 +109,7 @@ class LoginView extends GetView<LoginController> {
                                   thickness: 1.5,
                                 ),
                               ),
-                              TextComponent(value: "Atau"),
+                              TextComponent(value: "or".tr),
                               Expanded(
                                 child: Divider(
                                   color: context.text,
@@ -141,7 +140,7 @@ class LoginView extends GetView<LoginController> {
                         ButtonComponent(
                           onTap: controller.emailRegister,
                           buttonColor: context.contrast,
-                          text: "Daftarkan Akun",
+                          text: "register".tr,
                           fontWeight: FontWeights.semiBold,
                           margin: EdgeInsets.only(bottom: 15),
                         ),
@@ -150,7 +149,7 @@ class LoginView extends GetView<LoginController> {
                         ButtonComponent(
                           onTap: controller.emailLogin,
                           buttonColor: context.contrast,
-                          text: "Masuk",
+                          text: "sign_in".tr,
                           fontWeight: FontWeights.semiBold,
                           margin: EdgeInsets.only(bottom: 15),
                         ),
@@ -159,11 +158,9 @@ class LoginView extends GetView<LoginController> {
                         onTap: controller.isRegisterEmail.toggle,
                         child: Row(
                           children: [
+                            TextComponent(value: "no_account_email".tr),
                             TextComponent(
-                              value: "Belum punya akun berdasarkan email? ",
-                            ),
-                            TextComponent(
-                              value: "Daftar",
+                              value: "sign_up".tr,
                               fontColor: AppColors.info,
                             ),
                           ],

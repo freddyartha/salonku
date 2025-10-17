@@ -1,6 +1,6 @@
 import 'package:get_storage/get_storage.dart';
 import 'package:salonku/app/core/constants/storage_key.dart';
-import 'package:salonku/app/data/models/user_model.dart';
+import 'package:salonku/app/models/user_model.dart';
 
 import 'local_data_source.dart';
 

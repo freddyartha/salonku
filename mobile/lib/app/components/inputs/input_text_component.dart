@@ -163,7 +163,7 @@ class _InputTextState extends State<InputTextComponent> {
     final decoration = InputDecoration(
       contentPadding: const EdgeInsets.all(15),
       filled: true,
-      fillColor: context.accent2.withValues(alpha: widget.editable ? .03 : .1),
+      fillColor: context.accent2.withValues(alpha: widget.editable ? .2 : .5),
       hintText: widget.placeHolder,
       hintStyle: const TextStyle(fontSize: FontSizes.normal),
       isDense: true,

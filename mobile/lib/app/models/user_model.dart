@@ -3,6 +3,8 @@ import 'package:salonku/app/common/input_formatter.dart';
 
 String userModelToJson(UserModel data) => json.encode(data.toJson());
 
+UserModel userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
+
 class UserModel {
   int id;
   int? idSalon;
@@ -16,7 +18,7 @@ class UserModel {
   DateTime tanggalLahir;
   String alamat;
   String? avatarUrl;
-  DateTime createdAt;
+  DateTime? createdAt;
   DateTime? updatedAt;
 
   UserModel({
@@ -32,7 +34,7 @@ class UserModel {
     required this.tanggalLahir,
     required this.alamat,
     this.avatarUrl,
-    required this.createdAt,
+    this.createdAt,
     this.updatedAt,
   });
 
@@ -74,9 +76,10 @@ class UserModel {
     'phone': phone,
     'nik': nik,
     'jenis_kelamin': jenisKelamin,
-    'tangal_lahir': tanggalLahir,
+    'tangal_lahir': tanggalLahir.toIso8601String(),
     'alamat': alamat,
-    'created_at': createdAt,
-    'updated_at': updatedAt,
+    'avatar_url': avatarUrl,
+    'created_at': createdAt?.toIso8601String(),
+    'updated_at': updatedAt?.toIso8601String(),
   };
 }

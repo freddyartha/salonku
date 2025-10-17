@@ -49,7 +49,7 @@ void main() async {
       init: ThemeController(),
       builder: (themeController) {
         return GetMaterialApp(
-          title: "SalonKu",
+          title: "app_name".tr,
           theme: AppThemes.lightTheme,
           darkTheme: AppThemes.darkTheme,
           themeMode: themeController.themeMode.value,

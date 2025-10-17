@@ -9,6 +9,7 @@ class InputBoxComponent extends StatelessWidget {
   final String? label;
   final double? marginBottom;
   final String? childText;
+  final String? placeHolder;
   final Widget? children;
   final Widget? childrenSizeBox;
   final GestureTapCallback? onTap;
@@ -26,6 +27,7 @@ class InputBoxComponent extends StatelessWidget {
     this.label,
     this.marginBottom,
     this.childText,
+    this.placeHolder,
     this.onTap,
     this.children,
     this.childrenSizeBox,
@@ -81,16 +83,16 @@ class InputBoxComponent extends StatelessWidget {
                     borderRadius: BorderRadius.circular(
                       borderRadius == null ? 15 : borderRadius!.x,
                     ),
-                    color: context.text.withValues(
-                      alpha: editable == true ? .1 : .7,
+                    color: context.accent2.withValues(
+                      alpha: editable == true ? .2 : .5,
                     ),
                     border: errorMessage != null
                         ? Border.all(
                             color: AppColors.danger.withValues(alpha: .5),
                           )
                         : Border.all(
-                            color: context.text.withValues(
-                              alpha: editable == true ? .1 : .3,
+                            color: context.contrast.withValues(
+                              alpha: editable == true ? .2 : .5,
                             ),
                           ),
                   ),
@@ -107,7 +109,10 @@ class InputBoxComponent extends StatelessWidget {
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: TextComponent(
-                                  value: childText ?? '',
+                                  value:
+                                      placeHolder != null && childText != null
+                                      ? childText
+                                      : placeHolder,
                                   fontSize: FontSizes.normal,
                                   fontColor: context.text,
                                 ),

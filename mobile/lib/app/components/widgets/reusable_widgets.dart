@@ -14,7 +14,7 @@ enum NotifType { success, warning }
 class ReusableWidgets {
   static PreferredSizeWidget generalAppBarWidget({
     required String title,
-    required Color textColor,
+    Color? textColor,
     Widget? leading,
     List<Widget>? actions,
   }) {
@@ -23,7 +23,7 @@ class ReusableWidgets {
       title: TextComponent(
         value: title,
         fontWeight: FontWeight.w600,
-        fontColor: textColor,
+        fontColor: textColor ?? Get.context?.text,
         fontSize: FontSizes.h5,
       ),
       elevation: 0,
@@ -440,7 +440,7 @@ class ReusableWidgets {
                           localUrl: notifType == NotifType.warning
                               ? "assets/images/png/error.png"
                               : "assets/images/png/success.png",
-                          height: 150,
+                          height: 80,
                           width: Get.width,
                           boxFit: BoxFit.fitHeight,
                           color: notifType == NotifType.warning
@@ -505,13 +505,14 @@ class ReusableWidgets {
                     Container(
                       margin: EdgeInsets.only(bottom: 10),
                       height: 40,
+
                       child: GestureDetector(
                         onTap: () => Get.back(result: false),
                         child: Container(
                           padding: EdgeInsets.all(5),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(100),
-                            color: Get.context?.text,
+                            color: Get.context?.accent2,
                           ),
                           child: Icon(Icons.close, size: 30),
                         ),

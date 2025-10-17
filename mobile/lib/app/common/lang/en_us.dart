@@ -4,4 +4,33 @@ const Map<String, String> enUS = {
   "change_mode": "Theme",
   "sign_out": "Sign Out",
   "delete_account": "Delete Account",
+  "ok": "OK",
+  "yes": "Yes",
+  "cancel": "Cancel",
+  "save": "Save",
+  "success": "Success",
+  "error": "An Error Occurred",
+  "edit": "Edit",
+  "delete": "Delete",
+  "wrong_credential":
+      "Oops! Looks like you don't have an account yet, or there might be a mistake in your email or password. Please double-check!",
+  "email_in_use":
+      "This email is already in use. Please use another email or try logging in",
+  "email_invalid": "Invalid email format. Please check again",
+  "terjadi_kendala": "An error occurred. Please try again later",
+  "apple_private_email":
+      "Cannot link account because your Apple email is private.",
+  "account_linked_other_user":
+      "The account you selected is already linked to anothe user",
+  "different_email_link_error": "Cannot link account with a different email",
+  "link_error_general": "An error occurred while linking your account",
+  "login_prompt": "Log in first to enjoy all the features of the SalonKU app",
+  "or": "Or",
+  "register": "Register Account",
+  "sign_in": "Sign In",
+  "no_account_email": "Don't have an account associated with this email? ",
+  "sign_up": "Sign Up",
+  "owner": "Salon Owner",
+  "staff": "Salon Staff",
+  "select_date": "Select Date",
 };

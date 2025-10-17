@@ -28,35 +28,4 @@ class ThemeController extends GetxController {
     Get.changeThemeMode(themeMode.value);
     _box.write(StorageKey.cachedThemeKey, themeMode.value.name);
   }
-
-  // // AppColorsModel getAppColors(BuildContext context) {
-  // AppColorsModel getAppColors() {
-  //   final brightness = MediaQuery.of(Get.context!).platformBrightness;
-  //   AppColorsModel lightColors = AppColorsModel(
-  //     primary: AppColors.lightPrimary,
-  //     accent: AppColors.lightAccent,
-  //     accent2: AppColors.lightAccent2,
-  //     contrast: AppColors.lightContrast,
-  //     text: AppColors.lightText,
-  //   );
-  //   AppColorsModel darkColors = AppColorsModel(
-  //     primary: AppColors.darkPrimary,
-  //     accent: AppColors.darkAccent,
-  //     accent2: AppColors.darkAccent2,
-  //     contrast: AppColors.darkContrast,
-  //     text: AppColors.darkText,
-  //   );
-
-  //   if (themeMode.value == ThemeMode.system) {
-  //     if (brightness == Brightness.dark) {
-  //       return darkColors;
-  //     } else {
-  //       return lightColors;
-  //     }
-  //   } else if (themeMode.value == ThemeMode.dark) {
-  //     return darkColors;
-  //   } else {
-  //     return lightColors;
-  //   }
-  // }
 }

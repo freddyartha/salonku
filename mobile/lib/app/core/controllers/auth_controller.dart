@@ -67,8 +67,14 @@ class AuthController extends BaseController {
       },
       showErrorSnackbar: false,
       onError: () {
-        Get.offAllNamed(Routes.REGISTER);
-        ReusableWidgets.notifBottomSheet(subtitle: error.value?.message ?? "");
+        if (error.value?.statusCode == 403) {
+          Get.offAllNamed(Routes.REGISTER);
+        } else {
+          Get.offAllNamed(Routes.LOGIN);
+          ReusableWidgets.notifBottomSheet(
+            subtitle: error.value?.message ?? "",
+          );
+        }
       },
     );
   }
@@ -136,10 +142,7 @@ class AuthController extends BaseController {
     if (user != null) {
       if (user.email.toString().endsWith("privaterelay.appleid.com")) {
         if (EasyLoading.isShow) await EasyLoading.dismiss();
-        ReusableWidgets.notifBottomSheet(
-          subtitle:
-              "Tidak dapat menautkan akun karena email Apple bersifat privat",
-        );
+        ReusableWidgets.notifBottomSheet(subtitle: "apple_private_email".tr);
       } else {
         try {
           await user.linkWithCredential(credential);
@@ -152,19 +155,16 @@ class AuthController extends BaseController {
               )) {
             await _googleSignIn.disconnect();
             ReusableWidgets.notifBottomSheet(
-              subtitle:
-                  "Akun yang anda pilih sudah terhubung dengan pengguna lain",
+              subtitle: "account_linked_other_user".tr,
             );
           } else if (e.toString().toLowerCase().contains(
             "do not correspond to the previously signed in user",
           )) {
             ReusableWidgets.notifBottomSheet(
-              subtitle: "Tidak dapat menautkan akun dengan email yang berbeda",
+              subtitle: "different_email_link_error".tr,
             );
           } else {
-            ReusableWidgets.notifBottomSheet(
-              subtitle: "Terjadi kesalahan saat menautkan akun anda",
-            );
+            ReusableWidgets.notifBottomSheet(subtitle: "link_error_general".tr);
           }
         }
       }
@@ -238,26 +238,14 @@ class AuthController extends BaseController {
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case 'email-already-in-use':
-          ReusableWidgets.notifBottomSheet(
-            subtitle:
-                "Email sudah digunakan. Silakan gunakan email lain atau coba login.",
-          );
+          ReusableWidgets.notifBottomSheet(subtitle: "email_in_use".tr);
           break;
         case 'invalid-email':
-          ReusableWidgets.notifBottomSheet(
-            subtitle: "Format email tidak valid. Silakan periksa kembali.",
-          );
-          break;
-        default:
-          ReusableWidgets.notifBottomSheet(
-            subtitle: "Ada kendala, silakan coba beberapa saat lagi.",
-          );
+          ReusableWidgets.notifBottomSheet(subtitle: "email_invalid".tr);
           break;
       }
     } catch (e) {
-      ReusableWidgets.notifBottomSheet(
-        subtitle: "Ada kendala, silakan coba beberapa saat lagi.",
-      );
+      ReusableWidgets.notifBottomSheet(subtitle: "terjadi_kendala".tr);
     } finally {
       await EasyLoading.dismiss();
     }
@@ -269,7 +257,6 @@ class AuthController extends BaseController {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: pass);
     } catch (e) {
-      print(e.toString());
       if (e.toString().toLowerCase().contains("no user record") ||
           e.toString().toLowerCase().contains("malformed")) {
         ReusableWidgets.notifBottomSheet(subtitle: "wrong_credential".tr);

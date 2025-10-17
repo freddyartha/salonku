@@ -27,7 +27,7 @@ class ImageComponent extends StatefulWidget {
     this.boxFit = BoxFit.contain,
     this.margin = const EdgeInsets.all(0),
     this.padding = const EdgeInsets.all(0),
-    this.errorImage = "assets/images/error_image.png",
+    this.errorImage = "assets/images/png/error_image.png",
     this.zoomable = false,
     this.color,
   });

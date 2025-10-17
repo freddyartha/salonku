@@ -36,6 +36,7 @@ class BaseApiService extends GetxService {
 
       return Error(
         _getErrorMessage(exception),
+        statusCode: e.response?.statusCode,
         errors: _getErrorDetail(exception),
       );
     } catch (e) {
@@ -68,7 +69,11 @@ class BaseApiService extends GetxService {
           if (result is Success<T>) {
             results.add(result.data);
           } else if (result is Error<T>) {
-            return Error(result.message, errors: result.errors);
+            return Error(
+              result.message,
+              statusCode: result.statusCode,
+              errors: result.errors,
+            );
           }
         }
       } else {
@@ -85,7 +90,11 @@ class BaseApiService extends GetxService {
           if (response is Success<T>) {
             results.add(response.data);
           } else if (response is Error<T>) {
-            return Error(response.message, errors: response.errors);
+            return Error(
+              response.message,
+              statusCode: response.statusCode,
+              errors: response.errors,
+            );
           }
         }
       }

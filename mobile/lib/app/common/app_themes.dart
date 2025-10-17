@@ -15,7 +15,7 @@ class AppThemes {
     ),
     scaffoldBackgroundColor: AppColors.lightPrimary,
     appBarTheme: const AppBarTheme(
-      backgroundColor: AppColors.lightPrimary,
+      backgroundColor: AppColors.lightAccent,
       foregroundColor: AppColors.lightText,
       elevation: 0,
     ),
@@ -36,7 +36,7 @@ class AppThemes {
     ),
     scaffoldBackgroundColor: AppColors.darkPrimary,
     appBarTheme: const AppBarTheme(
-      backgroundColor: AppColors.darkPrimary,
+      backgroundColor: AppColors.darkAccent,
       foregroundColor: AppColors.darkText,
       elevation: 0,
     ),

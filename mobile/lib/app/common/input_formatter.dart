@@ -1,24 +1,22 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:salonku/app/common/lang/translation_service.dart';
 
 class InputFormatter {
   static String displayDate(
     DateTime? date, {
     bool mini = false,
-    bool britishDateFormat = false,
     bool showDayName = false,
-    bool withTime = false,
   }) {
     if (date == null) return "-";
     String format = "dd MMMM yyyy";
 
     if (mini) format = "dd MMM yyyy";
-    if (britishDateFormat) format = "dd/MM/yyyy";
     if (showDayName) format = "EEEE, $format";
-    if (withTime) format = "$format HH:mm:ss";
 
-    var dateFormat = DateFormat(format);
-    return dateFormat.format(date.toLocal());
+    var dateFormat = DateFormat(format, TranslationService.locale.languageCode);
+    return dateFormat.format(date);
   }
 
   static String displayDateRange(
@@ -66,8 +64,9 @@ class InputFormatter {
     bool millisecond = true,
   }) {
     if (time == null) return null;
-    var hour =
-        twentyFour ? time.hour : (time.hour > 12 ? time.hour - 12 : time.hour);
+    var hour = twentyFour
+        ? time.hour
+        : (time.hour > 12 ? time.hour - 12 : time.hour);
     if (hour == 0) {
       hour = 12;
     }
@@ -88,8 +87,9 @@ class InputFormatter {
 
   static String displayTime(TimeOfDay? time, {bool twentyFour = true}) {
     if (time == null) return "-";
-    var hour =
-        twentyFour ? time.hour : (time.hour > 12 ? time.hour - 12 : time.hour);
+    var hour = twentyFour
+        ? time.hour
+        : (time.hour > 12 ? time.hour - 12 : time.hour);
     if (hour == 0 && !twentyFour) {
       hour = 12;
     }
@@ -109,6 +109,20 @@ class InputFormatter {
     }
   }
 
+  static Timestamp? stringToTimestamp(String? stringDate) {
+    if (stringDate == null) return null;
+    try {
+      var dateValue = stringToDateTime(stringDate);
+      if (dateValue != null) {
+        return Timestamp.fromDate(dateValue);
+      } else {
+        return null;
+      }
+    } catch (ex) {
+      return null;
+    }
+  }
+
   static TimeOfDay? stringToTime(String? time) {
     if (time == null) return null;
     final add = time.indexOf("PM") > 0 ? 12 : 0;
@@ -119,15 +133,36 @@ class InputFormatter {
     return r;
   }
 
+  static Timestamp? timeOfDayToTimestamp(TimeOfDay? time) {
+    if (time == null) return null;
+    final now = DateTime.now();
+
+    final dateTime = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      time.hour,
+      time.minute,
+    );
+
+    return Timestamp.fromDate(dateTime);
+  }
+
   static String toCurrency(double? value) {
     if (value == null) return "";
-    var numberFormat = NumberFormat('#,###');
+    final numberFormat = NumberFormat.currency(
+      locale: TranslationService.locale.languageCode,
+      symbol: '',
+      decimalDigits: 0,
+    );
     return numberFormat.format(value);
   }
 
   static double currencyToDouble(String? value) {
     if (value == null) return 0;
-    value = value.replaceAll(',', '');
+    value = TranslationService.locale == Locale("id", "ID")
+        ? value.replaceAll(".", "")
+        : value.replaceAll(",", "");
     return double.parse(value);
   }
 
@@ -141,8 +176,18 @@ class InputFormatter {
   static DateTime? dynamicToDateTime(dynamic value) {
     if (value == null) return null;
     if (value is DateTime) return value;
-    if (value is String) return stringToDateTime(value);
+    if (value is Timestamp) return value.toDate();
+    if (value is String) return stringToDateTime(value.toString());
     return DateTime.tryParse(value);
+  }
+
+  static Timestamp? dynamicToTimestamp(dynamic value) {
+    // print(value);
+    if (value == null) return null;
+    if (value is Timestamp) return value;
+    if (value is DateTime) return Timestamp.fromDate(value);
+    if (value is String) return stringToTimestamp(value);
+    return null;
   }
 
   static int? dynamicToInt(dynamic value) {
@@ -200,5 +245,52 @@ class InputFormatter {
     }
 
     return value.toString();
+  }
+
+  static String titleToCamelCase(String input) {
+    input = input.trim().toLowerCase();
+    if (!input.contains("_") && !input.contains(" ")) {
+      return input;
+    }
+
+    List<String> parts;
+    if (input.contains("_")) {
+      parts = input.split('_');
+    } else {
+      parts = input.split(' ');
+    }
+
+    return parts.first +
+        parts.skip(1).map((e) => e[0].toUpperCase() + e.substring(1)).join();
+  }
+
+  static int getWeeksInCurrentMonth({DateTime? date}) {
+    final now = date ?? DateTime.now();
+    final firstDay = DateTime(now.year, now.month, 1);
+    final lastDay = DateTime(now.year, now.month + 1, 0);
+
+    int firstWeek = _weekNumber(firstDay);
+    int lastWeek = _weekNumber(lastDay);
+
+    return lastWeek - firstWeek + 1;
+  }
+
+  static int _weekNumber(DateTime date) {
+    final firstDayOfYear = DateTime(date.year, 1, 1);
+    final daysOffset = firstDayOfYear.weekday - 1;
+    final startOfFirstWeek = firstDayOfYear.subtract(
+      Duration(days: daysOffset),
+    );
+    final diff = date.difference(startOfFirstWeek).inDays;
+    return (diff / 7).ceil();
+  }
+
+  static int getWeekOfMonth(DateTime date) {
+    DateTime firstDayOfMonth = DateTime(date.year, date.month, 1);
+
+    int firstWeekday = firstDayOfMonth.weekday;
+    int diff = date.day + firstWeekday - 2;
+
+    return (diff / 7).ceil();
   }
 }

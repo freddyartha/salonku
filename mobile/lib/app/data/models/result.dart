@@ -76,8 +76,9 @@ class Link {
 
 class Error<T> extends Result<T> {
   final String? message;
+  final int? statusCode;
   final Map<String, dynamic>? errors;
-  const Error(this.message, {this.errors});
+  const Error(this.message, {this.statusCode, this.errors});
 }
 
 class Loading<T> extends Result<T> {

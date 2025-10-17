@@ -46,7 +46,11 @@ abstract class BaseRepository {
         if (result is Success<T>) {
           data.add(result.data);
         } else if (result is Error<T>) {
-          return Error(result.message, errors: result.errors);
+          return Error(
+            result.message,
+            statusCode: result.statusCode,
+            errors: result.errors,
+          );
         }
       }
 
