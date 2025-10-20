@@ -1,17 +1,19 @@
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:salonku/app/common/input_formatter.dart';
 import 'package:salonku/app/components/inputs/input_datetime_component.dart';
 import 'package:salonku/app/components/inputs/input_radio_component.dart';
 import 'package:salonku/app/components/inputs/input_text_component.dart';
+import 'package:salonku/app/components/widgets/reusable_widgets.dart';
+import 'package:salonku/app/core/base/base_controller.dart';
+import 'package:salonku/app/core/controllers/auth_controller.dart';
+import 'package:salonku/app/data/repositories/contract/user_salon_repository_contract.dart';
+import 'package:salonku/app/models/user_model.dart';
+import 'package:salonku/app/routes/app_pages.dart';
 
-class RegisterSetupController extends GetxController {
-  bool isOwner =
-      InputFormatter.dynamicToBool(Get.parameters["isOwner"]) ?? false;
-  RxBool isDoneSetupSalon = false.obs;
-
+class RegisterSetupController extends BaseController {
   final namaCon = InputTextController();
   final telpCon = InputTextController(type: InputTextType.phone);
-  final nikCon = InputTextController(type: InputTextType.ktp);
+  final nikCon = InputTextController();
   final jenisKelaminCon = InputRadioController(
     items: [
       RadioButtonItem(text: "Laki-laki", value: "l"),
@@ -21,8 +23,41 @@ class RegisterSetupController extends GetxController {
   final tanggalLahirCon = InputDatetimeController();
   final alamatCon = InputTextController(type: InputTextType.paragraf);
 
-  @override
-  void onInit() {
-    super.onInit();
+  final UserSalonRepositoryContract _userSalonRepositoryContract;
+  RegisterSetupController(this._userSalonRepositoryContract);
+
+  Future<void> registerUser() async {
+    if (!namaCon.isValid) return;
+    if (!telpCon.isValid) return;
+    if (!nikCon.isValid) return;
+    if (!jenisKelaminCon.isValid) return;
+    if (!tanggalLahirCon.isValid) return;
+    if (!alamatCon.isValid) return;
+
+    final model = UserModel(
+      id: 0,
+      idUserFirebase: AuthController.instance.firebaseUser.value?.uid ?? "",
+      level: 1,
+      nama: namaCon.value,
+      email: AuthController.instance.firebaseUser.value?.email ?? "",
+      phone: telpCon.value,
+      nik: nikCon.value,
+      jenisKelamin: jenisKelaminCon.value,
+      tanggalLahir: tanggalLahirCon.value,
+      alamat: alamatCon.value,
+    );
+    EasyLoading.show();
+    await handleRequest(
+      showLoading: true,
+      () => _userSalonRepositoryContract.registerUser(userModelToJson(model)),
+      onSuccess: (res) {
+        Get.toNamed(Routes.REGISTER);
+      },
+      showErrorSnackbar: false,
+      onError: () {
+        ReusableWidgets.notifBottomSheet(subtitle: error.value?.message ?? "");
+      },
+      onFinish: () => EasyLoading.dismiss(),
+    );
   }
 }

@@ -5,4 +5,5 @@ abstract class UserSalonRepositoryContract {
   Future<Result<UserModel>> getUserSalonByFirebaseId({
     required String userFirebaseId,
   });
+  Future<Result<UserModel>> registerUser(Map<String, dynamic> userModel);
 }

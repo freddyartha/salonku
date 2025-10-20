@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Services\UserSalonService;
 use App\Helpers\ApiResponse;
+use App\Http\Requests\UserSalonRequest;
 use App\Http\Resources\UserSalonResource;
+use Illuminate\Http\Request;
 
 class UserSalonController extends Controller
 {
@@ -20,10 +22,17 @@ class UserSalonController extends Controller
     {
         $response = $this->userSalonService->getUserSalonByFirebaseId($id);
 
-        $resource = new UserSalonResource($response);
+        return ApiResponse::success(
+            data: new UserSalonResource($response),
+        );
+    }
+
+    public function registerNewUser(UserSalonRequest $request)
+    {
+        $response = $this->userSalonService->register($request->validated());
 
         return ApiResponse::success(
-            data: $resource,
+            data: new UserSalonResource($response),
         );
     }
 }

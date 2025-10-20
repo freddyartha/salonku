@@ -32,80 +32,83 @@ class RegisterView extends GetView<RegisterController> {
               ),
             ),
           ),
-          ListView(
-            padding: EdgeInsets.only(top: (Get.height * 0.3)),
-            physics: ClampingScrollPhysics(),
-            children: [
-              Container(
-                padding: EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(Radiuses.extraLarge),
-                    topRight: Radius.circular(Radiuses.extraLarge),
+          Obx(
+            () => ListView(
+              padding: EdgeInsets.only(top: (Get.height * 0.3)),
+              physics: ClampingScrollPhysics(),
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(Radiuses.extraLarge),
+                      topRight: Radius.circular(Radiuses.extraLarge),
+                    ),
+                    color: context.accent,
                   ),
-                  color: context.accent,
-                ),
-                child: Column(
-                  children: [
-                    TextComponent(
-                      margin: EdgeInsetsGeometry.only(top: 20),
-                      value:
-                          "Anda belum terdaftar dalam sistem, daftarkan data anda terlebih dahulu",
-                      textAlign: TextAlign.center,
-                    ),
-                    TextComponent(
-                      margin: EdgeInsetsGeometry.only(top: 35, bottom: 15),
-                      value: "Pilih mendaftar sebagai",
-                      textAlign: TextAlign.center,
-                    ),
-                    GridView.count(
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: true,
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 20,
-                      crossAxisSpacing: 20,
-                      physics: NeverScrollableScrollPhysics(),
-                      children: controller.registerTypeList
-                          .map(
-                            (item) => GestureDetector(
-                              onTap: item.onTab,
-                              child: Container(
-                                padding: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  color: context.accent2,
-                                  borderRadius: BorderRadius.circular(
-                                    Radiuses.extraLarge,
-                                  ),
+                  child: Column(
+                    children: [
+                      TextComponent(
+                        margin: EdgeInsetsGeometry.only(top: 20),
+                        value:
+                            "Anda belum terdaftar dalam sistem, daftarkan data anda terlebih dahulu",
+                        textAlign: TextAlign.center,
+                      ),
+                      TextComponent(
+                        margin: EdgeInsetsGeometry.only(top: 35, bottom: 15),
+                        value: "Pilih mendaftar sebagai",
+                        textAlign: TextAlign.center,
+                      ),
+                      GridView.count(
+                        padding: EdgeInsets.zero,
+                        shrinkWrap: true,
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 20,
+                        crossAxisSpacing: 20,
+                        physics: NeverScrollableScrollPhysics(),
+                        children: controller.registerTypeList
+                            .map(
+                              (item) => GestureDetector(
+                                onTap: item.onTab,
+                                child: Container(
+                                  padding: EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    color: context.accent2,
+                                    borderRadius: BorderRadius.circular(
+                                      Radiuses.extraLarge,
+                                    ),
 
-                                  border: Border.all(color: context.contrast),
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  spacing: 5,
-                                  children: [
-                                    ImageComponent(
-                                      localUrl: item.imageLocation,
-                                      height: Get.width * 0.15,
-                                      width: Get.width * 0.15,
-                                      color: context.text,
-                                    ),
-                                    TextComponent(
-                                      value: item.title?.tr,
-                                      fontWeight: FontWeights.semiBold,
-                                      textAlign: TextAlign.center,
-                                      maxLines: 2,
-                                    ),
-                                  ],
+                                    border: Border.all(color: context.contrast),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    spacing: 5,
+                                    children: [
+                                      ImageComponent(
+                                        localUrl: item.imageLocation,
+                                        height: Get.width * 0.15,
+                                        width: Get.width * 0.15,
+                                        color: context.text,
+                                      ),
+                                      TextComponent(
+                                        value: item.title?.tr,
+                                        fontWeight: FontWeights.semiBold,
+                                        textAlign: TextAlign.center,
+                                        maxLines: 2,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          )
-                          .toList(),
-                    ),
-                  ],
+                            )
+                            .toList(),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),

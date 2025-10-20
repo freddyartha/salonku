@@ -12,6 +12,8 @@ import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
+import '../modules/register_salon/bindings/register_salon_binding.dart';
+import '../modules/register_salon/views/register_salon_view.dart';
 import '../modules/register_setup/bindings/register_setup_binding.dart';
 import '../modules/register_setup/views/register_setup_view.dart';
 import '../modules/settings/bindings/settings_binding.dart';
@@ -73,6 +75,11 @@ class AppPages {
       name: _Paths.REGISTER_SETUP,
       page: () => const RegisterSetupView(),
       binding: RegisterSetupBinding(),
+    ),
+    GetPage(
+      name: _Paths.REGISTER_SALON,
+      page: () => const RegisterSalonView(),
+      binding: RegisterSalonBinding(),
     ),
   ];
 }

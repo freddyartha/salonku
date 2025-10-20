@@ -3,11 +3,14 @@ import 'dart:developer' as developer;
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:salonku/app/core/controllers/auth_controller.dart';
+import 'package:salonku/app/data/providers/api/salon_provider.dart';
 import 'package:salonku/app/data/providers/api/user_salon_provider.dart';
 import 'package:salonku/app/data/providers/local/local_data_source.dart';
 import 'package:salonku/app/data/providers/local/local_data_source_impl.dart';
 import 'package:salonku/app/data/providers/network/dio_client.dart';
+import 'package:salonku/app/data/repositories/contract/salon_repository_contract.dart';
 import 'package:salonku/app/data/repositories/contract/user_salon_repository_contract.dart';
+import 'package:salonku/app/data/repositories/implementation/salon_repository_impl.dart';
 import 'package:salonku/app/data/repositories/implementation/user_salon_repository_impl.dart';
 import 'package:salonku/app/services/base_api_service.dart';
 import 'package:salonku/app/services/error_handler_service.dart';
@@ -100,8 +103,7 @@ class InitialBinding extends Bindings {
     );
 
     Get.lazyPut<UserSalonProvider>(() => UserSalonProvider(), fenix: true);
-    // Get.lazyPut<UserProvider>(() => UserProvider(), fenix: true);
-    // Get.lazyPut<OtpProvider>(() => OtpProvider(), fenix: true);
+    Get.lazyPut<SalonProvider>(() => SalonProvider(), fenix: true);
   }
 
   // // ===== PHASE 5: REPOSITORIES (Business Logic) =====
@@ -113,6 +115,7 @@ class InitialBinding extends Bindings {
 
     // Init Repository
     Get.lazyPut<UserSalonRepositoryContract>(() => UserSalonRepositoryImpl());
+    Get.lazyPut<SalonRepositoryContract>(() => SalonRepositoryImpl());
   }
 
   // // ===== PHASE 6: CONTROLLER ( =====

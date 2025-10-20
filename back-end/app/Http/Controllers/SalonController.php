@@ -22,11 +22,10 @@ class SalonController extends Controller
         $response = $this->salonService->getSalonById($id);
 
         $resource = new SalonResource($response);
-        
+
         return ApiResponse::success(
             data: $resource,
         );
-       
     }
 
     //create salon
@@ -34,7 +33,9 @@ class SalonController extends Controller
     {
         $salon = $this->salonService->store($request->validated());
 
-        return new SalonResource($salon);
+        return ApiResponse::success(
+            data: new SalonResource($salon)
+        );
     }
 
     //create salon
@@ -42,6 +43,8 @@ class SalonController extends Controller
     {
         $salon = $this->salonService->update($request->validated(), $id);
 
-        return new SalonResource($salon);
+        return ApiResponse::success(
+            data: new SalonResource($salon)
+        );
     }
 }

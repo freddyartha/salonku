@@ -6,6 +6,7 @@ use App\Http\Controllers\UserSalonController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/test-login', [FirebaseAuthController::class, 'login']);
+Route::post('/user-register', [UserSalonController::class, 'registerNewUser']);
 
 Route::middleware('firebase.auth')->group(function () {
     Route::get('/salon/{id}', [SalonController::class, 'readSalonById']);

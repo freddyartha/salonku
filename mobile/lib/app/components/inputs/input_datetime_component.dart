@@ -52,9 +52,9 @@ class InputDatetimeController {
 
   dynamic get value {
     if (type == InputDatetimeType.date) {
-      return InputFormatter.dynamicToTimestamp(_date);
+      return _date;
     } else if (type == InputDatetimeType.time) {
-      return InputFormatter.timeOfDayToTimestamp(_time);
+      return _time;
     } else {
       return _dateRange;
     }
@@ -119,6 +119,9 @@ class InputDatetimeController {
                     });
                   },
                   availableCalendarFormats: {CalendarFormat.month: 'Month'},
+                  headerStyle: HeaderStyle(
+                    titleTextStyle: TextStyle(color: Get.context?.text),
+                  ),
                   calendarBuilders: CalendarBuilders(
                     defaultBuilder: (context, day, focusedDay) {
                       final isWeekend =

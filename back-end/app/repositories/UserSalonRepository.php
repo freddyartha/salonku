@@ -11,10 +11,10 @@ class UserSalonRepository
         return UserSalon::where("id_user_firebase", $firebaseId)->first();
     }
 
-    // public function create(array $data): Salon
-    // {
-    //     return Salon::create($data);
-    // }
+    public function register(array $data): UserSalon
+    {
+        return UserSalon::create($data);
+    }
 
     // public function update(array $data, $id): Salon
     // {

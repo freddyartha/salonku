@@ -19,4 +19,12 @@ class UserSalonRepositoryImpl extends BaseRepository
       GeneralApiResponseParser(UserModel.fromDynamic),
     );
   }
+
+  @override
+  Future<Result<UserModel>> registerUser(Map<String, dynamic> userModel) {
+    return executeRequest(
+      () => _provider.registerNewUser(userModel),
+      GeneralApiResponseParser(UserModel.fromDynamic),
+    );
+  }
 }

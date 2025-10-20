@@ -21,7 +21,7 @@ class StoreSalonRequest extends FormRequest
      */
     public function rules(): array
     {
-         return [
+        return [
             'nama_salon' => 'required|string|max:255',
             'alamat'     => 'nullable|string|max:500',
             'phone'      => 'nullable|string|max:20',

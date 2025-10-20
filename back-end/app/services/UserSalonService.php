@@ -18,10 +18,10 @@ class UserSalonService
         return $this->userSalonRepository->findByFirebaseId($firebaseId);
     }
 
-    // public function store(array $data)
-    // {
-    //     return $this->userSalonRepository->create($data);
-    // }
+    public function register(array $data)
+    {
+        return $this->userSalonRepository->register($data);
+    }
 
     // public function update(array $data, int $id)
     // {

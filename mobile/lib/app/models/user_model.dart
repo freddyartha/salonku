@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'package:salonku/app/common/input_formatter.dart';
 
-String userModelToJson(UserModel data) => json.encode(data.toJson());
+// String userModelToJson(UserModel data) => json.encode(data.toJson());
+Map<String, dynamic> userModelToJson(UserModel data) => data.toJson();
 
 UserModel userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
 
@@ -76,10 +77,8 @@ class UserModel {
     'phone': phone,
     'nik': nik,
     'jenis_kelamin': jenisKelamin,
-    'tangal_lahir': tanggalLahir.toIso8601String(),
+    'tanggal_lahir': InputFormatter.dateToString(tanggalLahir),
     'alamat': alamat,
     'avatar_url': avatarUrl,
-    'created_at': createdAt?.toIso8601String(),
-    'updated_at': updatedAt?.toIso8601String(),
   };
 }

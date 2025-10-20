@@ -14,4 +14,13 @@ class UserSalonProvider extends ApiProvider {
       includeFirebaseToken: true,
     );
   }
+
+  Future<Response> registerNewUser(Map<String, dynamic> userModel) async {
+    return await post(
+      ApiConstants.registerUser,
+      data: userModel,
+      requiresAuth: false,
+      includeFirebaseToken: true,
+    );
+  }
 }

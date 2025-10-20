@@ -10,6 +10,7 @@ import 'package:salonku/app/common/radiuses.dart';
 import 'package:salonku/app/components/buttons/button_component.dart';
 import 'package:salonku/app/components/images/image_component.dart';
 import 'package:salonku/app/components/inputs/input_text_component.dart';
+import 'package:salonku/app/components/texts/rich_text_component.dart';
 import 'package:salonku/app/components/texts/text_component.dart';
 import 'package:salonku/app/extension/theme_extension.dart';
 
@@ -154,13 +155,14 @@ class LoginView extends GetView<LoginController> {
                           margin: EdgeInsets.only(bottom: 15),
                         ),
                       ],
+
                       GestureDetector(
                         onTap: controller.isRegisterEmail.toggle,
-                        child: Row(
-                          children: [
-                            TextComponent(value: "no_account_email".tr),
-                            TextComponent(
-                              value: "sign_up".tr,
+                        child: RichTextComponent(
+                          teks: [
+                            RichTextItem(text: "no_account_email".tr),
+                            RichTextItem(
+                              text: "sign_up".tr,
                               fontColor: AppColors.info,
                             ),
                           ],

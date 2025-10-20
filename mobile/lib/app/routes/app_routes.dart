@@ -14,6 +14,7 @@ abstract class Routes {
   static const ONBOARDING = _Paths.ONBOARDING;
   static const REGISTER = _Paths.REGISTER;
   static const REGISTER_SETUP = _Paths.REGISTER_SETUP;
+  static const REGISTER_SALON = _Paths.REGISTER_SALON;
 }
 
 abstract class _Paths {
@@ -27,4 +28,5 @@ abstract class _Paths {
   static const ONBOARDING = '/onboarding';
   static const REGISTER = '/register';
   static const REGISTER_SETUP = '/register-setup';
+  static const REGISTER_SALON = '/register-salon';
 }

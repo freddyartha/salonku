@@ -13,4 +13,6 @@ class ApiConstants {
   static final api = "${EnvironmentConfig.hostUrl}/api";
   static String getUserSalonByFirebaseId(String userFirebaseId) =>
       "$api/user-salon/$userFirebaseId";
+  static String createSalon = "$api/salon";
+  static String registerUser = "$api/user-register";
 }
