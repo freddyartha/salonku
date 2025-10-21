@@ -551,7 +551,7 @@ class ReusableWidgets {
                                 isMultilineText: true,
                                 borderColor: Get.context?.contrast,
                                 buttonColor: Get.context?.accent,
-                                textColor: AppColors.darkText,
+                                textColor: Get.context?.text,
                                 borderRadius: Radiuses.regular,
                                 onTap: () {
                                   Get.back(result: false);

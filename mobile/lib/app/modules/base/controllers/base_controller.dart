@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:salonku/app/data/providers/local/local_data_source.dart';
 import 'package:salonku/app/models/menu_item_model.dart';
 import 'package:salonku/app/modules/home/controllers/home_controller.dart';
 import 'package:salonku/app/modules/home/views/home_view.dart';
@@ -27,7 +28,7 @@ class BaseController extends GetxController {
 
   final HomeController homeController = Get.isRegistered<HomeController>()
       ? Get.find<HomeController>()
-      : Get.put(HomeController());
+      : Get.put(HomeController(Get.find<LocalDataSource>()));
   final ProfileController profileController =
       Get.isRegistered<ProfileController>()
       ? Get.find<ProfileController>()

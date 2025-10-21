@@ -23,6 +23,13 @@ class UserSalonService
         return $this->userSalonRepository->register($data);
     }
 
+    public function userAddSalon(int $idSalon, $id)
+    {
+        return $this->userSalonRepository->userAddSalon($idSalon, $id);
+    }
+
+
+
     // public function update(array $data, int $id)
     // {
     //     return $this->userSalonRepository->update($data, $id);

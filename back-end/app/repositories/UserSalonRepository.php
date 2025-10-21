@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\UserSalon;
+use App\Repositories\Request;
 
 class UserSalonRepository
 {
@@ -14,6 +15,15 @@ class UserSalonRepository
     public function register(array $data): UserSalon
     {
         return UserSalon::create($data);
+    }
+
+    public function userAddSalon(int $idSalon, $id)
+    {
+        $user = UserSalon::findOrFail($id);
+        $user->update([
+            'id_salon' => $idSalon,
+        ]);
+        return $user->fresh();
     }
 
     // public function update(array $data, $id): Salon

@@ -17,4 +17,12 @@ class SalonRepositoryImpl extends BaseRepository
       GeneralApiResponseParser(SalonModel.fromDynamic),
     );
   }
+
+  @override
+  Future<Result<SalonModel>> getSalonByKodeSalon(String kodeSalon) {
+    return executeRequest(
+      () => _provider.getSalonByKodeSalon(kodeSalon),
+      GeneralApiResponseParser(SalonModel.fromDynamic),
+    );
+  }
 }

@@ -52,6 +52,8 @@ class LoginView extends GetView<LoginController> {
                 top: false,
                 child: Obx(
                   () => ListView(
+                    keyboardDismissBehavior:
+                        ScrollViewKeyboardDismissBehavior.onDrag,
                     padding: EdgeInsets.only(top: 20),
                     children: [
                       if (!controller.isRegisterEmail.value) ...[
@@ -145,6 +147,21 @@ class LoginView extends GetView<LoginController> {
                           fontWeight: FontWeights.semiBold,
                           margin: EdgeInsets.only(bottom: 15),
                         ),
+                        GestureDetector(
+                          onTap: () {
+                            controller.isRegisterEmail.toggle();
+                            controller.confirmPassCon.value = null;
+                          },
+                          child: RichTextComponent(
+                            teks: [
+                              RichTextItem(text: "already_have_account".tr),
+                              RichTextItem(
+                                text: "sign_in".tr,
+                                fontColor: AppColors.info,
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                       if (!controller.isRegisterEmail.value) ...[
                         ButtonComponent(
@@ -154,20 +171,19 @@ class LoginView extends GetView<LoginController> {
                           fontWeight: FontWeights.semiBold,
                           margin: EdgeInsets.only(bottom: 15),
                         ),
-                      ],
-
-                      GestureDetector(
-                        onTap: controller.isRegisterEmail.toggle,
-                        child: RichTextComponent(
-                          teks: [
-                            RichTextItem(text: "no_account_email".tr),
-                            RichTextItem(
-                              text: "sign_up".tr,
-                              fontColor: AppColors.info,
-                            ),
-                          ],
+                        GestureDetector(
+                          onTap: controller.isRegisterEmail.toggle,
+                          child: RichTextComponent(
+                            teks: [
+                              RichTextItem(text: "no_account_email".tr),
+                              RichTextItem(
+                                text: "sign_up".tr,
+                                fontColor: AppColors.info,
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
+                      ],
                     ],
                   ),
                 ),

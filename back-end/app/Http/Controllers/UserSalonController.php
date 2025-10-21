@@ -6,6 +6,9 @@ use App\Services\UserSalonService;
 use App\Helpers\ApiResponse;
 use App\Http\Requests\UserSalonRequest;
 use App\Http\Resources\UserSalonResource;
+use App\Models\User;
+use App\Models\UserSalon;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 
 class UserSalonController extends Controller
@@ -30,6 +33,20 @@ class UserSalonController extends Controller
     public function registerNewUser(UserSalonRequest $request)
     {
         $response = $this->userSalonService->register($request->validated());
+
+        return ApiResponse::success(
+            data: new UserSalonResource($response),
+        );
+    }
+
+    //Add id_salon for user level staff
+    public function userAddSalon(Request $request, $id)
+    {
+        $request->validate([
+            'id_salon' => 'required|integer|exists:m_salon,id',
+        ]);
+
+        $response = $this->userSalonService->userAddSalon($request->id_salon, $id);
 
         return ApiResponse::success(
             data: new UserSalonResource($response),

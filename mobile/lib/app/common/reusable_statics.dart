@@ -4,8 +4,6 @@ import 'package:salonku/app/common/radiuses.dart';
 import 'package:salonku/app/extension/theme_extension.dart';
 import 'package:uuid/uuid.dart';
 
-enum Penilaian { empty, buruk, baik, luarBiasa }
-
 class ReusableStatics {
   static double appBarHeight(BuildContext context) =>
       MediaQuery.of(context).padding.top + kToolbarHeight;
@@ -40,17 +38,14 @@ class ReusableStatics {
     child: child,
   );
 
-  static String getPenilaianLocalImage(Penilaian penilaian) {
-    switch (penilaian) {
-      case Penilaian.empty:
-        return "";
-      case Penilaian.buruk:
-        return 'packages/gawat_darurat/assets/png/buruk.png';
-      case Penilaian.baik:
-        return 'packages/gawat_darurat/assets/png/baik.png';
-      case Penilaian.luarBiasa:
-        return 'packages/gawat_darurat/assets/png/luar_biasa.png';
+  static String getLevelUser(int level) {
+    String val = "";
+    if (level == 1) {
+      val = "Salon Owner";
+    } else if (level == 2) {
+      val = "Staff Salon";
     }
+    return val;
   }
 
   static Color getColorFromDynamic(dynamic dynamicColor, Color fallbackColor) {

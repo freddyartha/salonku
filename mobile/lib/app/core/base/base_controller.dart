@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:salonku/app/services/error_handler_service.dart';
 
@@ -12,6 +13,7 @@ abstract class BaseController extends GetxController {
   Future<T?> handleRequest<T>(
     Future<Result<T>> Function() request, {
     bool showLoading = true,
+    bool showEasyLoading = true,
     bool showErrorSnackbar = true,
     VoidCallback? onInit,
     Function(T data)? onSuccess,
@@ -20,6 +22,11 @@ abstract class BaseController extends GetxController {
   }) async {
     if (onInit != null) onInit();
     if (showLoading) isLoading.value = true;
+    if (showEasyLoading) {
+      if (EasyLoading.isShow) EasyLoading.dismiss();
+      EasyLoading.show();
+    }
+
     error.value = null;
 
     try {
@@ -62,6 +69,7 @@ abstract class BaseController extends GetxController {
       return null;
     } finally {
       if (showLoading) isLoading.value = false;
+      if (showEasyLoading) EasyLoading.dismiss();
       if (onFinish != null) onFinish();
     }
   }

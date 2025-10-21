@@ -1,14 +1,16 @@
 import 'package:get/get.dart';
+import 'package:salonku/app/common/input_formatter.dart';
 import 'package:salonku/app/components/inputs/input_text_component.dart';
-import 'package:salonku/app/components/widgets/reusable_widgets.dart';
 import 'package:salonku/app/core/base/base_controller.dart';
+import 'package:salonku/app/data/providers/local/local_data_source.dart';
 import 'package:salonku/app/data/repositories/contract/salon_repository_contract.dart';
+import 'package:salonku/app/data/repositories/contract/user_salon_repository_contract.dart';
 import 'package:salonku/app/models/salon_model.dart';
 import 'package:salonku/app/routes/app_pages.dart';
 
 class RegisterSalonController extends BaseController {
-  RxInt selectedLevel = 0.obs;
-  // final List<MenuItemModel> registerTypeList = [];
+  final level = InputFormatter.dynamicToInt(Get.parameters['level']) ?? 0;
+  final userId = InputFormatter.dynamicToInt(Get.parameters['id_user']) ?? 0;
 
   //owner
   final InputTextController namaSalonCon = InputTextController();
@@ -20,29 +22,44 @@ class RegisterSalonController extends BaseController {
   );
 
   //staff
-  final InputTextController nikOwnerCon = InputTextController();
-  final InputTextController emailOwnerCon = InputTextController(
-    type: InputTextType.email,
-  );
+  final InputTextController kodeSalonCon = InputTextController();
+  SalonModel? salonByKode;
+  RxBool isSalonFound = true.obs;
 
   final SalonRepositoryContract _salonRepositoryContract;
-  RegisterSalonController(this._salonRepositoryContract);
+  final UserSalonRepositoryContract _userSalonRepositoryContract;
+  final LocalDataSource _localDataSource;
+  RegisterSalonController(
+    this._salonRepositoryContract,
+    this._userSalonRepositoryContract,
+    this._localDataSource,
+  );
 
-  @override
-  void onInit() {
-    // registerTypeList.addAll([
-    //   MenuItemModel(
-    //     title: "owner",
-    //     imageLocation: "assets/images/png/owner.png",
-    //     onTab: () => selectedLevel.value = 1,
-    //   ),
-    //   MenuItemModel(
-    //     title: "staff",
-    //     imageLocation: "assets/images/png/staff.png",
-    //     onTab: () => selectedLevel.value = 2,
-    //   ),
-    // ]);
-    super.onInit();
+  void clearSalonData() {
+    salonByKode = null;
+    kodeSalonCon.value = null;
+    update();
+  }
+
+  Future<void> getSalonByUniqueId() async {
+    if (!kodeSalonCon.isValid) return;
+
+    await handleRequest(
+      showLoading: true,
+      () => _salonRepositoryContract.getSalonByKodeSalon(kodeSalonCon.value),
+      onSuccess: (res) async {
+        salonByKode = res;
+        isSalonFound(true);
+        update();
+      },
+      showErrorSnackbar: false,
+      onError: () {
+        if (error.value?.statusCode == 404) {
+          isSalonFound(false);
+        }
+        update();
+      },
+    );
   }
 
   Future<void> createSalon() async {
@@ -57,16 +74,26 @@ class RegisterSalonController extends BaseController {
       alamat: alamatSalonCon.value,
       phone: telpSalonCon.value,
     );
+
     await handleRequest(
       showLoading: true,
       () => _salonRepositoryContract.createSalon(salonModelToJson(model)),
-      onSuccess: (res) {
-        Get.toNamed(Routes.REGISTER_SETUP);
+      onSuccess: (res) async {
+        await userAddSalon(userId, res.id);
       },
       showErrorSnackbar: false,
-      onError: () {
-        ReusableWidgets.notifBottomSheet(subtitle: error.value?.message ?? "");
+    );
+  }
+
+  Future<void> userAddSalon(int userId, int salonId) async {
+    await handleRequest(
+      showLoading: true,
+      () => _userSalonRepositoryContract.userAddSalon(userId, salonId),
+      onSuccess: (res) async {
+        await _localDataSource.cacheUser(res);
+        Get.toNamed(Routes.BASE);
       },
+      showErrorSnackbar: false,
     );
   }
 }

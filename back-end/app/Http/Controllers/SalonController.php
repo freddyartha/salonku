@@ -28,6 +28,24 @@ class SalonController extends Controller
         );
     }
 
+    // Menampilkan data berdasarkan ID
+    public function readSalonByUniqueId($kodeSalon)
+    {
+        try {
+            $response = $this->salonService->getSalonByUniqueId($kodeSalon);
+            $resource = new SalonResource($response);
+
+            return ApiResponse::success(
+                data: $resource,
+            );
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return ApiResponse::error(
+                message: "data tidak ditemukan",
+                statusCode: 404
+            );
+        }
+    }
+
     //create salon
     public function storeSalon(StoreSalonRequest $request)
     {

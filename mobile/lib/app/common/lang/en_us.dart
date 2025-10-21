@@ -33,4 +33,6 @@ const Map<String, String> enUS = {
   "owner": "Salon Owner",
   "staff": "Salon Staff",
   "select_date": "Select Date",
+  "back": "Back",
+  "already_have_account": "Already have account? ",
 };

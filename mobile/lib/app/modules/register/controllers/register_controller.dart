@@ -1,8 +1,10 @@
 import 'package:get/get.dart';
+import 'package:salonku/app/core/controllers/auth_controller.dart';
 import 'package:salonku/app/models/menu_item_model.dart';
 import 'package:salonku/app/routes/app_pages.dart';
 
 class RegisterController extends GetxController {
+  final authCon = AuthController.instance;
   RxInt selectedLevel = 0.obs;
   final List<MenuItemModel> registerTypeList = [];
 

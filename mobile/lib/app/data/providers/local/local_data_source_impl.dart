@@ -21,7 +21,8 @@ class LocalDataSourceImpl extends LocalDataSource {
   @override
   UserModel get userData {
     final userData = _box.read(StorageKey.cachedUserDataKey);
-    return UserModel.fromJson(userData);
+    print(userData);
+    return UserModel.fromDynamic(userData);
   }
 
   @override

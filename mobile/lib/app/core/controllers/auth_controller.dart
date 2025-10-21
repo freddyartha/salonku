@@ -61,9 +61,20 @@ class AuthController extends BaseController {
       () => _userSalonRepositoryContract.getUserSalonByFirebaseId(
         userFirebaseId: userFirebaseId,
       ),
+      showEasyLoading: false,
       onSuccess: (res) {
         _localDataSource.cacheUser(res);
-        Get.offAllNamed(Routes.BASE);
+        if (res.idSalon == null) {
+          Get.offAllNamed(
+            Routes.REGISTER_SALON,
+            parameters: {
+              "level": res.level.toString(),
+              "id_user": res.id.toString(),
+            },
+          );
+        } else {
+          Get.offAllNamed(Routes.BASE);
+        }
       },
       showErrorSnackbar: false,
       onError: () {

@@ -11,6 +11,11 @@ class SalonRepository
         return Salon::find($id);
     }
 
+    public function findByUniqueId(string $uniqueId)
+    {
+        return Salon::where('kode_salon', $uniqueId)->firstOrFail();
+    }
+
     public function create(array $data): Salon
     {
         return Salon::create($data);
@@ -23,5 +28,4 @@ class SalonRepository
 
         return $salon;
     }
-    
 }

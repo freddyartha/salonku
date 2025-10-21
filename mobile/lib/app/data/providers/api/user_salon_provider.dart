@@ -23,4 +23,13 @@ class UserSalonProvider extends ApiProvider {
       includeFirebaseToken: true,
     );
   }
+
+  Future<Response> userAddSalon(int userId, int salonId) async {
+    return await patch(
+      ApiConstants.userAddSalon(userId),
+      data: {"id_salon": salonId},
+      requiresAuth: true,
+      includeFirebaseToken: true,
+    );
+  }
 }

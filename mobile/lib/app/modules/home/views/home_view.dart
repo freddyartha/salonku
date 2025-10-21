@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:salonku/app/common/app_colors.dart';
 import 'package:salonku/app/common/font_size.dart';
 import 'package:salonku/app/common/font_weight.dart';
+import 'package:salonku/app/common/reusable_statics.dart';
 import 'package:salonku/app/components/images/image_component.dart';
 import 'package:salonku/app/components/texts/text_component.dart';
 
@@ -30,7 +31,7 @@ class HomeView extends GetView<HomeController> {
                       border: Border.all(color: context.accent),
                     ),
                     clipBehavior: Clip.hardEdge,
-                    margin: EdgeInsets.only(right: 20),
+                    margin: EdgeInsets.only(right: 15),
                     child: ImageComponent(
                       localUrl: "assets/images/png/error_image.png",
                       height: 55,
@@ -42,11 +43,15 @@ class HomeView extends GetView<HomeController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TextComponent(
-                        value: "Nama Karyawan",
+                        value: controller.userData.nama,
                         fontWeight: FontWeights.semiBold,
                         fontSize: FontSizes.h5,
                       ),
-                      TextComponent(value: "Level Karyawan"),
+                      TextComponent(
+                        value: ReusableStatics.getLevelUser(
+                          controller.userData.level,
+                        ),
+                      ),
                     ],
                   ),
                 ],

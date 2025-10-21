@@ -15,6 +15,7 @@ class Salon extends Model
     // Kolom yang bisa diisi mass-assignment
     protected $fillable = [
         'nama_salon',
+        'kode_salon',
         'alamat',
         'phone',
         'logo_url',
@@ -34,6 +35,4 @@ class Salon extends Model
     {
         return $this->hasMany(PaymentMethod::class, 'id_salon');
     }
-
-
 }

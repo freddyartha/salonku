@@ -12,7 +12,10 @@ Route::middleware('firebase.auth')->group(function () {
     Route::get('/salon/{id}', [SalonController::class, 'readSalonById']);
     Route::post('/salon', [SalonController::class, 'storeSalon']);
     Route::put('/salon/{id}', [SalonController::class, 'updateSalon']);
+    Route::get('/salon/kode/{kodeSalon}', [SalonController::class, 'readSalonByUniqueId']);
+
 
     //User Salon
     Route::get('/user-salon/{id}', [UserSalonController::class, 'readUserSalonByFirebaseId']);
+    Route::patch('/user-salon/{id}/add-salon', [UserSalonController::class, 'userAddSalon']);
 });

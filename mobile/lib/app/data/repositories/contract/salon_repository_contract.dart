@@ -3,4 +3,6 @@ import 'package:salonku/app/models/salon_model.dart';
 
 abstract class SalonRepositoryContract {
   Future<Result<SalonModel>> createSalon(Map<String, dynamic> salonModel);
+
+  Future<Result<SalonModel>> getSalonByKodeSalon(String kodeSalon);
 }

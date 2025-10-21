@@ -7,8 +7,7 @@ import 'package:salonku/app/common/font_weight.dart';
 import 'package:salonku/app/common/radiuses.dart';
 import 'package:salonku/app/components/buttons/button_component.dart';
 import 'package:salonku/app/components/images/image_component.dart';
-import 'package:salonku/app/components/inputs/input_text_component.dart'
-    show InputTextComponent;
+import 'package:salonku/app/components/inputs/input_text_component.dart';
 import 'package:salonku/app/components/texts/text_component.dart';
 import 'package:salonku/app/extension/theme_extension.dart';
 
@@ -36,27 +35,25 @@ class RegisterSalonView extends GetView<RegisterSalonController> {
               ),
             ),
           ),
-          Obx(
-            () => ListView(
-              padding: EdgeInsets.only(top: (Get.height * 0.3)),
-              physics: ClampingScrollPhysics(),
-              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-              children: [
-                Container(
-                  padding: EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(Radiuses.extraLarge),
-                      topRight: Radius.circular(Radiuses.extraLarge),
-                    ),
-                    color: context.accent,
+          ListView(
+            padding: EdgeInsets.only(top: (Get.height * 0.3)),
+            physics: ClampingScrollPhysics(),
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+            children: [
+              Container(
+                padding: EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(Radiuses.extraLarge),
+                    topRight: Radius.circular(Radiuses.extraLarge),
                   ),
-                  child: controller.selectedLevel.value == 1
-                      ? OwnerWidget(controller: controller)
-                      : StaffWidget(controller: controller),
+                  color: context.accent,
                 ),
-              ],
-            ),
+                child: controller.level == 1
+                    ? OwnerWidget(controller: controller)
+                    : StaffWidget(controller: controller),
+              ),
+            ],
           ),
         ],
       ),
@@ -71,55 +68,130 @@ class StaffWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        GestureDetector(
-          onTap: () => controller.selectedLevel(0),
-          child: Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: Row(
-              spacing: 10,
-              children: [
-                Icon(Icons.chevron_left_rounded),
-                TextComponent(value: "Kembali"),
-              ],
-            ),
-          ),
-        ),
-        TextComponent(
-          margin: EdgeInsets.symmetric(vertical: 20),
-          value: "Masukkan Kode Unik Salon Tempat Kamu Bekerja*",
-          textAlign: TextAlign.center,
-          fontSize: FontSizes.h5,
-          fontWeight: FontWeights.semiBold,
-        ),
-
-        Row(
-          spacing: 20,
-          crossAxisAlignment: CrossAxisAlignment.center,
+    return GetBuilder<RegisterSalonController>(
+      builder: (controller) {
+        return Column(
           children: [
-            Expanded(
-              flex: 3,
-              child: InputTextComponent(
-                controller: controller.nikOwnerCon,
-                placeHolder: "Kode Unik Salon",
-                required: true,
-                marginBottom: 0,
+            if (controller.salonByKode == null) ...[
+              TextComponent(
+                margin: EdgeInsets.symmetric(vertical: 20),
+                value: "Masukkan Kode Unik Salon Tempat Kamu Bekerja*",
+                textAlign: TextAlign.center,
+                fontSize: FontSizes.h5,
+                fontWeight: FontWeights.semiBold,
               ),
-            ),
-            Expanded(
-              flex: 1,
-              child: ButtonComponent(onTap: () {}, text: "Cari"),
-            ),
+              Row(
+                spacing: 20,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: InputTextComponent(
+                      controller: controller.kodeSalonCon,
+                      placeHolder: "Kode Unik Salon",
+                      required: true,
+                      marginBottom: 0,
+                    ),
+                  ),
+
+                  Expanded(
+                    flex: 1,
+                    child: ButtonComponent(
+                      onTap: controller.getSalonByUniqueId,
+                      text: "Cari",
+                    ),
+                  ),
+                ],
+              ),
+              if (!controller.isSalonFound.value) ...[
+                Column(
+                  children: [
+                    ImageComponent(
+                      localUrl: "assets/images/png/settings.png",
+                      height: 150,
+                      width: Get.width,
+                      boxFit: BoxFit.fitHeight,
+                      margin: EdgeInsets.zero,
+                    ),
+                    TextComponent(
+                      value: "Kode Unik Salon yang anda cari tidak ditemukan",
+                    ),
+                  ],
+                ),
+              ],
+              TextComponent(
+                value:
+                    "*Kode Unik Salon bisa ditemukan di halaman profil dari aplikasi SalonKu yang dimiliki Owner Salon",
+                fontSize: FontSizes.small,
+                margin: EdgeInsets.only(top: 20),
+              ),
+            ],
+
+            if (controller.salonByKode != null) ...[
+              TextComponent(
+                margin: EdgeInsets.symmetric(vertical: 20),
+                value: "Salon Berhasil Ditemukan!",
+                textAlign: TextAlign.center,
+                fontSize: FontSizes.h5,
+                fontWeight: FontWeights.semiBold,
+              ),
+              Container(
+                margin: EdgeInsets.only(bottom: 40),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(Radiuses.large),
+                  border: BoxBorder.all(color: context.contrast),
+                ),
+                child: ListTile(
+                  title: TextComponent(
+                    value: controller.salonByKode?.namaSalon,
+                    fontWeight: FontWeights.semiBold,
+                    fontSize: FontSizes.h5,
+                  ),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextComponent(value: controller.salonByKode?.alamat),
+                      TextComponent(value: controller.salonByKode?.phone),
+                    ],
+                  ),
+                  leading: Container(
+                    clipBehavior: Clip.hardEdge,
+                    decoration: BoxDecoration(shape: BoxShape.circle),
+                    child: ImageComponent(
+                      networkUrl: controller.salonByKode?.logoUrl ?? "",
+                      height: 50,
+                      width: 50,
+                      boxFit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ),
+              Row(
+                spacing: 20,
+                children: [
+                  Expanded(
+                    child: ButtonComponent(
+                      buttonColor: Colors.transparent,
+                      borderColor: context.contrast,
+                      onTap: controller.clearSalonData,
+                      text: "Ulangi Pencarian",
+                    ),
+                  ),
+                  Expanded(
+                    child: ButtonComponent(
+                      onTap: () => controller.userAddSalon(
+                        controller.userId,
+                        controller.salonByKode?.id ?? 0,
+                      ),
+                      text: "Lanjut",
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ],
-        ),
-        TextComponent(
-          value:
-              "*Kode Unik Salon bisa ditemukan di halaman profil dari aplikasi SalonKu yang dimiliki Owner Salon",
-          fontSize: FontSizes.small,
-          margin: EdgeInsets.only(top: 20),
-        ),
-      ],
+        );
+      },
     );
   }
 }
@@ -156,25 +228,7 @@ class OwnerWidget extends StatelessWidget {
           required: true,
           marginBottom: 30,
         ),
-        Row(
-          spacing: 20,
-          children: [
-            Expanded(
-              child: ButtonComponent(
-                onTap: () => controller.selectedLevel.value = 0,
-                text: "Batal",
-                borderColor: context.contrast,
-                buttonColor: context.accent2,
-              ),
-            ),
-            Expanded(
-              child: ButtonComponent(
-                onTap: controller.createSalon,
-                text: "Simpan",
-              ),
-            ),
-          ],
-        ),
+        ButtonComponent(onTap: controller.createSalon, text: "Simpan"),
       ],
     );
   }

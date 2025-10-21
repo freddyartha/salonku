@@ -37,4 +37,6 @@ const Map<String, String> idID = {
   "owner": "Pemilik Salon",
   "staff": "Staff Salon",
   "select_date": "Pilih Tanggal",
+  "back": "Kembali",
+  "already_have_account": "Sudah punya akun? ",
 };

@@ -17,6 +17,7 @@ class SalonResource extends JsonResource
         return [
             'id'         => $this->id,
             'nama_salon' => $this->nama_salon,
+            'kode_salon' => $this->kode_salon,
             'alamat'     => $this->alamat,
             'phone'      => $this->phone,
             'logo_url'   => $this->logo_url,

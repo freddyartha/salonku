@@ -33,7 +33,8 @@ class LoginController extends GetxController {
       ReusableWidgets.notifBottomSheet(
         subtitle: "Password yang anda masukkan tidak sama",
       );
+    } else {
+      await authCon.signUpWithPassword(emailCon.value, confirmPassCon.value);
     }
-    await authCon.signUpWithPassword(emailCon.value, confirmPassCon.value);
   }
 }
