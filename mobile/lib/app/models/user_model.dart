@@ -9,6 +9,8 @@ UserModel userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
 class UserModel {
   int id;
   int? idSalon;
+  bool? ownerApproval;
+  DateTime? approvedDate;
   String idUserFirebase;
   int level;
   String nama;
@@ -25,6 +27,8 @@ class UserModel {
   UserModel({
     required this.id,
     this.idSalon,
+    this.ownerApproval,
+    this.approvedDate,
     required this.idUserFirebase,
     required this.level,
     required this.nama,
@@ -48,6 +52,12 @@ class UserModel {
     return UserModel(
       id: InputFormatter.dynamicToInt(dynamicData['id']) ?? 0,
       idSalon: InputFormatter.dynamicToInt(dynamicData['id_salon']),
+      ownerApproval: InputFormatter.dynamicToBool(
+        dynamicData['owner_approval'],
+      ),
+      approvedDate: InputFormatter.dynamicToDateTime(
+        dynamicData['approved_date'],
+      ),
       idUserFirebase: dynamicData['id_user_firebase'],
       level: InputFormatter.dynamicToInt(dynamicData['level']) ?? 0,
       nama: dynamicData['nama'],

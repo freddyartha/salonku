@@ -16,6 +16,9 @@ class ApiConstants {
   static String createSalon = "$api/salon";
   static String registerUser = "$api/user-register";
   static String userAddSalon(int userId) => '$api/user-salon/$userId/add-salon';
+  static String getSalonByIdSalon(int idSalon) => '$api/salon/$idSalon';
   static String getSalonByKodeSalon(String kodeSalon) =>
       '$api/salon/kode/$kodeSalon';
+  static String userRemoveSalon(int userId) =>
+      '$api/user-salon/$userId/remove-salon';
 }

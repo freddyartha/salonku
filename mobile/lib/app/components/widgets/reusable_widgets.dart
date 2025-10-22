@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:salonku/app/common/app_colors.dart';
 import 'package:salonku/app/common/font_size.dart';
+import 'package:salonku/app/common/font_weight.dart';
 import 'package:salonku/app/common/radiuses.dart';
 import 'package:salonku/app/components/buttons/button_component.dart';
 import 'package:salonku/app/components/images/image_component.dart';
 import 'package:salonku/app/components/texts/text_component.dart';
 
 import 'package:salonku/app/extension/theme_extension.dart';
+import 'package:salonku/app/models/salon_model.dart';
 
 enum NotifType { success, warning }
 
@@ -30,6 +32,87 @@ class ReusableWidgets {
       centerTitle: false,
       leading: leading,
       actions: actions,
+    );
+  }
+
+  static Widget generalBottomDecoration() {
+    return Align(
+      alignment: Alignment.bottomLeft,
+      child: Container(
+        width: Get.width,
+        height: Get.width,
+        padding: EdgeInsets.only(top: 80, right: 80),
+        decoration: BoxDecoration(
+          color: Get.context?.accent,
+          borderRadius: BorderRadius.only(topRight: Radius.circular(Get.width)),
+        ),
+        child: Container(
+          padding: EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: Get.context?.accent2,
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(Get.height),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  static Widget generalCircleDecoration({
+    double? left,
+    double? top,
+    double? right,
+    double? bottom,
+  }) {
+    return Positioned(
+      top: top,
+      left: left,
+      right: right,
+      bottom: bottom,
+      child: Container(
+        width: Get.width / 2,
+        height: Get.width / 2,
+
+        padding: EdgeInsets.all(40),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Get.context?.accent,
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Get.context?.accent2,
+          ),
+        ),
+      ),
+    );
+  }
+
+  static Widget salonTileWidget(SalonModel model) {
+    return ListTile(
+      title: TextComponent(
+        value: model.namaSalon,
+        fontWeight: FontWeights.semiBold,
+        fontSize: FontSizes.h5,
+      ),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TextComponent(value: model.alamat),
+          TextComponent(value: model.phone),
+        ],
+      ),
+      leading: Container(
+        clipBehavior: Clip.hardEdge,
+        decoration: BoxDecoration(shape: BoxShape.circle),
+        child: ImageComponent(
+          networkUrl: model.logoUrl ?? "",
+          height: 50,
+          width: 50,
+          boxFit: BoxFit.cover,
+        ),
+      ),
     );
   }
 

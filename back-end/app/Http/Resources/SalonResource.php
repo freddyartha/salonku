@@ -21,6 +21,7 @@ class SalonResource extends JsonResource
             'alamat'     => $this->alamat,
             'phone'      => $this->phone,
             'logo_url'   => $this->logo_url,
+            'cabang'     => $this->cabang,
         ];
     }
 }

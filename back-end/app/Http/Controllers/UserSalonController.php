@@ -52,4 +52,13 @@ class UserSalonController extends Controller
             data: new UserSalonResource($response),
         );
     }
+
+    public function userRemoveSalon($id)
+    {
+        $response = $this->userSalonService->userRemoveSalon($id);
+
+        return ApiResponse::success(
+            data: new UserSalonResource($response),
+        );
+    }
 }

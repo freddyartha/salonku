@@ -20,6 +20,11 @@ class SalonCabang extends Model
         'phone',
     ];
 
+    public function salon()
+    {
+        return $this->belongsTo(Salon::class, 'id_salon', 'id');
+    }
+
     /**
      * Relasi ke Salon (cabang milik 1 salon)
      */

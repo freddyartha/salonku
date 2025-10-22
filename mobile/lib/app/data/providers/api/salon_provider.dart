@@ -21,4 +21,12 @@ class SalonProvider extends ApiProvider {
       includeFirebaseToken: true,
     );
   }
+
+  Future<Response> getSalonById(int idSalon) async {
+    return await get(
+      ApiConstants.getSalonByIdSalon(idSalon),
+      requiresAuth: true,
+      includeFirebaseToken: true,
+    );
+  }
 }

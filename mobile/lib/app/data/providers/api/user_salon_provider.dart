@@ -32,4 +32,12 @@ class UserSalonProvider extends ApiProvider {
       includeFirebaseToken: true,
     );
   }
+
+  Future<Response> userRemoveSalon(int userId) async {
+    return await patch(
+      ApiConstants.userRemoveSalon(userId),
+      requiresAuth: true,
+      includeFirebaseToken: true,
+    );
+  }
 }

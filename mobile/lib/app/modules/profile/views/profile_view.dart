@@ -40,13 +40,13 @@ class ProfileView extends GetView<ProfileController> {
               ),
             ),
             TextComponent(
-              value: "Nama Karyawan",
+              value: controller.userModel.nama,
               fontWeight: FontWeights.semiBold,
               fontSize: FontSizes.h5,
               textAlign: TextAlign.center,
             ),
             TextComponent(
-              value: "email@email.com",
+              value: controller.userModel.email,
               textAlign: TextAlign.center,
             ),
             Center(
@@ -57,6 +57,24 @@ class ProfileView extends GetView<ProfileController> {
                 margin: EdgeInsets.only(top: 10, bottom: 30),
                 padding: EdgeInsets.symmetric(vertical: 5),
                 borderRadius: Radiuses.large,
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.all(10),
+              margin: EdgeInsets.only(bottom: 20),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(Radiuses.large),
+                color: context.accent,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextComponent(
+                    value: "Informasi Salon".tr,
+                    fontWeight: FontWeights.semiBold,
+                    margin: EdgeInsetsGeometry.only(bottom: 5),
+                  ),
+                ],
               ),
             ),
             Container(
@@ -141,7 +159,7 @@ class ProfileView extends GetView<ProfileController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextComponent(
-                    value: "Pengaturan Akun".tr,
+                    value: "account_setting".tr,
                     fontWeight: FontWeights.semiBold,
                     margin: EdgeInsetsGeometry.only(bottom: 5),
                   ),

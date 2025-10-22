@@ -5,4 +5,6 @@ abstract class SalonRepositoryContract {
   Future<Result<SalonModel>> createSalon(Map<String, dynamic> salonModel);
 
   Future<Result<SalonModel>> getSalonByKodeSalon(String kodeSalon);
+
+  Future<Result<SalonModel>> getSalonById(int idSalon);
 }

@@ -35,4 +35,12 @@ class UserSalonRepositoryImpl extends BaseRepository
       GeneralApiResponseParser(UserModel.fromDynamic),
     );
   }
+
+  @override
+  Future<Result<UserModel>> userRemoveSalon(int userId) {
+    return executeRequest(
+      () => _provider.userRemoveSalon(userId),
+      GeneralApiResponseParser(UserModel.fromDynamic),
+    );
+  }
 }

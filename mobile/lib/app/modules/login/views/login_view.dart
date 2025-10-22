@@ -58,7 +58,7 @@ class LoginView extends GetView<LoginController> {
                     children: [
                       if (!controller.isRegisterEmail.value) ...[
                         TextComponent(
-                          value: "MASUK",
+                          value: "sign_in".tr,
                           fontWeight: FontWeights.bold,
                           fontSize: FontSizes.h4,
                           textAlign: TextAlign.center,
@@ -137,7 +137,7 @@ class LoginView extends GetView<LoginController> {
                       if (controller.isRegisterEmail.value) ...[
                         InputTextComponent(
                           controller: controller.confirmPassCon,
-                          placeHolder: "password",
+                          placeHolder: "confirm password",
                           marginBottom: 30,
                         ),
                         ButtonComponent(

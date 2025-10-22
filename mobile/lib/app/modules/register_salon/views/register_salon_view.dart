@@ -7,8 +7,10 @@ import 'package:salonku/app/common/font_weight.dart';
 import 'package:salonku/app/common/radiuses.dart';
 import 'package:salonku/app/components/buttons/button_component.dart';
 import 'package:salonku/app/components/images/image_component.dart';
+import 'package:salonku/app/components/inputs/input_phone_component.dart';
 import 'package:salonku/app/components/inputs/input_text_component.dart';
 import 'package:salonku/app/components/texts/text_component.dart';
+import 'package:salonku/app/components/widgets/reusable_widgets.dart';
 import 'package:salonku/app/extension/theme_extension.dart';
 
 import '../controllers/register_salon_controller.dart';
@@ -75,7 +77,7 @@ class StaffWidget extends StatelessWidget {
             if (controller.salonByKode == null) ...[
               TextComponent(
                 margin: EdgeInsets.symmetric(vertical: 20),
-                value: "Masukkan Kode Unik Salon Tempat Kamu Bekerja*",
+                value: "enter_salon_code".tr,
                 textAlign: TextAlign.center,
                 fontSize: FontSizes.h5,
                 fontWeight: FontWeights.semiBold,
@@ -88,7 +90,7 @@ class StaffWidget extends StatelessWidget {
                     flex: 3,
                     child: InputTextComponent(
                       controller: controller.kodeSalonCon,
-                      placeHolder: "Kode Unik Salon",
+                      placeHolder: "salon_code".tr,
                       required: true,
                       marginBottom: 0,
                     ),
@@ -98,7 +100,7 @@ class StaffWidget extends StatelessWidget {
                     flex: 1,
                     child: ButtonComponent(
                       onTap: controller.getSalonByUniqueId,
-                      text: "Cari",
+                      text: "search".tr,
                     ),
                   ),
                 ],
@@ -113,15 +115,12 @@ class StaffWidget extends StatelessWidget {
                       boxFit: BoxFit.fitHeight,
                       margin: EdgeInsets.zero,
                     ),
-                    TextComponent(
-                      value: "Kode Unik Salon yang anda cari tidak ditemukan",
-                    ),
+                    TextComponent(value: "salon_code_not_found".tr),
                   ],
                 ),
               ],
               TextComponent(
-                value:
-                    "*Kode Unik Salon bisa ditemukan di halaman profil dari aplikasi SalonKu yang dimiliki Owner Salon",
+                value: "salon_code_hint".tr,
                 fontSize: FontSizes.small,
                 margin: EdgeInsets.only(top: 20),
               ),
@@ -130,7 +129,7 @@ class StaffWidget extends StatelessWidget {
             if (controller.salonByKode != null) ...[
               TextComponent(
                 margin: EdgeInsets.symmetric(vertical: 20),
-                value: "Salon Berhasil Ditemukan!",
+                value: "salon_found".tr,
                 textAlign: TextAlign.center,
                 fontSize: FontSizes.h5,
                 fontWeight: FontWeights.semiBold,
@@ -141,30 +140,7 @@ class StaffWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(Radiuses.large),
                   border: BoxBorder.all(color: context.contrast),
                 ),
-                child: ListTile(
-                  title: TextComponent(
-                    value: controller.salonByKode?.namaSalon,
-                    fontWeight: FontWeights.semiBold,
-                    fontSize: FontSizes.h5,
-                  ),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextComponent(value: controller.salonByKode?.alamat),
-                      TextComponent(value: controller.salonByKode?.phone),
-                    ],
-                  ),
-                  leading: Container(
-                    clipBehavior: Clip.hardEdge,
-                    decoration: BoxDecoration(shape: BoxShape.circle),
-                    child: ImageComponent(
-                      networkUrl: controller.salonByKode?.logoUrl ?? "",
-                      height: 50,
-                      width: 50,
-                      boxFit: BoxFit.cover,
-                    ),
-                  ),
-                ),
+                child: ReusableWidgets.salonTileWidget(controller.salonByKode!),
               ),
               Row(
                 spacing: 20,
@@ -174,7 +150,7 @@ class StaffWidget extends StatelessWidget {
                       buttonColor: Colors.transparent,
                       borderColor: context.contrast,
                       onTap: controller.clearSalonData,
-                      text: "Ulangi Pencarian",
+                      text: "repeat_search".tr,
                     ),
                   ),
                   Expanded(
@@ -183,7 +159,7 @@ class StaffWidget extends StatelessWidget {
                         controller.userId,
                         controller.salonByKode?.id ?? 0,
                       ),
-                      text: "Lanjut",
+                      text: "continue".tr,
                     ),
                   ),
                 ],
@@ -207,28 +183,30 @@ class OwnerWidget extends StatelessWidget {
       children: [
         TextComponent(
           margin: EdgeInsetsGeometry.symmetric(vertical: 20),
-          value: "Tambahkan Data Salon Kamu Dulu",
+          value: "title_tambah_salon".tr,
           textAlign: TextAlign.center,
           fontSize: FontSizes.h5,
           fontWeight: FontWeights.semiBold,
         ),
         InputTextComponent(
           controller: controller.namaSalonCon,
-          label: "Nama Salon",
+          label: "nama_salon".tr,
+          placeHolder: "placeholder_nama_salon".tr,
           required: true,
         ),
         InputTextComponent(
           controller: controller.alamatSalonCon,
-          label: "Alamat Salon",
+          label: "alamat_salon".tr,
+          placeHolder: "placeholder_alamat_salon".tr,
           required: true,
         ),
-        InputTextComponent(
-          controller: controller.telpSalonCon,
-          label: "No Telp. Salon",
+        InputPhoneComponent(
+          controller: controller.phoneSalonCon,
+          label: "nomor_telp_salon".tr,
           required: true,
           marginBottom: 30,
         ),
-        ButtonComponent(onTap: controller.createSalon, text: "Simpan"),
+        ButtonComponent(onTap: controller.createSalon, text: "save".tr),
       ],
     );
   }

@@ -34,16 +34,12 @@ class AuthController extends BaseController {
   void onInit() async {
     firebaseUser = Rx<User?>(_auth.currentUser);
     firebaseUser.bindStream(_auth.authStateChanges().distinct());
-    debounce(
-      firebaseUser,
-      _setInitialScreen,
-      time: Duration(milliseconds: 500),
-    );
+    debounce(firebaseUser, setInitialScreen, time: Duration(milliseconds: 500));
     super.onInit();
   }
 
-  void _setInitialScreen(User? user) async {
-    final showOnboarding = Get.find<LocalDataSource>().getIsShowOnboarding();
+  void setInitialScreen(User? user) async {
+    final showOnboarding = _localDataSource.getIsShowOnboarding();
     if (showOnboarding != false) {
       Get.toNamed(Routes.ONBOARDING);
     } else {
@@ -70,6 +66,28 @@ class AuthController extends BaseController {
             parameters: {
               "level": res.level.toString(),
               "id_user": res.id.toString(),
+            },
+          );
+        } else if (res.level == 2 &&
+            res.idSalon != null &&
+            res.ownerApproval == null) {
+          Get.offAllNamed(
+            Routes.OWNER_APPROVAL,
+            parameters: {
+              "approved": "null",
+              "userId": res.id.toString(),
+              "salonId": res.idSalon.toString(),
+            },
+          );
+        } else if (res.level == 2 &&
+            res.idSalon != null &&
+            res.ownerApproval == false) {
+          Get.offAllNamed(
+            Routes.OWNER_APPROVAL,
+            parameters: {
+              "approved": "false",
+              "userId": res.id.toString(),
+              "salonId": res.idSalon.toString(),
             },
           );
         } else {
@@ -283,9 +301,7 @@ class AuthController extends BaseController {
     await EasyLoading.show();
     //jangan lupa tambahkan delete notif tokennya
     await _auth.signOut();
-    await _googleSignIn.disconnect();
-
-    await EasyLoading.dismiss();
+    await _googleSignIn.disconnect().then((v) => EasyLoading.dismiss());
   }
 
   Future<void> deleteAccount() async {

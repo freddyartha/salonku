@@ -8,6 +8,8 @@ import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
+import '../modules/owner_approval/bindings/owner_approval_binding.dart';
+import '../modules/owner_approval/views/owner_approval_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/register/bindings/register_binding.dart';
@@ -80,6 +82,11 @@ class AppPages {
       name: _Paths.REGISTER_SALON,
       page: () => const RegisterSalonView(),
       binding: RegisterSalonBinding(),
+    ),
+    GetPage(
+      name: _Paths.OWNER_APPROVAL,
+      page: () => const OwnerApprovalView(),
+      binding: OwnerApprovalBinding(),
     ),
   ];
 }

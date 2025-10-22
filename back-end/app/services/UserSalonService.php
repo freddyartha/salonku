@@ -28,6 +28,11 @@ class UserSalonService
         return $this->userSalonRepository->userAddSalon($idSalon, $id);
     }
 
+    public function userRemoveSalon($id)
+    {
+        return $this->userSalonRepository->userRemoveSalon($id);
+    }
+
 
 
     // public function update(array $data, int $id)

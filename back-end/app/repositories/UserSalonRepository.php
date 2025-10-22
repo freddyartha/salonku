@@ -26,6 +26,17 @@ class UserSalonRepository
         return $user->fresh();
     }
 
+    public function userRemoveSalon($id)
+    {
+        $user = UserSalon::findOrFail($id);
+        $user->update([
+            'id_salon' => null,
+        ]);
+        return $user->fresh();
+    }
+
+
+
     // public function update(array $data, $id): Salon
     // {
     //     $salon = $this->findById($id);

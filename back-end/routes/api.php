@@ -18,4 +18,5 @@ Route::middleware('firebase.auth')->group(function () {
     //User Salon
     Route::get('/user-salon/{id}', [UserSalonController::class, 'readUserSalonByFirebaseId']);
     Route::patch('/user-salon/{id}/add-salon', [UserSalonController::class, 'userAddSalon']);
+    Route::patch('/user-salon/{id}/remove-salon', [UserSalonController::class, 'userRemoveSalon']);
 });

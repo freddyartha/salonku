@@ -15,6 +15,8 @@ class UserSalon extends Model
     // Kolom yang bisa diisi mass-assignment
     protected $fillable = [
         'id_salon',
+        'owner_approval',
+        'approved_date',
         'id_user_firebase',
         'level',
         'nama',

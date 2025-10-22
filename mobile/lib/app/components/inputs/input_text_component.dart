@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:salonku/app/common/currency_input_formater.dart';
 import 'package:salonku/app/common/font_size.dart';
 import 'package:salonku/app/common/input_formatter.dart';
@@ -9,16 +10,7 @@ import 'package:salonku/app/common/radiuses.dart';
 import 'package:salonku/app/components/inputs/input_box_component.dart';
 import 'package:salonku/app/extension/theme_extension.dart';
 
-enum InputTextType {
-  text,
-  email,
-  password,
-  number,
-  paragraf,
-  money,
-  ktp,
-  phone,
-}
+enum InputTextType { text, email, password, number, paragraf, money, ktp }
 
 class InputTextController extends ChangeNotifier {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
@@ -28,7 +20,7 @@ class InputTextController extends ChangeNotifier {
 
   InputTextController({this.type = InputTextType.text, this.onTap});
 
-  final bool _required = false;
+  bool _required = false;
   bool _showPassword = false;
   final InputTextType type;
 
@@ -40,7 +32,7 @@ class InputTextController extends ChangeNotifier {
 
   String? _validator(String? v, {FormFieldValidator<String>? otherValidator}) {
     if (_required && (v?.isEmpty ?? false)) {
-      return 'The field is required';
+      return "field_is_required".tr;
     }
     if (type == InputTextType.email) {
       const pattern =
@@ -56,10 +48,6 @@ class InputTextController extends ChangeNotifier {
     }
     if (type == InputTextType.ktp) {
       if (v!.length < 16) return "Tambahkan min. 16 digits";
-    }
-    if (type == InputTextType.phone) {
-      if (v!.length < 10) return "Nomor Telepon minimal 10 digit";
-      if (v.length > 14) return "Nomor Telepon maksimal 14 digit";
     }
     if (otherValidator != null) {
       return otherValidator(v);
@@ -80,6 +68,7 @@ class InputTextController extends ChangeNotifier {
   }
 
   dynamic get value {
+    if (_con.text.toString().isEmpty) return null;
     if (type == InputTextType.number) {
       return num.tryParse(_con.text);
     } else if (type == InputTextType.money) {
@@ -160,6 +149,8 @@ class _InputTextState extends State<InputTextComponent> {
 
   @override
   Widget build(BuildContext context) {
+    widget.controller._required = widget.required;
+
     final decoration = InputDecoration(
       contentPadding: const EdgeInsets.all(15),
       filled: true,
@@ -227,8 +218,7 @@ class _InputTextState extends State<InputTextComponent> {
       style: TextStyle(color: context.text),
       inputFormatters:
           widget.controller.type == InputTextType.number ||
-              widget.controller.type == InputTextType.ktp ||
-              widget.controller.type == InputTextType.phone
+              widget.controller.type == InputTextType.ktp
           ? [
               FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\d{0,10}')),
               ...(widget.inputFormatters ?? []),
@@ -253,8 +243,7 @@ class _InputTextState extends State<InputTextComponent> {
       keyboardType:
           (widget.controller.type == InputTextType.number ||
               widget.controller.type == InputTextType.money ||
-              widget.controller.type == InputTextType.ktp ||
-              widget.controller.type == InputTextType.phone)
+              widget.controller.type == InputTextType.ktp)
           ? TextInputType.number
           : null,
       decoration: decoration,
@@ -283,6 +272,6 @@ class Debouncer {
     if (null != _timer) {
       _timer!.cancel();
     }
-    _timer = Timer(const Duration(milliseconds: 1000), action);
+    _timer = Timer(const Duration(milliseconds: 500), action);
   }
 }

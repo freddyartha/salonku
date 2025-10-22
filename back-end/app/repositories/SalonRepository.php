@@ -8,7 +8,7 @@ class SalonRepository
 {
     public function findById(int $id)
     {
-        return Salon::find($id);
+        return Salon::with('cabang')->find($id);
     }
 
     public function findByUniqueId(string $uniqueId)

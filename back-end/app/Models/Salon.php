@@ -21,6 +21,12 @@ class Salon extends Model
         'logo_url',
     ];
 
+    public function cabang()
+    {
+        return $this->hasMany(SalonCabang::class, 'id_salon', 'id');
+    }
+
+
     public function suppliers()
     {
         return $this->hasMany(Supplier::class, 'id_salon');

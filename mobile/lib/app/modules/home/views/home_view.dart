@@ -96,18 +96,6 @@ class HomeView extends GetView<HomeController> {
                           ),
                         ),
                       ),
-                      // KategoriGawat(
-                      //   title: "Gawat Kebakaran",
-                      //   image: "assets/png/kebakaran.png",
-                      // ),
-                      // KategoriGawat(
-                      //   title: "Gawat Kesehatan",
-                      //   image: "assets/png/kesehatan.png",
-                      // ),
-                      // KategoriGawat(
-                      //   title: "Gawat Kecelakaan",
-                      //   image: "assets/png/kecelakaan.png",
-                      // ),
                     ],
                   ),
                 ],

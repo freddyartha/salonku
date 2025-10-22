@@ -32,7 +32,7 @@ class BaseController extends GetxController {
   final ProfileController profileController =
       Get.isRegistered<ProfileController>()
       ? Get.find<ProfileController>()
-      : Get.put(ProfileController());
+      : Get.put(ProfileController(Get.find<LocalDataSource>()));
 
   void itemOnTap(int id) {
     selectedId.value = id;

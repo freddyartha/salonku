@@ -66,13 +66,12 @@ class RegisterView extends GetView<RegisterController> {
                     ),
                     TextComponent(
                       margin: EdgeInsetsGeometry.only(top: 20),
-                      value:
-                          "Anda belum terdaftar dalam sistem, daftarkan data anda terlebih dahulu",
+                      value: "not_registered_message".tr,
                       textAlign: TextAlign.center,
                     ),
                     TextComponent(
                       margin: EdgeInsetsGeometry.only(top: 35, bottom: 15),
-                      value: "Pilih mendaftar sebagai",
+                      value: "register_as".tr,
                       textAlign: TextAlign.center,
                     ),
                     GridView.count(

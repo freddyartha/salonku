@@ -8,4 +8,6 @@ abstract class UserSalonRepositoryContract {
   Future<Result<UserModel>> registerUser(Map<String, dynamic> userModel);
 
   Future<Result<UserModel>> userAddSalon(int userId, int salonId);
+
+  Future<Result<UserModel>> userRemoveSalon(int userId);
 }
