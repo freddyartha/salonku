@@ -5,6 +5,7 @@ import 'package:salonku/app/data/providers/api/salon_provider.dart';
 import 'package:salonku/app/data/repositories/contract/salon_repository_contract.dart';
 import 'package:salonku/app/models/salon_model.dart';
 import 'package:salonku/app/data/network/general_api_response_parser.dart';
+import 'package:salonku/app/models/salon_summary_model.dart';
 
 class SalonRepositoryImpl extends BaseRepository
     implements SalonRepositoryContract {
@@ -31,6 +32,14 @@ class SalonRepositoryImpl extends BaseRepository
     return executeRequest(
       () => _provider.getSalonById(idSalon),
       GeneralApiResponseParser(SalonModel.fromDynamic),
+    );
+  }
+
+  @override
+  Future<Result<SalonSummaryModel>> getSalonSummary(int idSalon) {
+    return executeRequest(
+      () => _provider.getSalonSummary(idSalon),
+      GeneralApiResponseParser(SalonSummaryModel.fromDynamic),
     );
   }
 }

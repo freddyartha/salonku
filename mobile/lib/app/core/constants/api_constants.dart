@@ -21,4 +21,21 @@ class ApiConstants {
       '$api/salon/kode/$kodeSalon';
   static String userRemoveSalon(int userId) =>
       '$api/user-salon/$userId/remove-salon';
+  static String getSalonSummary(int salonId) =>
+      '$api/general/salon-summary/$salonId';
+  static String getServiceList({
+    required int idSalon,
+    required int pageIndex,
+    required int pageSize,
+    String? keyword,
+  }) {
+    final queryParams = <String, String>{
+      'page': '$pageIndex',
+      'per_page': '$pageSize',
+      if (keyword != null && keyword.isNotEmpty) 'search': keyword,
+    };
+
+    final queryString = Uri(queryParameters: queryParams).query;
+    return "$api/service/$idSalon/list?$queryString";
+  }
 }

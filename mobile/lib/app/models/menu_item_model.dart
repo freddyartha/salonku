@@ -8,6 +8,7 @@ class MenuItemModel {
   final String? imageLocation;
   final GestureTapCallback? onTab;
   final GlobalKey? globalKey;
+  final dynamic value;
 
   MenuItemModel({
     this.id,
@@ -17,5 +18,6 @@ class MenuItemModel {
     this.imageLocation,
     this.onTab,
     this.globalKey,
+    this.value,
   });
 }

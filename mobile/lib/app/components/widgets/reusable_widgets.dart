@@ -10,6 +10,7 @@ import 'package:salonku/app/components/texts/text_component.dart';
 
 import 'package:salonku/app/extension/theme_extension.dart';
 import 'package:salonku/app/models/salon_model.dart';
+import 'package:shimmer/shimmer.dart';
 
 enum NotifType { success, warning }
 
@@ -90,29 +91,65 @@ class ReusableWidgets {
   }
 
   static Widget salonTileWidget(SalonModel model) {
-    return ListTile(
-      title: TextComponent(
-        value: model.namaSalon,
-        fontWeight: FontWeights.semiBold,
-        fontSize: FontSizes.h5,
-      ),
-      subtitle: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          TextComponent(value: model.alamat),
-          TextComponent(value: model.phone),
-        ],
-      ),
-      leading: Container(
-        clipBehavior: Clip.hardEdge,
-        decoration: BoxDecoration(shape: BoxShape.circle),
-        child: ImageComponent(
-          networkUrl: model.logoUrl ?? "",
-          height: 50,
-          width: 50,
-          boxFit: BoxFit.cover,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ListTile(
+          title: TextComponent(
+            value: model.namaSalon,
+            fontWeight: FontWeights.semiBold,
+            fontSize: FontSizes.h5,
+          ),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextComponent(value: model.alamat),
+              TextComponent(value: model.phone),
+            ],
+          ),
+          leading: Container(
+            clipBehavior: Clip.hardEdge,
+            decoration: BoxDecoration(shape: BoxShape.circle),
+            child: ImageComponent(
+              networkUrl: model.logoUrl ?? "",
+              height: 50,
+              width: 50,
+              boxFit: BoxFit.cover,
+            ),
+          ),
         ),
-      ),
+        if (model.cabang != null && model.cabang!.isNotEmpty) ...[
+          Padding(
+            padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
+            child: ListView.builder(
+              padding: EdgeInsets.zero,
+              shrinkWrap: true,
+              itemCount: model.cabang!.length,
+              itemBuilder: (context, index) {
+                final cabang = model.cabang![index];
+                return Container(
+                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  margin: EdgeInsets.only(bottom: 5),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: context.contrast),
+                    borderRadius: BorderRadius.circular(Radiuses.regular),
+                  ),
+                  child: ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    dense: true,
+                    visualDensity: VisualDensity.compact,
+                    title: TextComponent(
+                      value: "${cabang.nama} (${cabang.phone})",
+                      fontWeight: FontWeights.semiBold,
+                    ),
+                    subtitle: TextComponent(value: cabang.alamat),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ],
     );
   }
 
@@ -1056,26 +1093,92 @@ class ReusableWidgets {
   //   }
   // }
 
-  // static Widget listLoadingWidget({required int count, double? height}) {
-  //   return Shimmer.fromColors(
-  //     baseColor: AppColors.mediumgray,
-  //     highlightColor: AppColors.lightgray,
-  //     child: ListView.separated(
-  //       padding: EdgeInsets.zero,
-  //       shrinkWrap: true,
-  //       physics: NeverScrollableScrollPhysics(),
-  //       itemCount: count,
-  //       separatorBuilder: (context, index) => SizedBox(height: 10),
-  //       itemBuilder: (context, index) => Container(
-  //         decoration: BoxDecoration(
-  //           color: AppColors.white,
-  //           borderRadius: BorderRadius.circular(Radiuses.regular),
-  //         ),
-  //         height: height ?? 80,
-  //       ),
-  //     ),
-  //   );
-  // }
+  static Widget listLoadingWidget({
+    required int count,
+    double? height,
+    double? radius,
+    double? itemHorizontalMargin,
+    List<Widget>? children,
+  }) {
+    return children != null
+        ? ListView.separated(
+            padding: EdgeInsets.only(top: 5),
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: count,
+            separatorBuilder: (context, index) => SizedBox(height: 10),
+            itemBuilder: (context, index) => Container(
+              padding: EdgeInsets.all(10),
+              margin: EdgeInsets.symmetric(
+                horizontal: itemHorizontalMargin ?? 0,
+              ),
+              decoration: BoxDecoration(
+                color: context.accent,
+                borderRadius: BorderRadius.circular(radius ?? Radiuses.regular),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.lightText.withValues(alpha: 0.3),
+                    blurRadius: 5,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+              ),
+              height: height ?? 80,
+              child: Shimmer.fromColors(
+                baseColor: context.accent,
+                highlightColor: context.accent2,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: children,
+                ),
+              ),
+            ),
+          )
+        : Shimmer.fromColors(
+            baseColor: Get.context?.accent ?? AppColors.darkContrast,
+            highlightColor: Get.context?.accent2 ?? AppColors.lightAccent,
+            child: ListView.separated(
+              padding: EdgeInsets.zero,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: count,
+              separatorBuilder: (context, index) => SizedBox(height: 10),
+              itemBuilder: (context, index) => Container(
+                decoration: BoxDecoration(
+                  color: Get.context?.accent,
+                  borderRadius: BorderRadius.circular(
+                    radius ?? Radiuses.regular,
+                  ),
+                ),
+                height: height ?? 80,
+              ),
+            ),
+          );
+  }
+
+  static Widget notFoundWidget({required double width, bool isOffset = true}) {
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: isOffset
+          ? MainAxisAlignment.start
+          : MainAxisAlignment.center,
+      children: [
+        if (isOffset) SizedBox(height: Get.height * 0.1),
+        Image.asset(
+          'packages/gawat_darurat/assets/png/not_found.png',
+          width: width,
+          fit: BoxFit.contain,
+        ),
+        TextComponent(
+          value: "data_not_found".tr,
+          fontSize: FontSizes.h4,
+          fontWeight: FontWeight.w600,
+        ),
+      ],
+    );
+  }
 
   // static Widget formLoadingWidget() {
   //   return Padding(

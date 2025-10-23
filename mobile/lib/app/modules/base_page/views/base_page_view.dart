@@ -5,11 +5,10 @@ import 'package:salonku/app/common/app_colors.dart';
 import 'package:salonku/app/components/images/image_component.dart';
 
 import 'package:salonku/app/extension/theme_extension.dart';
+import 'package:salonku/app/modules/base_page/controllers/base_page_controller.dart';
 
-import '../controllers/base_controller.dart';
-
-class BaseView extends GetView<BaseController> {
-  const BaseView({super.key});
+class BasePageView extends GetView<BasePageController> {
+  const BasePageView({super.key});
   @override
   Widget build(BuildContext context) {
     return Obx(() {

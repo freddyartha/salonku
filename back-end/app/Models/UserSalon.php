@@ -17,6 +17,7 @@ class UserSalon extends Model
         'id_salon',
         'owner_approval',
         'approved_date',
+        'aktif',
         'id_user_firebase',
         'level',
         'nama',
@@ -27,6 +28,10 @@ class UserSalon extends Model
         'tanggal_lahir',
         'alamat',
         'avatar_url',
+    ];
+
+    protected $attributes = [
+        'aktif' => true,
     ];
 
     /**

@@ -5,6 +5,6 @@ import 'package:salonku/app/routes/app_pages.dart';
 class OnboardingController extends GetxController {
   void onStartPage() {
     Get.find<LocalDataSource>().cacheIsShowOnboarding(false);
-    Get.offNamed(Routes.BASE);
+    Get.offNamed(Routes.LOGIN);
   }
 }

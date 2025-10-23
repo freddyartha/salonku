@@ -38,6 +38,7 @@ class RegisterSetupController extends BaseController {
     final model = UserModel(
       id: 0,
       idUserFirebase: AuthController.instance.firebaseUser.value?.uid ?? "",
+      aktif: true,
       level: level,
       nama: namaCon.value,
       email: AuthController.instance.firebaseUser.value?.email ?? "",

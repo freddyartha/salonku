@@ -23,8 +23,6 @@ class SalonService
         return $this->salonRepository->findByUniqueId($uniqueId);
     }
 
-
-
     public function store(array $data)
     {
         $data['kode_salon'] = $this->generateUniqueCode();

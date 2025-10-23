@@ -26,7 +26,6 @@ class Salon extends Model
         return $this->hasMany(SalonCabang::class, 'id_salon', 'id');
     }
 
-
     public function suppliers()
     {
         return $this->hasMany(Supplier::class, 'id_salon');

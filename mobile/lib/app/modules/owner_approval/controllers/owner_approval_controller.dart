@@ -31,6 +31,10 @@ class OwnerApprovalController extends BaseController {
     super.onInit();
   }
 
+  void signOutOnTap() {
+    _authCon.signOut();
+  }
+
   Future<void> userRemoveSalon() async {
     await handleRequest(
       showLoading: true,

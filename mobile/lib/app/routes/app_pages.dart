@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
-import '../modules/base/bindings/base_binding.dart';
-import '../modules/base/views/base_view.dart';
+import '../modules/base_page/bindings/base_page_binding.dart';
+import '../modules/base_page/views/base_page_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
@@ -18,6 +18,10 @@ import '../modules/register_salon/bindings/register_salon_binding.dart';
 import '../modules/register_salon/views/register_salon_view.dart';
 import '../modules/register_setup/bindings/register_setup_binding.dart';
 import '../modules/register_setup/views/register_setup_view.dart';
+import '../modules/service_list/bindings/service_list_binding.dart';
+import '../modules/service_list/views/service_list_view.dart';
+import '../modules/service_setup/bindings/service_setup_binding.dart';
+import '../modules/service_setup/views/service_setup_view.dart';
 import '../modules/settings/bindings/settings_binding.dart';
 import '../modules/settings/views/settings_view.dart';
 import '../modules/splash_screen/bindings/splash_screen_binding.dart';
@@ -50,8 +54,8 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.BASE,
-      page: () => const BaseView(),
-      binding: BaseBinding(),
+      page: () => const BasePageView(),
+      binding: BasePageBinding(),
     ),
     GetPage(
       name: _Paths.PROFILE,
@@ -87,6 +91,16 @@ class AppPages {
       name: _Paths.OWNER_APPROVAL,
       page: () => const OwnerApprovalView(),
       binding: OwnerApprovalBinding(),
+    ),
+    GetPage(
+      name: _Paths.SERVICE_LIST,
+      page: () => const ServiceListView(),
+      binding: ServiceListBinding(),
+    ),
+    GetPage(
+      name: _Paths.SERVICE_SETUP,
+      page: () => const ServiceSetupView(),
+      binding: ServiceSetupBinding(),
     ),
   ];
 }

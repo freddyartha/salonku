@@ -33,7 +33,7 @@ class ProfileView extends GetView<ProfileController> {
               clipBehavior: Clip.hardEdge,
               margin: EdgeInsets.only(bottom: 20),
               child: ImageComponent(
-                localUrl: "assets/images/png/error_image.png",
+                networkUrl: controller.userModel.avatarUrl,
                 height: 100,
                 width: 100,
                 boxFit: BoxFit.cover,
@@ -59,24 +59,7 @@ class ProfileView extends GetView<ProfileController> {
                 borderRadius: Radiuses.large,
               ),
             ),
-            Container(
-              padding: EdgeInsets.all(10),
-              margin: EdgeInsets.only(bottom: 20),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(Radiuses.large),
-                color: context.accent,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextComponent(
-                    value: "Informasi Salon".tr,
-                    fontWeight: FontWeights.semiBold,
-                    margin: EdgeInsetsGeometry.only(bottom: 5),
-                  ),
-                ],
-              ),
-            ),
+
             Container(
               padding: EdgeInsets.all(10),
               margin: EdgeInsets.only(bottom: 20),

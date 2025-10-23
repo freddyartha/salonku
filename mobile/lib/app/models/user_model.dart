@@ -11,6 +11,7 @@ class UserModel {
   int? idSalon;
   bool? ownerApproval;
   DateTime? approvedDate;
+  bool aktif;
   String idUserFirebase;
   int level;
   String nama;
@@ -29,6 +30,7 @@ class UserModel {
     this.idSalon,
     this.ownerApproval,
     this.approvedDate,
+    required this.aktif,
     required this.idUserFirebase,
     required this.level,
     required this.nama,
@@ -55,9 +57,11 @@ class UserModel {
       ownerApproval: InputFormatter.dynamicToBool(
         dynamicData['owner_approval'],
       ),
+
       approvedDate: InputFormatter.dynamicToDateTime(
         dynamicData['approved_date'],
       ),
+      aktif: InputFormatter.dynamicToBool(dynamicData['aktif']) ?? false,
       idUserFirebase: dynamicData['id_user_firebase'],
       level: InputFormatter.dynamicToInt(dynamicData['level']) ?? 0,
       nama: dynamicData['nama'],
@@ -69,7 +73,7 @@ class UserModel {
           InputFormatter.dynamicToDateTime(dynamicData['tanggal_lahir']) ??
           DateTime.now(),
       alamat: dynamicData['alamat'],
-      avatarUrl: dynamicData['avatar_url'],
+      avatarUrl: dynamicData['avatar_url'] ?? "",
       createdAt:
           InputFormatter.dynamicToDateTime(dynamicData['created_at']) ??
           DateTime.now(),
@@ -80,6 +84,9 @@ class UserModel {
   Map<String, dynamic> toJson() => {
     'id': id,
     'id_salon': idSalon,
+    'owner_approval': ownerApproval,
+    'approved_date': InputFormatter.dateToString(approvedDate),
+    'aktif': aktif,
     'id_user_firebase': idUserFirebase,
     'level': level,
     'nama': nama,

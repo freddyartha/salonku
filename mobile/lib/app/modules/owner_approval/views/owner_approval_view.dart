@@ -32,24 +32,33 @@ class OwnerApprovalView extends GetView<OwnerApprovalController> {
                       ? "assets/images/png/error.png"
                       : "assets/images/png/error_image.png",
                   color: context.text,
-                  margin: EdgeInsets.only(bottom: 50),
+                  margin: EdgeInsets.only(bottom: 30),
                 ),
                 if (controller.approved == null) ...[
                   TextComponent(
-                    value: "Menunggu Approval dari Owner Salon",
+                    value: "menunggu_approval_title".tr,
                     fontSize: FontSizes.h4,
                     fontWeight: FontWeights.bold,
                     textAlign: TextAlign.center,
                   ),
                   TextComponent(
-                    value:
-                        "Selangkah lagi! kamu dapat menggunakan semua fitur SalonKu, untuk saat ini kamu diarahkan ke halaman menuggu approval dari Owner Salon. Setelah Owner Salon menerima permintaan staff kamu, semua fitur SalonKu dapat kamu gunakan!",
-
+                    value: "menunggu_approval_subtitle".tr,
                     textAlign: TextAlign.center,
                   ),
                 ],
 
-                if (controller.approved == false) ...[],
+                if (controller.approved == false) ...[
+                  TextComponent(
+                    value: "permintaan_ditolak_title".tr,
+                    fontSize: FontSizes.h4,
+                    fontWeight: FontWeights.bold,
+                    textAlign: TextAlign.center,
+                  ),
+                  TextComponent(
+                    value: "permintaan_ditolak_subtitle".tr,
+                    textAlign: TextAlign.center,
+                  ),
+                ],
 
                 GetBuilder<OwnerApprovalController>(
                   builder: (controller) {
@@ -73,16 +82,44 @@ class OwnerApprovalView extends GetView<OwnerApprovalController> {
                 ),
 
                 TextComponent(
-                  margin: EdgeInsetsGeometry.only(top: 50, bottom: 10),
-                  value:
-                      "Bukan ini salon yang kamu maksud? \nklik tombol 'Ganti Salon' di bawah",
+                  margin: EdgeInsetsGeometry.only(top: 30, bottom: 10),
+                  value: "bukan_salon_ini".tr,
                   textAlign: TextAlign.center,
                 ),
                 ButtonComponent(
                   onTap: controller.userRemoveSalon,
-                  text: "Ganti Salon",
+                  text: "ganti_salon".tr,
                 ),
               ],
+            ),
+          ),
+          SafeArea(
+            child: Align(
+              alignment: Alignment.topRight,
+              child: InkWell(
+                onTap: controller.signOutOnTap,
+                child: Container(
+                  padding: EdgeInsets.all(15),
+                  margin: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.15),
+                        offset: Offset(2, 4),
+                        spreadRadius: 2,
+                      ),
+                    ],
+                    shape: BoxShape.circle,
+                    color: context.accent2,
+                  ),
+                  child: ImageComponent(
+                    localUrl: "assets/images/png/sign_out.png",
+                    height: 25,
+                    width: 25,
+                    color: context.text,
+                  ),
+                ),
+              ),
             ),
           ),
         ],

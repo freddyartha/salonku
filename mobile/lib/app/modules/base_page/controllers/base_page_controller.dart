@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:salonku/app/data/providers/local/local_data_source.dart';
+import 'package:salonku/app/data/repositories/contract/salon_repository_contract.dart';
 import 'package:salonku/app/models/menu_item_model.dart';
 import 'package:salonku/app/modules/home/controllers/home_controller.dart';
 import 'package:salonku/app/modules/home/views/home_view.dart';
 import 'package:salonku/app/modules/profile/controllers/profile_controller.dart';
 import 'package:salonku/app/modules/profile/views/profile_view.dart';
+import 'package:salonku/app/modules/settings/controllers/settings_controller.dart';
 import 'package:salonku/app/modules/settings/views/settings_view.dart';
 
-class BaseController extends GetxController {
+class BasePageController extends GetxController {
   final List<MenuItemModel> menuItemList = [
     MenuItemModel(id: 0, imageLocation: "assets/images/png/home.png"),
     MenuItemModel(id: 1, imageLocation: "assets/images/png/settings.png"),
@@ -26,6 +28,15 @@ class BaseController extends GetxController {
     () => const ProfileView(),
   ];
 
+  final SettingsController settingController =
+      Get.isRegistered<SettingsController>()
+      ? Get.find<SettingsController>()
+      : Get.put(
+          SettingsController(
+            Get.find<SalonRepositoryContract>(),
+            Get.find<LocalDataSource>(),
+          ),
+        );
   final HomeController homeController = Get.isRegistered<HomeController>()
       ? Get.find<HomeController>()
       : Get.put(HomeController(Get.find<LocalDataSource>()));
@@ -36,5 +47,8 @@ class BaseController extends GetxController {
 
   void itemOnTap(int id) {
     selectedId.value = id;
+    if (selectedId.value == 1 && settingController.salonModel == null) {
+      settingController.getSalonById();
+    }
   }
 }

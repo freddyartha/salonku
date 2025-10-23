@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:salonku/app/components/texts/text_component.dart';
 import 'package:salonku/app/components/widgets/reusable_widgets.dart';
 import 'package:salonku/app/core/base/base_controller.dart';
 import 'package:salonku/app/data/providers/local/local_data_source.dart';
@@ -297,11 +299,18 @@ class AuthController extends BaseController {
   }
 
   Future<void> signOut({bool deleteToken = true}) async {
-    if (EasyLoading.isShow) EasyLoading.dismiss();
-    await EasyLoading.show();
-    //jangan lupa tambahkan delete notif tokennya
-    await _auth.signOut();
-    await _googleSignIn.disconnect().then((v) => EasyLoading.dismiss());
+    var r = await ReusableWidgets.confirmationBottomSheet(
+      children: [
+        TextComponent(value: "logout_confirm".tr, textAlign: TextAlign.center),
+      ],
+    );
+    if (r == true) {
+      if (EasyLoading.isShow) EasyLoading.dismiss();
+      await EasyLoading.show();
+      //jangan lupa tambahkan delete notif tokennya
+      await _auth.signOut();
+      await _googleSignIn.disconnect().then((v) => EasyLoading.dismiss());
+    }
   }
 
   Future<void> deleteAccount() async {

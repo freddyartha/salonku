@@ -38,15 +38,8 @@ class ProfileController extends GetxController {
     super.onInit();
   }
 
-  Future<void> signOutOnTap() async {
-    var r = await ReusableWidgets.confirmationBottomSheet(
-      children: [
-        TextComponent(value: "logout_confirm".tr, textAlign: TextAlign.center),
-      ],
-    );
-    if (r == true) {
-      await authCon.signOut();
-    }
+  void signOutOnTap() {
+    authCon.signOut();
   }
 
   Future<void> deleteAccountOnTap() async {

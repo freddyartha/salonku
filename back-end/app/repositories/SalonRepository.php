@@ -28,4 +28,15 @@ class SalonRepository
 
         return $salon;
     }
+
+    public function getJumlahCabang($id): int
+    {
+        $salon = Salon::withCount('cabang')->find($id);
+
+        if (!$salon) {
+            return 0;
+        }
+
+        return $salon->cabang_count;
+    }
 }

@@ -48,7 +48,7 @@ const Map<String, String> enUS = {
   'enter_salon_code': 'Enter the Unique Salon Code where you work*',
   'salon_code': 'Salon Unique Code',
   'search': 'Search',
-  'salon_code_not_found': 'The salon code you’re looking for was not found',
+  'salon_code_not_found': "The salon code you're looking for was not found",
   'salon_code_hint':
       '*The Unique Salon Code can be found on the profile page of the SalonKu app owned by the salon owner',
   'salon_found': 'Salon Found Successfully!',
@@ -74,4 +74,14 @@ const Map<String, String> enUS = {
   "alamat_salon": "Salon Address",
   "placeholder_alamat_salon": "Enter your full salon address",
   "nomor_telp_salon": "Salon Phone Number",
+  "menunggu_approval_title": "Waiting for Salon Owner' Approval",
+  "menunggu_approval_subtitle":
+      "Almost there! You're just one step away from enjoying all the features of SalonKu. For now, you'll be directed to the waiting page until the Salon Owner approves your staff request. Once approved, you can start using all SalonKu features right away!",
+  "permintaan_ditolak_title": "Sorry, Your Staff Request Was Rejected",
+  "permintaan_ditolak_subtitle":
+      "Unfortunately, your request to join as a staff member was declined by the Salon Owner. Please contact them for more details.",
+  "bukan_salon_ini":
+      "Not the salon you meant? Tap the 'Change Salon' button below to pick again.",
+  "ganti_salon": "Change Salon",
+  "data_not_found": "Data not found",
 };

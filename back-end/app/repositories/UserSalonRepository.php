@@ -7,6 +7,21 @@ use App\Repositories\Request;
 
 class UserSalonRepository
 {
+    public function getJumlahStaff($id): int
+    {
+        $staff = UserSalon::where([
+            ['id_salon', '=', $id],
+            ['level', '=', 2],
+            ['aktif', '=', 1],
+        ])->count();
+
+        if (!$staff) {
+            return 0;
+        }
+
+        return $staff;
+    }
+
     public function findByFirebaseId(string $firebaseId)
     {
         return UserSalon::where("id_user_firebase", $firebaseId)->first();

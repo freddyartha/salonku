@@ -78,4 +78,14 @@ const Map<String, String> idID = {
   "alamat_salon": "Alamat Salon",
   "placeholder_alamat_salon": "Tuliskan alamat lengkap salon kamu",
   "nomor_telp_salon": "No. Telepon Salon",
+  "menunggu_approval_title": "Menunggu Persetujuan dari Owner Salon",
+  "menunggu_approval_subtitle":
+      "Selangkah lagi! Kamu hampir bisa menikmati semua fitur SalonKu. Untuk saat ini, kamu akan diarahkan ke halaman menunggu persetujuan dari Owner Salon. Setelah Owner menyetujui permintaan kamu sebagai staff, semua fitur SalonKu bisa langsung kamu gunakan!",
+  "permintaan_ditolak_title": "Maaf, Permintaan Kamu Ditolak oleh Owner Salon",
+  "permintaan_ditolak_subtitle":
+      "Sayang sekali, permintaan kamu untuk menjadi staff ditolak oleh Owner Salon. Coba hubungi Owner untuk info lebih lanjut, ya.",
+  "bukan_salon_ini":
+      "Bukan salon yang kamu maksud? Klik tombol 'Ganti Salon' di bawah untuk memilih ulang.",
+  "ganti_salon": "Ganti Salon",
+  "data_not_found": "Data tidak ditemukan",
 };
