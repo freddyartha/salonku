@@ -11,6 +11,7 @@ class SalonModel {
   int id;
   String namaSalon;
   String kodeSalon;
+  String currencyCode;
   String alamat;
   String phone;
   List<SalonCabangModel>? cabang;
@@ -21,6 +22,7 @@ class SalonModel {
   SalonModel({
     required this.id,
     required this.namaSalon,
+    required this.currencyCode,
     required this.kodeSalon,
     required this.alamat,
     required this.phone,
@@ -40,6 +42,7 @@ class SalonModel {
       id: InputFormatter.dynamicToInt(dynamicData['id']) ?? 0,
       namaSalon: dynamicData['nama_salon'],
       kodeSalon: dynamicData['kode_salon'],
+      currencyCode: dynamicData['currency_code'],
       alamat: dynamicData['alamat'],
       phone: dynamicData['phone'],
       logoUrl: dynamicData['logo_url'] ?? "",
@@ -64,6 +67,7 @@ class SalonModel {
     'id': id,
     'nama_salon': namaSalon,
     'kode_salon': kodeSalon,
+    'currency_code': currencyCode,
     'alamat': alamat,
     'phone': phone,
     'logo_url': logoUrl,

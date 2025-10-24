@@ -1,0 +1,36 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::table('m_salon', function (Blueprint $table) {
+            $table->string('currency_code')->after('kode_salon');
+        });
+
+        Schema::table('m_salon_Cabang', function (Blueprint $table) {
+            $table->string('currency_code')->nullable()->after('id_salon');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::table('m_salon', function (Blueprint $table) {
+            $table->dropColumn('currency_code');
+        });
+
+        Schema::table('m_salon_Cabang', function (Blueprint $table) {
+            $table->dropColumn('currency_code');
+        });
+    }
+};

@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:get/get.dart';
+import 'package:salonku/app/common/app_colors.dart';
+import 'package:salonku/app/common/radiuses.dart';
 import 'package:salonku/app/common/reusable_statics.dart';
 import 'package:salonku/app/components/widgets/reusable_widgets.dart';
 import 'package:salonku/app/data/models/result.dart';
+import 'package:salonku/app/extension/theme_extension.dart';
 
 class ListComponentController<T> {
   Future<Success<List<T>>> Function(int pageIndex) getDataResult;
@@ -91,6 +96,8 @@ class ListComponent<T> extends StatefulWidget {
   final bool withPadding;
   final Widget? customLoadingChildren;
   final bool withSeparator;
+  final dynamic Function(T e)? editAction;
+  final dynamic Function(T e)? deleteAction;
 
   const ListComponent({
     super.key,
@@ -101,6 +108,8 @@ class ListComponent<T> extends StatefulWidget {
     this.withPadding = true,
     this.customLoadingChildren,
     this.withSeparator = false,
+    this.editAction,
+    this.deleteAction,
   });
 
   @override
@@ -120,7 +129,7 @@ class _ListComponentState<T> extends State<ListComponent<T>> {
 
   @override
   Widget build(BuildContext context) {
-    double paddingValue = widget.withPadding ? 15.0 : 0.0;
+    double paddingValue = widget.withPadding ? 10.0 : 0.0;
     return Expanded(
       child: Padding(
         padding: EdgeInsets.only(
@@ -142,7 +151,7 @@ class _ListComponentState<T> extends State<ListComponent<T>> {
                     !widget.controller._isItemRefresh
               ? widget.customEmptyWidget != null
                     ? widget.customEmptyWidget!
-                    : ReusableWidgets.notFoundWidget(
+                    : ReusableWidgets.generalNotFoundWidget(
                         width: MediaQuery.of(context).size.width * 0.7,
                       )
               : ListView.separated(
@@ -169,9 +178,74 @@ class _ListComponentState<T> extends State<ListComponent<T>> {
                         ),
                       );
                     } else {
-                      return widget.itemBuilder(
-                        widget.controller._items[index],
-                      );
+                      if (widget.editAction == null &&
+                          widget.deleteAction == null) {
+                        return widget.itemBuilder(
+                          widget.controller._items[index],
+                        );
+                      } else {
+                        return Container(
+                          decoration: BoxDecoration(
+                            color: context.accent2.withValues(alpha: 0.3),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(Radiuses.large),
+                            ),
+                            border: Border.all(color: context.contrast),
+                          ),
+                          child: Slidable(
+                            endActionPane: ActionPane(
+                              motion: StretchMotion(),
+                              children: [
+                                if (widget.editAction != null) ...[
+                                  SlidableAction(
+                                    onPressed: (_) {
+                                      widget.editAction!(
+                                        widget.controller._items[index],
+                                      );
+                                    },
+                                    backgroundColor: context.contrast,
+                                    foregroundColor: AppColors.darkText,
+                                    icon: Icons.edit,
+                                    label: 'edit'.tr,
+                                    borderRadius: widget.deleteAction == null
+                                        ? BorderRadius.only(
+                                            topRight: Radius.circular(
+                                              Radiuses.large,
+                                            ),
+                                            bottomRight: Radius.circular(
+                                              Radiuses.large,
+                                            ),
+                                          )
+                                        : BorderRadius.zero,
+                                  ),
+                                ],
+                                if (widget.deleteAction != null) ...[
+                                  SlidableAction(
+                                    onPressed: (_) {
+                                      widget.deleteAction!(
+                                        widget.controller._items[index],
+                                      );
+                                    },
+                                    backgroundColor: AppColors.danger,
+                                    foregroundColor: AppColors.darkText,
+                                    icon: Icons.delete,
+                                    label: 'delete'.tr,
+                                    borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(Radiuses.large),
+                                      bottomRight: Radius.circular(
+                                        Radiuses.large,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ],
+                            ),
+                            child: widget.itemBuilder(
+                              widget.controller._items[index],
+                            ),
+                          ),
+                        );
+                      }
                     }
                   },
                 ),

@@ -71,6 +71,8 @@ class RegisterSalonController extends BaseController {
       id: 0,
       namaSalon: namaSalonCon.value,
       kodeSalon: "",
+      //TODO : Buatkan field untuk currency code
+      currencyCode: "",
       alamat: alamatSalonCon.value,
       phone: phoneSalonCon.value,
     );

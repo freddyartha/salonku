@@ -10,6 +10,7 @@ SalonCabangModel salonCabangModelFromJson(String str) =>
 class SalonCabangModel {
   int id;
   int idSalon;
+  String? currencyCode;
   String nama;
   String alamat;
   String phone;
@@ -19,6 +20,7 @@ class SalonCabangModel {
   SalonCabangModel({
     required this.id,
     required this.idSalon,
+    this.currencyCode,
     required this.nama,
     required this.alamat,
     required this.phone,
@@ -35,6 +37,7 @@ class SalonCabangModel {
     return SalonCabangModel(
       id: InputFormatter.dynamicToInt(dynamicData['id']) ?? 0,
       idSalon: InputFormatter.dynamicToInt(dynamicData['id_salon']) ?? 0,
+      currencyCode: dynamicData['currency_code'],
       nama: dynamicData['nama'],
       alamat: dynamicData['alamat'],
       phone: dynamicData['phone'],
@@ -48,6 +51,7 @@ class SalonCabangModel {
   Map<String, dynamic> toJson() => {
     'id': id,
     'id_salon': idSalon,
+    "currency_code": currencyCode,
     'nama': nama,
     'alamat': alamat,
     'phone': phone,

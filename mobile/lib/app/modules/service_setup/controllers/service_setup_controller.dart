@@ -1,23 +1,6 @@
 import 'package:get/get.dart';
+import 'package:salonku/app/components/inputs/input_text_component.dart';
 
 class ServiceSetupController extends GetxController {
-  //TODO: Implement ServiceSetupController
-
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
+  final namaServiceCon = InputTextController();
 }

@@ -7,7 +7,6 @@ import 'package:salonku/app/common/radiuses.dart';
 import 'package:salonku/app/components/buttons/button_component.dart';
 import 'package:salonku/app/components/images/image_component.dart';
 import 'package:salonku/app/components/texts/text_component.dart';
-
 import 'package:salonku/app/extension/theme_extension.dart';
 import 'package:salonku/app/models/salon_model.dart';
 import 'package:shimmer/shimmer.dart';
@@ -54,6 +53,38 @@ class ReusableWidgets {
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(Get.height),
             ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  static Widget generalCreateDataWidget(
+    BuildContext context,
+    dynamic Function() onTap,
+  ) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.all(15),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: context.contrast,
+          boxShadow: [
+            BoxShadow(
+              color: context.accent2,
+              blurRadius: 5,
+              offset: Offset(4, 5),
+            ),
+          ],
+        ),
+        height: 60,
+        width: 60,
+        child: Center(
+          child: ImageComponent(
+            localUrl: "assets/images/png/create.png",
+            boxFit: BoxFit.contain,
+            color: AppColors.darkText,
           ),
         ),
       ),
@@ -848,250 +879,62 @@ class ReusableWidgets {
   //   );
   // }
 
-  // static Widget carouselWidget({required List<ArticleModel> imageList}) {
-  //   return CarouselSlider(
-  //     items: imageList.map((item) {
-  //       return Container(
-  //         margin: EdgeInsets.only(top: 10, bottom: 20),
-  //         decoration: BoxDecoration(
-  //           boxShadow: [
-  //             BoxShadow(
-  //               color: AppColors.black.withValues(alpha: 0.5),
-  //               blurRadius: 8,
-  //               spreadRadius: 2,
-  //               offset: Offset(0, 0),
-  //             ),
-  //           ],
-  //           borderRadius: BorderRadius.circular(Radiuses.large),
-  //           image: DecorationImage(
-  //             fit: BoxFit.cover,
-  //             alignment: Alignment.bottomCenter,
-  //             image: NetworkImage(item.imageUrl),
-  //           ),
-  //         ),
-  //         child: Align(
-  //           alignment: Alignment.bottomCenter,
-  //           child: Container(
-  //             padding: EdgeInsets.all(10),
-  //             decoration: BoxDecoration(
-  //               gradient: LinearGradient(
-  //                 colors: [Colors.transparent, AppColors.white],
-  //                 begin: Alignment.topCenter,
-  //                 end: Alignment.bottomCenter,
-  //               ),
-  //               borderRadius: BorderRadius.circular(Radiuses.large),
-  //             ),
-  //             child: Column(
-  //               mainAxisSize: MainAxisSize.min,
-  //               crossAxisAlignment: CrossAxisAlignment.start,
-  //               children: [
-  //                 TextComponent(
-  //                   value: item.title,
-  //                   fontColor: AppColors.white,
-  //                   fontWeight: FontWeight.w600,
-  //                   fontSize: FontSizes.h6,
-  //                   maxLines: 10,
-  //                 ),
-  //                 TextComponent(
-  //                   value: item.subtitle,
-  //                   fontColor: AppColors.white,
-  //                   fontSize: FontSizes.small,
-  //                 ),
-  //               ],
-  //             ),
-  //           ),
-  //         ),
-  //       );
-  //     }).toList(),
-  //     options: CarouselOptions(
-  //       height: Get.width * 0.8,
-  //       autoPlay: true,
-  //       enlargeCenterPage: true,
-  //       autoPlayInterval: const Duration(seconds: 3),
-  //       autoPlayAnimationDuration: const Duration(milliseconds: 1000),
-  //     ),
-  //   );
-  // }
+  static Widget generalSetupPageWidget(
+    BuildContext context, {
+    required String title,
+    required List<Widget> children,
+    dynamic Function()? saveOnTap,
+  }) {
+    return Stack(
+      children: [
+        Container(
+          color: context.primary,
+          height: MediaQuery.of(context).size.height,
+        ),
+        Positioned.fill(child: ReusableWidgets.generalBottomDecoration()),
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: ReusableWidgets.generalAppBarWidget(title: title.tr),
+          body: SafeArea(
+            child: ListView(
+              physics: ClampingScrollPhysics(),
+              shrinkWrap: true,
+              children: [
+                Container(
+                  height: 30,
+                  margin: EdgeInsets.only(bottom: 10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(Radiuses.extraLarge),
+                      bottomRight: Radius.circular(Radiuses.extraLarge),
+                    ),
+                    color: context.accent,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ...children,
 
-  // static Widget scannedDocCarouselWidget({
-  //   required List<String> imageList,
-  //   bool isNetworkImage = false,
-  // }) {
-  //   final CarouselSliderController imageController = CarouselSliderController();
-  //   RxInt current = 0.obs;
-
-  //   //sizes
-  //   final screenWidth = Get.width;
-  //   final screenHeight = Get.height * 0.75;
-
-  //   // Ambil ukuran gambar dari File
-  //   Future<Size> getFileImageSize(File file) async {
-  //     final bytes = await file.readAsBytes();
-  //     final codec = await ui.instantiateImageCodec(bytes);
-  //     final frame = await codec.getNextFrame();
-  //     final image = frame.image;
-  //     return Size(image.width.toDouble(), image.height.toDouble());
-  //   }
-
-  //   Future<void> showImageBottomSheet(String item) async =>
-  //       await customBottomSheet(
-  //         title: "scan_result".tr,
-  //         children: [
-  //           LayoutBuilder(
-  //             builder: (context, constraints) {
-  //               if (isNetworkImage) {
-  //                 Size? imageSize;
-  //                 double? aspectRatio;
-  //                 double? imageHeight;
-  //                 final image = Image.network(item);
-
-  //                 image.image
-  //                     .resolve(const ImageConfiguration())
-  //                     .addListener(
-  //                       ImageStreamListener((ImageInfo info, bool _) {
-  //                         imageSize = Size(
-  //                           info.image.width.toDouble(),
-  //                           info.image.height.toDouble(),
-  //                         );
-  //                         aspectRatio = imageSize!.width / imageSize!.height;
-  //                         imageHeight = screenWidth / aspectRatio!;
-  //                       }),
-  //                     );
-
-  //                 return ImageComponent(
-  //                   zoomable: true,
-  //                   networkUrl: item,
-  //                   width: screenWidth,
-  //                   height: imageHeight! > screenHeight
-  //                       ? screenHeight
-  //                       : imageHeight,
-  //                   boxFit: BoxFit.contain,
-  //                 );
-  //               } else {
-  //                 return FutureBuilder<Size>(
-  //                   future: getFileImageSize(File(item)),
-  //                   builder: (context, snapshot) {
-  //                     if (!snapshot.hasData) {
-  //                       return const Center(
-  //                         child: CircularProgressIndicator(
-  //                           color: AppColors.primary,
-  //                         ),
-  //                       );
-  //                     }
-
-  //                     final imageSize = snapshot.data!;
-  //                     final aspectRatio = imageSize.width / imageSize.height;
-  //                     final imageHeight = screenWidth / aspectRatio;
-
-  //                     return ImageComponent(
-  //                       zoomable: true,
-  //                       imageFromFile: item,
-  //                       width: screenWidth,
-  //                       height: imageHeight > screenHeight
-  //                           ? screenHeight
-  //                           : imageHeight,
-  //                       boxFit: BoxFit.contain,
-  //                     );
-  //                   },
-  //                 );
-  //               }
-  //             },
-  //           ),
-  //         ],
-  //       );
-
-  //   if (imageList.length <= 1) {
-  //     final item = imageList.first;
-  //     return GestureDetector(
-  //       onTap: () => showImageBottomSheet(item),
-  //       child: Container(
-  //         margin: EdgeInsets.all(10),
-  //         clipBehavior: Clip.hardEdge,
-  //         decoration: BoxDecoration(
-  //           boxShadow: [
-  //             BoxShadow(
-  //               color: AppColors.black.withValues(alpha: 0.5),
-  //               blurRadius: 8,
-  //               offset: Offset(0, 0),
-  //             ),
-  //           ],
-  //           borderRadius: BorderRadius.circular(Radiuses.large),
-  //         ),
-  //         child: ImageComponent(
-  //           imageFromFile: isNetworkImage ? null : item,
-  //           networkUrl: isNetworkImage ? item : null,
-  //           width: screenWidth,
-  //           boxFit: BoxFit.fitWidth,
-  //         ),
-  //       ),
-  //     );
-  //   } else {
-  //     return ListView(
-  //       padding: EdgeInsets.only(bottom: 20),
-  //       shrinkWrap: true,
-  //       physics: NeverScrollableScrollPhysics(),
-  //       children: [
-  //         CarouselSlider(
-  //           items: imageList.map((item) {
-  //             return GestureDetector(
-  //               onTap: () => showImageBottomSheet(item),
-  //               child: Container(
-  //                 margin: EdgeInsets.symmetric(vertical: 10),
-  //                 decoration: BoxDecoration(
-  //                   boxShadow: [
-  //                     BoxShadow(
-  //                       color: AppColors.black.withValues(alpha: 0.5),
-  //                       blurRadius: 8,
-  //                       offset: Offset(0, 0),
-  //                     ),
-  //                   ],
-  //                   borderRadius: BorderRadius.circular(Radiuses.large),
-  //                   image: DecorationImage(
-  //                     fit: BoxFit.cover,
-  //                     alignment: Alignment.bottomCenter,
-  //                     image: isNetworkImage
-  //                         ? NetworkImage(item)
-  //                         : FileImage(File(item)),
-  //                   ),
-  //                 ),
-  //               ),
-  //             );
-  //           }).toList(),
-  //           carouselController: imageController,
-  //           options: CarouselOptions(
-  //             height: Get.height * 0.5,
-  //             autoPlay: true,
-  //             enlargeCenterPage: true,
-  //             autoPlayInterval: const Duration(seconds: 8),
-  //             autoPlayAnimationDuration: const Duration(seconds: 3),
-  //             onPageChanged: (index, reason) => current.value = index,
-  //           ),
-  //         ),
-  //         Obx(
-  //           () => Row(
-  //             mainAxisAlignment: MainAxisAlignment.center,
-  //             children: imageList.asMap().entries.map((entry) {
-  //               return GestureDetector(
-  //                 onTap: () => imageController.animateToPage(entry.key),
-  //                 child: Container(
-  //                   width: current.value == entry.key ? 20 : 10,
-  //                   height: 8,
-  //                   margin: const EdgeInsets.symmetric(horizontal: 2),
-  //                   decoration: BoxDecoration(
-  //                     borderRadius: BorderRadius.all(Radius.circular(3)),
-  //                     color: (AppColors.primary).withValues(
-  //                       alpha: current.value == entry.key ? 1 : 0.4,
-  //                     ),
-  //                   ),
-  //                 ),
-  //               );
-  //             }).toList(),
-  //           ),
-  //         ),
-  //       ],
-  //     );
-  //   }
-  // }
+                      if (saveOnTap != null) ...[
+                        ButtonComponent(
+                          onTap: saveOnTap,
+                          text: "save".tr,
+                          margin: EdgeInsets.only(top: 50),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 
   static Widget listLoadingWidget({
     required int count,
@@ -1157,7 +1000,10 @@ class ReusableWidgets {
           );
   }
 
-  static Widget notFoundWidget({required double width, bool isOffset = true}) {
+  static Widget generalNotFoundWidget({
+    required double width,
+    bool isOffset = true,
+  }) {
     return Column(
       mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -1232,39 +1078,39 @@ class ReusableWidgets {
   //   );
   // }
 
-  // static Widget generalPopScopeWidget({
-  //   required Widget child,
-  //   required bool Function() showConfirmationCondition,
-  //   Function()? customBackAction,
-  // }) {
-  //   return PopScope(
-  //     canPop: false,
-  //     onPopInvokedWithResult: (didPop, result) async {
-  //       if (didPop) return;
-  //       if (showConfirmationCondition()) {
-  //         bool? result = await ReusableWidgets.confirmationBottomSheet(
-  //           textConfirm: "yes".tr,
-  //           withImage: true,
-  //           children: [TextComponent(value: "go_back_confirmation".tr)],
-  //         );
-  //         if (result == true) {
-  //           if (customBackAction != null) {
-  //             customBackAction();
-  //           } else {
-  //             Get.back();
-  //           }
-  //         }
-  //       } else {
-  //         if (customBackAction != null) {
-  //           customBackAction();
-  //         } else {
-  //           Get.back();
-  //         }
-  //       }
-  //     },
-  //     child: child,
-  //   );
-  // }
+  static Widget generalPopScopeWidget({
+    required Widget child,
+    required bool Function() showConfirmationCondition,
+    Function()? customBackAction,
+  }) {
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (didPop) return;
+        if (showConfirmationCondition()) {
+          bool? result = await ReusableWidgets.confirmationBottomSheet(
+            textConfirm: "yes".tr,
+            withImage: true,
+            children: [TextComponent(value: "go_back_confirmation".tr)],
+          );
+          if (result == true) {
+            if (customBackAction != null) {
+              customBackAction();
+            } else {
+              Get.back();
+            }
+          }
+        } else {
+          if (customBackAction != null) {
+            customBackAction();
+          } else {
+            Get.back();
+          }
+        }
+      },
+      child: child,
+    );
+  }
 
   // static Widget generalShadowedContainer({
   //   required Widget child,
@@ -1331,22 +1177,5 @@ class ReusableWidgets {
   //       ),
   //     ),
   //   ],
-  // );
-
-  // static Widget generalNotFoundWidget() => Container(
-  //   margin: EdgeInsets.symmetric(horizontal: 40),
-  //   child: Column(
-  //     mainAxisAlignment: MainAxisAlignment.center,
-  //     spacing: 20,
-  //     children: [
-  //       Image.asset("assets/images/not_found.png"),
-  //       TextComponent(
-  //         value: "general_not_found".tr,
-  //         fontSize: FontSizes.h6,
-  //         fontWeight: FontWeight.w600,
-  //         textAlign: TextAlign.center,
-  //       ),
-  //     ],
-  //   ),
   // );
 }

@@ -14,7 +14,7 @@ class ServiceRepository
         $search = $options['search'];
         $sort = $options['sort'] ?? 'desc';
 
-        $query = Service::query()->with('cabangs')->where("id_Salon", $salonId);
+        $query = Service::query()->with('cabangs', 'salon')->where("id_Salon", $salonId);
 
         if ($search) {
             $query->where(function ($q) use ($search) {

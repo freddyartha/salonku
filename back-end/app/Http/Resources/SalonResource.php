@@ -15,13 +15,14 @@ class SalonResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'         => $this->id,
-            'nama_salon' => $this->nama_salon,
-            'kode_salon' => $this->kode_salon,
-            'alamat'     => $this->alamat,
-            'phone'      => $this->phone,
-            'logo_url'   => $this->logo_url,
-            'cabang'     => $this->cabang,
+            'id'            => $this->id,
+            'nama_salon'    => $this->nama_salon,
+            'kode_salon'    => $this->kode_salon,
+            'currency_code' => $this->currency_code,
+            'alamat'        => $this->alamat,
+            'phone'         => $this->phone,
+            'logo_url'      => $this->logo_url,
+            'cabang'        => $this->cabang,
         ];
     }
 }
