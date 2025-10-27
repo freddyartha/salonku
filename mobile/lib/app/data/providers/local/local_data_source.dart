@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:salonku/app/models/salon_model.dart';
 import 'package:salonku/app/models/user_model.dart';
 
 abstract class LocalDataSource extends GetxService {
@@ -6,6 +7,8 @@ abstract class LocalDataSource extends GetxService {
   bool getIsShowOnboarding();
 
   UserModel get userData;
+
+  SalonModel get salonData;
 
   bool getIsLoginApple();
 
@@ -17,4 +20,6 @@ abstract class LocalDataSource extends GetxService {
   Future<void> clearAllCache();
 
   Future<void> cacheIsLoginApple(bool isApple);
+
+  Future<void> cacheSalon(SalonModel salon);
 }

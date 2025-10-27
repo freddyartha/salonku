@@ -47,7 +47,7 @@ const Map<String, String> enUS = {
   'register_as': 'Choose to register as',
   'enter_salon_code': 'Enter the Unique Salon Code where you work*',
   'salon_code': 'Salon Unique Code',
-  'search': 'Search',
+  'search': 'Search...',
   'salon_code_not_found': "The salon code you're looking for was not found",
   'salon_code_hint':
       '*The Unique Salon Code can be found on the profile page of the SalonKu app owned by the salon owner',
@@ -84,4 +84,15 @@ const Map<String, String> enUS = {
       "Not the salon you meant? Tap the 'Change Salon' button below to pick again.",
   "ganti_salon": "Change Salon",
   "data_not_found": "Data not found",
+  "delete_confirmation": "Are you sure want to delete this item?",
+
+  "service": "Service",
+  "nama_service": "Service Name",
+  "deskripsi": "Description",
+  "harga": "Price",
+  "placeholder_nama_service": "Enter your service name",
+  "placeholder_deskripsi": "Write a short description of the service",
+  "placeholder_harga": "Enter the service price",
+  "go_back_confirmation":
+      "There are unsaved changes, are you sure you want to go back?",
 };

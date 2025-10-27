@@ -8,4 +8,15 @@ abstract class ServiceRepositoryContract {
     required int pageSize,
     String? keyword,
   });
+
+  Future<Result<ServiceModel>> getServiceById(int id);
+
+  Future<Result<List>> deleteServiceById(int id);
+
+  Future<Result<ServiceModel>> createService(Map<String, dynamic> model);
+
+  Future<Result<ServiceModel>> updateService(
+    int id,
+    Map<String, dynamic> model,
+  );
 }

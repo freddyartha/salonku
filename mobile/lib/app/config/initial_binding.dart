@@ -133,6 +133,7 @@ class InitialBinding extends Bindings {
     Get.lazyPut<AuthController>(
       () => AuthController(
         Get.find<UserSalonRepositoryContract>(),
+        Get.find<SalonRepositoryContract>(),
         Get.find<LocalDataSource>(),
       ),
     );

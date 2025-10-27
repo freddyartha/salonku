@@ -23,4 +23,24 @@ class ServiceService
         ];
         return $this->serviceRepository->getPaginatedService($id, $options);
     }
+
+    public function getServiceById(int $id)
+    {
+        return $this->serviceRepository->findById($id);
+    }
+
+    public function deleteById(int $id)
+    {
+        return $this->serviceRepository->deleteById($id);
+    }
+
+    public function storeService(array $data)
+    {
+        return $this->serviceRepository->create($data);
+    }
+
+    public function updateService(array $data, int $id)
+    {
+        return $this->serviceRepository->update($data, $id);
+    }
 }

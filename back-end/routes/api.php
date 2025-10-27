@@ -27,4 +27,8 @@ Route::middleware('firebase.auth')->group(function () {
 
     //Service
     Route::get('/service/{salonId}/list', [ServiceController::class, 'getPaginatedService']);
+    Route::get('/service/{id}', [ServiceController::class, 'readServiceById']);
+    Route::post('/service', [ServiceController::class, 'storeService']);
+    Route::put('/service/{id}', [ServiceController::class, 'updateService']);
+    Route::delete('/service/{id}/delete', [ServiceController::class, 'deleteServiceById']);
 });

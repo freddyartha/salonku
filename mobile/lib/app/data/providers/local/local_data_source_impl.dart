@@ -1,5 +1,6 @@
 import 'package:get_storage/get_storage.dart';
 import 'package:salonku/app/core/constants/storage_key.dart';
+import 'package:salonku/app/models/salon_model.dart';
 import 'package:salonku/app/models/user_model.dart';
 
 import 'local_data_source.dart';
@@ -22,6 +23,12 @@ class LocalDataSourceImpl extends LocalDataSource {
   UserModel get userData {
     final userData = _box.read(StorageKey.cachedUserDataKey);
     return UserModel.fromDynamic(userData);
+  }
+
+  @override
+  SalonModel get salonData {
+    final salonData = _box.read(StorageKey.cachedSalonDataKey);
+    return SalonModel.fromDynamic(salonData);
   }
 
   @override
@@ -50,5 +57,11 @@ class LocalDataSourceImpl extends LocalDataSource {
   bool getIsLoginApple() {
     final isApple = _box.read(StorageKey.cachedAppleLoginKey);
     return isApple ?? false;
+  }
+
+  @override
+  Future<void> cacheSalon(SalonModel salon) async {
+    var salonJson = salonModelToJson(salon);
+    await _box.write(StorageKey.cachedSalonDataKey, salonJson);
   }
 }

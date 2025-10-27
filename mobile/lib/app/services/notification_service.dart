@@ -21,7 +21,7 @@ Future<void> handleNotificationRouting(String? payload) async {
       await Get.toNamed(data["page"], arguments: args);
     }
   } catch (e) {
-    print("error parsing notification payload: $e");
+    // print("error parsing notification payload: $e");
   }
 }
 

@@ -28,4 +28,28 @@ class ServiceRepository
 
         return $query->paginate($perPage);
     }
+
+    public function findById(int $id)
+    {
+        return Service::with('cabangs', 'salon')->find($id);
+    }
+
+    public function deleteById(int $id)
+    {
+        return Service::findOrFail($id)->delete();
+    }
+
+    public function create(array $data): Service
+    {
+        $res = Service::create($data);
+        return $res->load('cabangs', 'salon');
+    }
+
+    public function update(array $data, $id): Service
+    {
+        $res = $this->findById($id);
+        $res->update($data);
+
+        return $res->load('cabangs', 'salon');
+    }
 }

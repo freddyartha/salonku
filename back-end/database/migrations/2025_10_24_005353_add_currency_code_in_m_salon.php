@@ -14,10 +14,6 @@ return new class extends Migration
         Schema::table('m_salon', function (Blueprint $table) {
             $table->string('currency_code')->after('kode_salon');
         });
-
-        Schema::table('m_salon_Cabang', function (Blueprint $table) {
-            $table->string('currency_code')->nullable()->after('id_salon');
-        });
     }
 
     /**
@@ -26,10 +22,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('m_salon', function (Blueprint $table) {
-            $table->dropColumn('currency_code');
-        });
-
-        Schema::table('m_salon_Cabang', function (Blueprint $table) {
             $table->dropColumn('currency_code');
         });
     }

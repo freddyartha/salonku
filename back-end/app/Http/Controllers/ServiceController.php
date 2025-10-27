@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ApiResponse;
+use App\Http\Requests\StoreServiceRequest;
 use App\Http\Resources\ListServiceResource;
+use App\Http\Resources\ServiceResource;
 use App\Services\ServiceService;
 use Illuminate\Http\Request;
 
@@ -28,5 +31,44 @@ class ServiceController extends Controller
         }
 
         return ListServiceResource::collection($response);
+    }
+
+    // Menampilkan data berdasarkan ID
+    public function readServiceById($id)
+    {
+        $response = $this->serviceService->getServiceById($id);
+
+        $resource = new ServiceResource($response);
+
+        return ApiResponse::success(
+            data: $resource,
+        );
+    }
+
+    public function deleteServiceById($id)
+    {
+        $this->serviceService->deleteById($id);
+
+        return ApiResponse::success(
+            message: "Service deleted successfully",
+        );
+    }
+
+    public function storeService(StoreServiceRequest $request)
+    {
+        $salon = $this->serviceService->storeService($request->validated());
+
+        return ApiResponse::success(
+            data: new ServiceResource($salon)
+        );
+    }
+
+    public function updateService(StoreServiceRequest $request, int $id)
+    {
+        $salon = $this->serviceService->updateService($request->validated(), $id);
+
+        return ApiResponse::success(
+            data: new ServiceResource($salon)
+        );
     }
 }

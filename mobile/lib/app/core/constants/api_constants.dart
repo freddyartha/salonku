@@ -38,4 +38,9 @@ class ApiConstants {
     final queryString = Uri(queryParameters: queryParams).query;
     return "$api/service/$idSalon/list?$queryString";
   }
+
+  static String postService = '$api/service';
+  static String putServiceById(int id) => '$api/service/$id';
+  static String getServiceById(int id) => '$api/service/$id';
+  static String deleteServiceById(int id) => '$api/service/$id/delete';
 }

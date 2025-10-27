@@ -13,6 +13,7 @@ import 'package:salonku/app/components/texts/text_component.dart';
 import 'package:salonku/app/components/widgets/reusable_widgets.dart';
 import 'package:salonku/app/core/base/base_controller.dart';
 import 'package:salonku/app/data/providers/local/local_data_source.dart';
+import 'package:salonku/app/data/repositories/contract/salon_repository_contract.dart';
 import 'package:salonku/app/data/repositories/contract/user_salon_repository_contract.dart';
 import 'package:salonku/app/routes/app_pages.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -29,8 +30,13 @@ class AuthController extends BaseController {
   String? notificationToken;
 
   final UserSalonRepositoryContract _userSalonRepositoryContract;
+  final SalonRepositoryContract _salonRepositoryContract;
   final LocalDataSource _localDataSource;
-  AuthController(this._userSalonRepositoryContract, this._localDataSource);
+  AuthController(
+    this._userSalonRepositoryContract,
+    this._salonRepositoryContract,
+    this._localDataSource,
+  );
 
   @override
   void onInit() async {
@@ -93,7 +99,7 @@ class AuthController extends BaseController {
             },
           );
         } else {
-          Get.offAllNamed(Routes.BASE);
+          _getSalon(res.idSalon!);
         }
       },
       showErrorSnackbar: false,
@@ -106,6 +112,22 @@ class AuthController extends BaseController {
             subtitle: error.value?.message ?? "",
           );
         }
+      },
+    );
+  }
+
+  Future<void> _getSalon(int id) async {
+    await handleRequest(
+      () => _salonRepositoryContract.getSalonById(id),
+      showEasyLoading: false,
+      onSuccess: (res) {
+        _localDataSource.cacheSalon(res);
+        Get.offAllNamed(Routes.BASE);
+      },
+      showErrorSnackbar: false,
+      onError: () {
+        Get.offAllNamed(Routes.LOGIN);
+        ReusableWidgets.notifBottomSheet(subtitle: error.value?.message ?? "");
       },
     );
   }

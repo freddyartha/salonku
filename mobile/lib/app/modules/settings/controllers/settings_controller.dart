@@ -20,7 +20,6 @@ class SettingsController extends BaseController {
   @override
   void onInit() {
     userData = _localDataSource.userData;
-    print(userData.idSalon);
 
     dataUtamaList.addAll([
       MenuItemModel(
@@ -76,7 +75,6 @@ class SettingsController extends BaseController {
       showEasyLoading: false,
       () => _salonRepositoryContract.getSalonById(userData.idSalon ?? 0),
       onSuccess: (res) {
-        print(res.logoUrl);
         salonModel = res;
         getSalonSummary();
       },

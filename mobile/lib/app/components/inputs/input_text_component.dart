@@ -8,6 +8,7 @@ import 'package:salonku/app/common/font_size.dart';
 import 'package:salonku/app/common/input_formatter.dart';
 import 'package:salonku/app/common/radiuses.dart';
 import 'package:salonku/app/components/inputs/input_box_component.dart';
+import 'package:salonku/app/components/texts/text_component.dart';
 import 'package:salonku/app/extension/theme_extension.dart';
 
 enum InputTextType { text, email, password, number, paragraf, money, ktp }
@@ -178,10 +179,15 @@ class _InputTextState extends State<InputTextComponent> {
           width: widget.editable ? .1 : .3,
         ),
       ),
-      prefixText: widget.prefixText,
-      prefixStyle: TextStyle(color: context.text.withValues(alpha: 0.6)),
+      // prefixText: widget.prefixText,
+      // prefixStyle: TextStyle(color: context.text),
       suffixIconConstraints: const BoxConstraints(minHeight: 30, minWidth: 30),
-      prefixIcon: widget.prefixIcon,
+      prefixIcon: widget.prefixText != null
+          ? SizedBox(
+              width: 50,
+              child: Center(child: TextComponent(value: widget.prefixText)),
+            )
+          : widget.prefixIcon,
       suffixIcon: widget.controller.type == InputTextType.password
           ? InkWell(
               splashColor: Colors.transparent,

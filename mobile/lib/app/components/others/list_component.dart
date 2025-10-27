@@ -156,13 +156,12 @@ class _ListComponentState<T> extends State<ListComponent<T>> {
                       )
               : ListView.separated(
                   padding: EdgeInsets.zero,
-                  shrinkWrap: true,
                   itemCount: widget.controller._items.length,
                   controller: widget.controller._listViewController,
                   physics: const AlwaysScrollableScrollPhysics(),
                   separatorBuilder: (context, index) => widget.withSeparator
                       ? Divider(height: 1.5, thickness: 0.5)
-                      : SizedBox.shrink(),
+                      : SizedBox(height: 8),
                   itemBuilder: (context, index) {
                     if (index == widget.controller._items.length) {
                       return Visibility(

@@ -51,7 +51,7 @@ const Map<String, String> idID = {
   'register_as': 'Pilih mendaftar sebagai',
   'enter_salon_code': 'Masukkan Kode Unik Salon Tempat Kamu Bekerja*',
   'salon_code': 'Kode Unik Salon',
-  'search': 'Cari',
+  'search': 'Cari...',
   'salon_code_not_found': 'Kode Unik Salon yang kamu cari tidak ditemukan',
   'salon_code_hint':
       '*Kode Unik Salon bisa ditemukan di halaman profil dari aplikasi SalonKu yang dimiliki Owner Salon',
@@ -88,4 +88,15 @@ const Map<String, String> idID = {
       "Bukan salon yang kamu maksud? Klik tombol 'Ganti Salon' di bawah untuk memilih ulang.",
   "ganti_salon": "Ganti Salon",
   "data_not_found": "Data tidak ditemukan",
+  "delete_confirmation": "Kamu yakin ingin menghapaus data ini?",
+
+  "service": "Layanan",
+  "nama_service": "Nama Layanan",
+  "deskripsi": "Deskripsi",
+  "harga": "Harga",
+  "placeholder_nama_service": "Masukkan nama layanan kamu",
+  "placeholder_deskripsi": "Tuliskan deskripsi singkat layanan",
+  "placeholder_harga": "Masukkan harga layanan",
+  "go_back_confirmation":
+      "Ada perubahan yang belum disimpan, kamu yakin ingin kembali?",
 };

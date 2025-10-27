@@ -7,6 +7,7 @@ import 'package:salonku/app/common/radiuses.dart';
 import 'package:salonku/app/components/buttons/button_component.dart';
 import 'package:salonku/app/components/images/image_component.dart';
 import 'package:salonku/app/components/texts/text_component.dart';
+import 'package:salonku/app/core/base/setup_base_controller.dart';
 import 'package:salonku/app/extension/theme_extension.dart';
 import 'package:salonku/app/models/salon_model.dart';
 import 'package:shimmer/shimmer.dart';
@@ -880,10 +881,13 @@ class ReusableWidgets {
   // }
 
   static Widget generalSetupPageWidget(
-    BuildContext context, {
+    BuildContext context,
+    SetupBaseController controller, {
     required String title,
     required List<Widget> children,
+    required bool Function() showConfirmationCondition,
     dynamic Function()? saveOnTap,
+    dynamic Function()? cancelEditOnTap,
   }) {
     return Stack(
       children: [
@@ -892,43 +896,89 @@ class ReusableWidgets {
           height: MediaQuery.of(context).size.height,
         ),
         Positioned.fill(child: ReusableWidgets.generalBottomDecoration()),
-        Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: ReusableWidgets.generalAppBarWidget(title: title.tr),
-          body: SafeArea(
-            child: ListView(
-              physics: ClampingScrollPhysics(),
-              shrinkWrap: true,
-              children: [
-                Container(
-                  height: 30,
-                  margin: EdgeInsets.only(bottom: 10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(Radiuses.extraLarge),
-                      bottomRight: Radius.circular(Radiuses.extraLarge),
+        generalPopScopeWidget(
+          showConfirmationCondition: showConfirmationCondition,
+          child: Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: ReusableWidgets.generalAppBarWidget(
+              title: title.tr,
+              actions: [
+                if (controller.isEditable.value &&
+                    controller.itemId != null) ...[
+                  Container(
+                    margin: EdgeInsets.only(right: 10),
+                    decoration: BoxDecoration(
+                      color: context.accent2,
+                      shape: BoxShape.circle,
                     ),
-                    color: context.accent,
+                    child: IconButton(
+                      onPressed: () {
+                        controller.isEditable.value = false;
+                        if (cancelEditOnTap != null) {
+                          cancelEditOnTap();
+                        }
+                      },
+                      icon: Icon(Icons.close),
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ...children,
-
-                      if (saveOnTap != null) ...[
-                        ButtonComponent(
-                          onTap: saveOnTap,
-                          text: "save".tr,
-                          margin: EdgeInsets.only(top: 50),
-                        ),
-                      ],
-                    ],
+                ] else if (!controller.isEditable.value &&
+                    controller.itemId != null) ...[
+                  Container(
+                    margin: EdgeInsets.only(right: 10),
+                    decoration: BoxDecoration(
+                      color: context.accent2,
+                      shape: BoxShape.circle,
+                    ),
+                    child: IconButton(
+                      onPressed: () {
+                        controller.isEditable.value = true;
+                      },
+                      icon: Icon(Icons.edit),
+                    ),
                   ),
-                ),
+                ],
               ],
+            ),
+            body: SafeArea(
+              child: ListView(
+                keyboardDismissBehavior:
+                    ScrollViewKeyboardDismissBehavior.onDrag,
+                physics: ClampingScrollPhysics(),
+                shrinkWrap: true,
+                children: [
+                  Container(
+                    height: 30,
+                    margin: EdgeInsets.only(bottom: 10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(Radiuses.extraLarge),
+                        bottomRight: Radius.circular(Radiuses.extraLarge),
+                      ),
+                      color: context.accent,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ...children,
+
+                        if (saveOnTap != null) ...[
+                          Visibility(
+                            visible: controller.isEditable.value,
+                            child: ButtonComponent(
+                              onTap: saveOnTap,
+                              text: "save".tr,
+                              margin: EdgeInsets.only(top: 50),
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

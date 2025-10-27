@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:salonku/app/common/font_size.dart';
+import 'package:salonku/app/common/font_weight.dart';
+import 'package:salonku/app/common/input_formatter.dart';
 import 'package:salonku/app/common/radiuses.dart';
 import 'package:salonku/app/components/inputs/input_text_component.dart';
 import 'package:salonku/app/components/others/list_component.dart';
@@ -17,7 +20,7 @@ class ServiceListView extends GetView<ServiceListController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: ReusableWidgets.generalAppBarWidget(title: "Service List"),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: ReusableWidgets.generalCreateDataWidget(
         context,
         () => Get.toNamed(
@@ -37,18 +40,28 @@ class ServiceListView extends GetView<ServiceListController> {
             ),
             child: InputTextComponent(
               controller: controller.searchCon,
-              placeHolder: "search_notification".tr,
+              placeHolder: "search".tr,
               prefixIcon: Icon(Icons.search, size: 25),
               marginBottom: 0,
             ),
           ),
           ListComponent(
             controller: controller.serviceListCon,
-            editAction: (item) => print(item.id),
-            deleteAction: (item) => print(item.id),
+            editAction: (item) => controller.itemOnTap(item.id, true),
+            deleteAction: (item) => controller.deletData(item.id),
             itemBuilder: (item) => ListTile(
-              title: TextComponent(value: item.nama),
-              subtitle: TextComponent(value: item.deskripsi),
+              contentPadding: EdgeInsets.symmetric(horizontal: 15),
+              onTap: () => controller.itemOnTap(item.id, false),
+              title: TextComponent(
+                value: item.nama,
+                fontWeight: FontWeights.semiBold,
+                fontSize: FontSizes.h6,
+              ),
+              subtitle: TextComponent(value: item.deskripsi, maxLines: 3),
+              trailing: TextComponent(
+                value:
+                    "${item.currencyCode} ${InputFormatter.toCurrency(item.harga)}",
+              ),
             ),
           ),
         ],
