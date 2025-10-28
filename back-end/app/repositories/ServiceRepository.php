@@ -59,9 +59,20 @@ class ServiceRepository
 
     public function update(array $data, $id): Service
     {
-        $res = $this->findById($id);
-        $res->update($data);
+        // pisahkan cabangs dari data utama
+        $cabangs = $data['cabangs'] ?? [];
 
-        return $res->load('cabangs', 'salon');
+        // hapus cabangs dari data utama sebelum create
+        unset($data['cabangs']);
+
+        $service = $this->findById($id);
+        $service->update($data);
+
+        // jika ada cabang, attach ke pivot
+        if (!empty($cabangs)) {
+            $service->cabangs()->sync($cabangs);
+        }
+
+        return $service->load('cabangs', 'salon');
     }
 }

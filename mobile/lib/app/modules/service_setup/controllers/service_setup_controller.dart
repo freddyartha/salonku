@@ -55,6 +55,10 @@ class ServiceSetupController extends SetupBaseController {
     namaServiceCon.value = model.nama;
     deskripsiCon.value = model.deskripsi;
     hargaCon.value = model.harga;
+    cabangSpesifikCon.value = model.cabang != null && model.cabang!.isNotEmpty
+        ? true
+        : false;
+    showSelectCabang(cabangSpesifikCon.value);
     if (model.cabang != null && model.cabang!.isNotEmpty) {
       selectCabangCon.values = model.cabang!
           .map(
