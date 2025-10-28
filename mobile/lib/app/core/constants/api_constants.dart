@@ -43,4 +43,19 @@ class ApiConstants {
   static String putServiceById(int id) => '$api/service/$id';
   static String getServiceById(int id) => '$api/service/$id';
   static String deleteServiceById(int id) => '$api/service/$id/delete';
+  static String getCabangByIdSalon({
+    required int idSalon,
+    required int pageIndex,
+    required int pageSize,
+    String? keyword,
+  }) {
+    final queryParams = <String, String>{
+      'page': '$pageIndex',
+      'per_page': '$pageSize',
+      if (keyword != null && keyword.isNotEmpty) 'search': keyword,
+    };
+
+    final queryString = Uri(queryParameters: queryParams).query;
+    return "$api/salon/$idSalon/cabang/list?$queryString";
+  }
 }

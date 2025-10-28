@@ -53,7 +53,7 @@ class ServiceModel {
     'nama': nama,
     'deskripsi': deskripsi,
     'harga': harga,
-    // 'id_cabang': cabang?.map((e) => e.id).toList() ?? [],
+    'cabangs': cabang?.map((e) => e.id).toList() ?? [],
   };
 }
 

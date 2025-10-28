@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\FirebaseAuthController;
 use App\Http\Controllers\GeneralController;
+use App\Http\Controllers\SalonCabangController;
 use App\Http\Controllers\SalonController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserSalonController;
@@ -31,4 +32,7 @@ Route::middleware('firebase.auth')->group(function () {
     Route::post('/service', [ServiceController::class, 'storeService']);
     Route::put('/service/{id}', [ServiceController::class, 'updateService']);
     Route::delete('/service/{id}/delete', [ServiceController::class, 'deleteServiceById']);
+
+    //Cabang
+    Route::get('/salon/{id}/cabang/list', [SalonCabangController::class, 'getPaginatedCabangBySalonId']);
 });

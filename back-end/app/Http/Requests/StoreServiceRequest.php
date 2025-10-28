@@ -26,6 +26,8 @@ class StoreServiceRequest extends FormRequest
             'nama'       => 'required|string|max:255',
             'deskripsi'  => 'required|string|max:500',
             'harga'      => 'required|numeric|min:0',
+            'cabangs'    => 'array',
+            'cabangs.*'  => 'integer|exists:m_salon_cabang,id',
         ];
     }
 }

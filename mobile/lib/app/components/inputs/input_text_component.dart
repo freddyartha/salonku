@@ -19,7 +19,14 @@ class InputTextController extends ChangeNotifier {
   final Debouncer _debouncer = Debouncer();
   late Function(VoidCallback fn) setState;
 
-  InputTextController({this.type = InputTextType.text, this.onTap});
+  InputTextController({
+    this.type = InputTextType.text,
+    this.onTap,
+    this.onEditingComplete,
+    this.onChanged,
+    this.onFieldSubmitted,
+    this.onSaved,
+  });
 
   bool _required = false;
   bool _showPassword = false;

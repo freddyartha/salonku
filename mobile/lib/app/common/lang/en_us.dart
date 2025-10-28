@@ -85,7 +85,6 @@ const Map<String, String> enUS = {
   "ganti_salon": "Change Salon",
   "data_not_found": "Data not found",
   "delete_confirmation": "Are you sure want to delete this item?",
-
   "service": "Service",
   "nama_service": "Service Name",
   "deskripsi": "Description",
@@ -95,4 +94,9 @@ const Map<String, String> enUS = {
   "placeholder_harga": "Enter the service price",
   "go_back_confirmation":
       "There are unsaved changes, are you sure you want to go back?",
+  "select_data": "Select Data",
+  "service_for_branch": "This service apply for",
+  "branch": "Branch",
+  "all_branch": "All Branch",
+  "spesific_branch": "Spesific Branch",
 };

@@ -37,4 +37,22 @@ class SalonProvider extends ApiProvider {
       includeFirebaseToken: true,
     );
   }
+
+  Future<Response> getCabangByIdSalon({
+    required int idSalon,
+    required int pageIndex,
+    required int pageSize,
+    String? keyword,
+  }) async {
+    return await get(
+      ApiConstants.getCabangByIdSalon(
+        idSalon: idSalon,
+        pageIndex: pageIndex,
+        pageSize: pageSize,
+        keyword: keyword,
+      ),
+      requiresAuth: true,
+      includeFirebaseToken: true,
+    );
+  }
 }

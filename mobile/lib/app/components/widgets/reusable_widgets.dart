@@ -673,7 +673,7 @@ class ReusableWidgets {
                   ],
                 ),
                 ListView(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  padding: EdgeInsets.zero,
                   shrinkWrap: true,
                   physics: ClampingScrollPhysics(),
                   children: [
@@ -735,68 +735,71 @@ class ReusableWidgets {
     );
   }
 
-  // static Future<bool?> customBottomSheet({
-  //   required List<Widget> children,
-  //   String? title,
-  //   bool allowPopScope = true,
-  // }) {
-  //   return Get.bottomSheet<bool>(
-  //     isScrollControlled: true,
-  //     enableDrag: true,
-  //     PopScope(
-  //       canPop: false,
-  //       onPopInvokedWithResult: (didPop, result) {
-  //         if (allowPopScope) {
-  //           if (didPop) return;
-  //           Get.back(result: null);
-  //         }
-  //       },
-  //       child: Container(
-  //         decoration: BoxDecoration(
-  //           color: AppColors.white,
-  //           borderRadius: BorderRadius.circular(25),
-  //         ),
-  //         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-  //         child: SafeArea(
-  //           child: Column(
-  //             mainAxisSize: MainAxisSize.min,
-  //             children: [
-  //               Row(
-  //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                 children: [
-  //                   TextComponent(
-  //                     value: title ?? "",
-  //                     fontWeight: FontWeight.w600,
-  //                     fontSize: FontSizes.h6,
-  //                     margin: EdgeInsets.only(right: 10),
-  //                   ),
-  //                   if (allowPopScope) ...[
-  //                     Container(
-  //                       margin: EdgeInsets.only(bottom: 10),
-  //                       height: 40,
-  //                       child: GestureDetector(
-  //                         onTap: () => Get.back(result: false),
-  //                         child: Container(
-  //                           padding: EdgeInsets.all(5),
-  //                           decoration: BoxDecoration(
-  //                             borderRadius: BorderRadius.circular(100),
-  //                             color: AppColors.black.withValues(alpha: 0.06),
-  //                           ),
-  //                           child: Icon(Icons.close, size: 30),
-  //                         ),
-  //                       ),
-  //                     ),
-  //                   ],
-  //                 ],
-  //               ),
-  //               ...children,
-  //             ],
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
+  static Future<bool?> customBottomSheet({
+    required List<Widget> children,
+    String? title,
+    bool allowPopScope = true,
+  }) {
+    return Get.bottomSheet<bool>(
+      isScrollControlled: true,
+      enableDrag: true,
+      PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (didPop, result) {
+          if (allowPopScope) {
+            if (didPop) return;
+            Get.back(result: null);
+          }
+        },
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxHeight: Get.height * 0.9),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Get.context?.accent,
+              borderRadius: BorderRadius.circular(25),
+            ),
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            child: SafeArea(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextComponent(
+                        value: title ?? "",
+                        fontWeight: FontWeight.w600,
+                        fontSize: FontSizes.h6,
+                        margin: EdgeInsets.only(right: 10),
+                      ),
+                      if (allowPopScope) ...[
+                        Container(
+                          margin: EdgeInsets.only(bottom: 10),
+                          height: 40,
+                          child: GestureDetector(
+                            onTap: () => Get.back(result: false),
+                            child: Container(
+                              padding: EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100),
+                                color: Get.context?.accent2,
+                              ),
+                              child: Icon(Icons.close, size: 30),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                  ...children,
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 
   // static Future<void> showImageBottomSheet(
   //   String item,
@@ -941,6 +944,7 @@ class ReusableWidgets {
             ),
             body: SafeArea(
               child: ListView(
+                key: GlobalKey(),
                 keyboardDismissBehavior:
                     ScrollViewKeyboardDismissBehavior.onDrag,
                 physics: ClampingScrollPhysics(),
@@ -1187,45 +1191,4 @@ class ReusableWidgets {
   //     child: child,
   //   );
   // }
-
-  // static Widget generalEditDeleteButtonWidget({
-  //   required Function() editOnTap,
-  //   required Function() deleteOnTap,
-  // }) => Row(
-  //   spacing: 20,
-  //   children: [
-  //     Expanded(
-  //       child: ButtonComponent(
-  //         onTap: editOnTap,
-  //         text: "edit".tr,
-  //         buttonColor: AppColors.primary,
-  //         icon: "assets/images/edit.png",
-  //         isSvg: false,
-  //         iconSize: 25,
-  //       ),
-  //     ),
-  //     Expanded(
-  //       child: ButtonComponent(
-  //         onTap: () async {
-  //           bool? result = await confirmationBottomSheet(
-  //             title: "general_delete_header".tr,
-  //             withImage: true,
-  //             children: [
-  //               TextComponent(
-  //                 textAlign: TextAlign.center,
-  //                 value: "general_delete_subtitle".tr,
-  //               ),
-  //             ],
-  //           );
-  //           if (result == true) deleteOnTap();
-  //         },
-  //         text: "delete".tr,
-  //         buttonColor: AppColors.red,
-  //         icon: "assets/images/delete.png",
-  //         isSvg: false,
-  //         iconSize: 25,
-  //       ),
-  //     ),
-  //   ],
-  // );
 }

@@ -1,8 +1,10 @@
 import 'package:get/get.dart';
 import 'package:salonku/app/core/base/base_repository.dart';
 import 'package:salonku/app/data/models/result.dart';
+import 'package:salonku/app/data/network/paged_api_response_parser.dart';
 import 'package:salonku/app/data/providers/api/salon_provider.dart';
 import 'package:salonku/app/data/repositories/contract/salon_repository_contract.dart';
+import 'package:salonku/app/models/salon_cabang_model.dart';
 import 'package:salonku/app/models/salon_model.dart';
 import 'package:salonku/app/data/network/general_api_response_parser.dart';
 import 'package:salonku/app/models/salon_summary_model.dart';
@@ -40,6 +42,24 @@ class SalonRepositoryImpl extends BaseRepository
     return executeRequest(
       () => _provider.getSalonSummary(idSalon),
       GeneralApiResponseParser(SalonSummaryModel.fromDynamic),
+    );
+  }
+
+  @override
+  Future<Result<List<SalonCabangModel>>> getCabangByIdSalon({
+    required int idSalon,
+    required int pageIndex,
+    required int pageSize,
+    String? keyword,
+  }) {
+    return executeRequest(
+      () => _provider.getCabangByIdSalon(
+        idSalon: idSalon,
+        pageIndex: pageIndex,
+        pageSize: pageSize,
+        keyword: keyword,
+      ),
+      PagedApiResponseParser(SalonCabangModel.fromDynamic),
     );
   }
 }

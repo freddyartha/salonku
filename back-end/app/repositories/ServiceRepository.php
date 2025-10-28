@@ -41,8 +41,20 @@ class ServiceRepository
 
     public function create(array $data): Service
     {
-        $res = Service::create($data);
-        return $res->load('cabangs', 'salon');
+        // pisahkan cabangs dari data utama
+        $cabangs = $data['cabangs'] ?? [];
+
+        // hapus cabangs dari data utama sebelum create
+        unset($data['cabangs']);
+
+        // buat service
+        $service = Service::create($data);
+
+        // jika ada cabang, attach ke pivot
+        if (!empty($cabangs)) {
+            $service->cabangs()->attach($cabangs);
+        }
+        return $service->load('cabangs', 'salon');
     }
 
     public function update(array $data, $id): Service

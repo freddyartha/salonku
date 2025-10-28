@@ -89,7 +89,6 @@ const Map<String, String> idID = {
   "ganti_salon": "Ganti Salon",
   "data_not_found": "Data tidak ditemukan",
   "delete_confirmation": "Kamu yakin ingin menghapaus data ini?",
-
   "service": "Layanan",
   "nama_service": "Nama Layanan",
   "deskripsi": "Deskripsi",
@@ -99,4 +98,9 @@ const Map<String, String> idID = {
   "placeholder_harga": "Masukkan harga layanan",
   "go_back_confirmation":
       "Ada perubahan yang belum disimpan, kamu yakin ingin kembali?",
+  "select_data": "Pilih Data",
+  "service_for_branch": "Layanan ini belaku untuk",
+  "branch": "Cabang",
+  "all_branch": "Semua Cabang",
+  "spesific_branch": "Cabang Tertentu",
 };
