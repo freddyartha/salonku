@@ -99,4 +99,11 @@ const Map<String, String> enUS = {
   "branch": "Branch",
   "all_branch": "All Branch",
   "spesific_branch": "Spesific Branch",
+  "currency": "Currency",
+  "currency_hint": "Select Currency",
+  "nama_cabang": "Branch Name",
+  "placeholder_nama_cabang": "Enter branch name",
+  "alamat_cabang": "Branch Address",
+  "placeholder_alamat_cabang": "Enter branch address",
+  "phone_cabang": "Branch Phone Number",
 };

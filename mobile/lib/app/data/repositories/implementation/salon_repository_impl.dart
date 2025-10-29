@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:salonku/app/core/base/base_repository.dart';
 import 'package:salonku/app/data/models/result.dart';
 import 'package:salonku/app/data/network/paged_api_response_parser.dart';
+import 'package:salonku/app/data/network/simple_api_response_parser.dart';
 import 'package:salonku/app/data/providers/api/salon_provider.dart';
 import 'package:salonku/app/data/repositories/contract/salon_repository_contract.dart';
 import 'package:salonku/app/models/salon_cabang_model.dart';
@@ -60,6 +61,52 @@ class SalonRepositoryImpl extends BaseRepository
         keyword: keyword,
       ),
       PagedApiResponseParser(SalonCabangModel.fromDynamic),
+    );
+  }
+
+  @override
+  Future<Result<SalonModel>> updateSalon(
+    int idSalon,
+    Map<String, dynamic> salonModel,
+  ) {
+    return executeRequest(
+      () => _provider.updateSalon(idSalon, salonModel),
+      GeneralApiResponseParser(SalonModel.fromDynamic),
+    );
+  }
+
+  @override
+  Future<Result<SalonCabangModel>> createCabang(Map<String, dynamic> model) {
+    return executeRequest(
+      () => _provider.createCabang(model),
+      GeneralApiResponseParser(SalonCabangModel.fromDynamic),
+    );
+  }
+
+  @override
+  Future<Result<SalonCabangModel>> getCabangById(int id) {
+    return executeRequest(
+      () => _provider.getCabangById(id),
+      GeneralApiResponseParser(SalonCabangModel.fromDynamic),
+    );
+  }
+
+  @override
+  Future<Result<SalonCabangModel>> updateCabangById(
+    int id,
+    Map<String, dynamic> model,
+  ) {
+    return executeRequest(
+      () => _provider.updateCabang(id, model),
+      GeneralApiResponseParser(SalonCabangModel.fromDynamic),
+    );
+  }
+
+  @override
+  Future<Result<List>> deleteCabangById(int id) {
+    return executeRequest(
+      () => _provider.deleteCabangById(id),
+      SimpleApiResponseParser((res) => []),
     );
   }
 }

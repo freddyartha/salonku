@@ -19,8 +19,8 @@ class ServiceRepository
         if ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('nama', 'like', "%{$search}%")
-                    ->orWhere('deskripsi', 'like', "%{$search}%")
-                    ->orWhere('harge', 'like', "%{$search}%");
+                    ->orWhere('deskripsi', 'like', "%{$search}%");
+                // ->orWhere('harge', 'like', "%{$search}%");
             });
         }
 

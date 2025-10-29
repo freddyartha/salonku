@@ -638,7 +638,10 @@ class ReusableWidgets {
         child: Container(
           decoration: BoxDecoration(
             color: Get.context?.accent,
-            borderRadius: BorderRadius.circular(25),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(25),
+              topRight: Radius.circular(25),
+            ),
           ),
           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           child: SafeArea(
@@ -672,56 +675,52 @@ class ReusableWidgets {
                     ),
                   ],
                 ),
-                ListView(
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  physics: ClampingScrollPhysics(),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    withImage
+                        ? Center(
+                            child: ImageComponent(
+                              localUrl: "assets/images/question.png",
+                              height: 150,
+                              width: Get.width,
+                              boxFit: BoxFit.fitHeight,
+                              margin: EdgeInsets.only(bottom: 20),
+                            ),
+                          )
+                        : SizedBox(
+                            height: title == null || title.isEmpty ? 0 : 15,
+                          ),
+
+                    ...children,
+                    const SizedBox(height: 30),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      spacing: 20,
                       children: [
-                        withImage
-                            ? Center(
-                                child: ImageComponent(
-                                  localUrl: "assets/images/question.png",
-                                  height: 150,
-                                  width: Get.width,
-                                  boxFit: BoxFit.fitHeight,
-                                  margin: EdgeInsets.only(bottom: 20),
-                                ),
-                              )
-                            : SizedBox(height: 15),
-                        ...children,
-                        const SizedBox(height: 30),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          spacing: 20,
-                          children: [
-                            Expanded(
-                              child: ButtonComponent(
-                                text: textCancel ?? "cancel".tr,
-                                isMultilineText: true,
-                                borderColor: Get.context?.contrast,
-                                buttonColor: Get.context?.accent,
-                                textColor: Get.context?.text,
-                                borderRadius: Radiuses.regular,
-                                onTap: () {
-                                  Get.back(result: false);
-                                },
-                              ),
-                            ),
-                            Expanded(
-                              child: ButtonComponent(
-                                text: textConfirm ?? "ok".tr,
-                                borderRadius: Radiuses.regular,
-                                buttonColor: confirmColor,
-                                isMultilineText: true,
-                                onTap: () {
-                                  Get.back(result: true);
-                                },
-                              ),
-                            ),
-                          ],
+                        Expanded(
+                          child: ButtonComponent(
+                            text: textCancel ?? "cancel".tr,
+                            isMultilineText: true,
+                            borderColor: Get.context?.contrast,
+                            buttonColor: Get.context?.accent,
+                            textColor: Get.context?.text,
+                            borderRadius: Radiuses.regular,
+                            onTap: () {
+                              Get.back(result: false);
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: ButtonComponent(
+                            text: textConfirm ?? "ok".tr,
+                            borderRadius: Radiuses.regular,
+                            buttonColor: confirmColor,
+                            isMultilineText: true,
+                            onTap: () {
+                              Get.back(result: true);
+                            },
+                          ),
                         ),
                       ],
                     ),
@@ -756,7 +755,10 @@ class ReusableWidgets {
           child: Container(
             decoration: BoxDecoration(
               color: Get.context?.accent,
-              borderRadius: BorderRadius.circular(25),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25),
+                topRight: Radius.circular(25),
+              ),
             ),
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: SafeArea(
@@ -799,6 +801,147 @@ class ReusableWidgets {
         ),
       ),
     );
+  }
+
+  static Future<bool?> fullScreenBottomSheet({
+    required List<Widget> children,
+    String? title,
+    bool allowPopScope = true,
+  }) {
+    return Get.bottomSheet<bool>(
+      isScrollControlled: true,
+      enableDrag: false,
+      PopScope(
+        canPop: false,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxHeight: Get.height * 0.7),
+          child: Scaffold(
+            resizeToAvoidBottomInset: false, // <- supaya sheet gak naik
+            backgroundColor: Colors.transparent,
+            body: Container(
+              decoration: BoxDecoration(
+                color: Get.context?.accent,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(25),
+                  topRight: Radius.circular(25),
+                ),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: SafeArea(
+                top: false,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Header
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        TextComponent(
+                          value: title ?? "",
+                          fontWeight: FontWeight.w600,
+                          fontSize: FontSizes.h6,
+                        ),
+                        if (allowPopScope)
+                          GestureDetector(
+                            onTap: () => Get.back(result: false),
+                            child: Container(
+                              padding: EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100),
+                                color: Get.context?.accent2,
+                              ),
+                              child: Icon(Icons.close, size: 30),
+                            ),
+                          ),
+                      ],
+                    ),
+
+                    // Konten scrollable
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Column(children: children),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    // return Get.bottomSheet<bool>(
+    //   enableDrag: false,
+    //   isScrollControlled: true,
+    //   // PopScope(
+    //   //   canPop: false,
+    //   //   onPopInvokedWithResult: (didPop, result) {
+    //   //     if (allowPopScope) {
+    //   //       if (didPop) return;
+    //   //       Get.back(result: null);
+    //   //     }
+    //   //   },
+    //   //   child:
+    //   Container(
+    //     height: MediaQuery.of(Get.context!).size.height * 0.8,
+    //     decoration: BoxDecoration(
+    //       color: Get.context?.accent,
+    //       borderRadius: BorderRadius.only(
+    //         topLeft: Radius.circular(25),
+    //         topRight: Radius.circular(25),
+    //       ),
+    //     ),
+    //     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+    //     child: Scaffold(
+    //       backgroundColor: Colors.transparent,
+    //       resizeToAvoidBottomInset: false,
+    //       body: SafeArea(
+    //         child: Column(
+    //           mainAxisSize: MainAxisSize.min,
+    //           children: [
+    //             Row(
+    //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //               children: [
+    //                 TextComponent(
+    //                   value: title ?? "",
+    //                   fontWeight: FontWeight.w600,
+    //                   fontSize: FontSizes.h6,
+    //                   margin: EdgeInsets.only(right: 10),
+    //                 ),
+    //                 if (allowPopScope) ...[
+    //                   Container(
+    //                     margin: EdgeInsets.only(bottom: 10),
+    //                     height: 40,
+    //                     child: GestureDetector(
+    //                       onTap: () => Get.back(result: false),
+    //                       child: Container(
+    //                         padding: EdgeInsets.all(5),
+    //                         decoration: BoxDecoration(
+    //                           borderRadius: BorderRadius.circular(100),
+    //                           color: Get.context?.accent2,
+    //                         ),
+    //                         child: Icon(Icons.close, size: 30),
+    //                       ),
+    //                     ),
+    //                   ),
+    //                 ],
+    //               ],
+    //             ),
+    //             ListView(
+    //               shrinkWrap: true,
+    //               physics: ClampingScrollPhysics(),
+    //               children: [...children],
+    //             ),
+    //           ],
+    //         ),
+    //       ),
+    //     ),
+    //   ),
+    //   // ),
+    // );
   }
 
   // static Future<void> showImageBottomSheet(

@@ -37,25 +37,30 @@ class RegisterSalonView extends GetView<RegisterSalonController> {
               ),
             ),
           ),
-          ListView(
-            padding: EdgeInsets.only(top: (Get.height * 0.3)),
-            physics: ClampingScrollPhysics(),
-            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-            children: [
-              Container(
-                padding: EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(Radiuses.extraLarge),
-                    topRight: Radius.circular(Radiuses.extraLarge),
-                  ),
-                  color: context.accent,
-                ),
-                child: controller.level == 1
-                    ? OwnerWidget(controller: controller)
-                    : StaffWidget(controller: controller),
+          Container(
+            margin: EdgeInsets.only(top: Get.height * 0.3),
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(Radiuses.extraLarge),
+                topRight: Radius.circular(Radiuses.extraLarge),
               ),
-            ],
+              color: context.accent,
+            ),
+            child: SafeArea(
+              top: false,
+              child: ListView(
+                padding: EdgeInsets.zero,
+                physics: ClampingScrollPhysics(),
+                keyboardDismissBehavior:
+                    ScrollViewKeyboardDismissBehavior.onDrag,
+                children: [
+                  controller.level == 1
+                      ? OwnerWidget(controller: controller)
+                      : StaffWidget(controller: controller),
+                ],
+              ),
+            ),
           ),
         ],
       ),
@@ -83,11 +88,11 @@ class StaffWidget extends StatelessWidget {
                 fontWeight: FontWeights.semiBold,
               ),
               Row(
-                spacing: 20,
+                spacing: 10,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Expanded(
-                    flex: 3,
+                    flex: 5,
                     child: InputTextComponent(
                       controller: controller.kodeSalonCon,
                       placeHolder: "salon_code".tr,
@@ -97,7 +102,7 @@ class StaffWidget extends StatelessWidget {
                   ),
 
                   Expanded(
-                    flex: 1,
+                    flex: 2,
                     child: ButtonComponent(
                       onTap: controller.getSalonByUniqueId,
                       text: "search".tr,
@@ -182,7 +187,7 @@ class OwnerWidget extends StatelessWidget {
     return Column(
       children: [
         TextComponent(
-          margin: EdgeInsetsGeometry.symmetric(vertical: 20),
+          margin: EdgeInsets.symmetric(vertical: 20),
           value: "title_tambah_salon".tr,
           textAlign: TextAlign.center,
           fontSize: FontSizes.h5,
@@ -204,8 +209,21 @@ class OwnerWidget extends StatelessWidget {
           controller: controller.phoneSalonCon,
           label: "nomor_telp_salon".tr,
           required: true,
-          marginBottom: 30,
         ),
+        InputTextComponent(
+          marginBottom: 30,
+          controller: controller.currencyCon,
+          label: "currency".tr,
+          placeHolder: "currency_hint".tr,
+          required: true,
+          editable: true,
+          disableInputKeyboard: true,
+          suffixIcon: Padding(
+            padding: const EdgeInsets.only(right: 5),
+            child: Icon(Icons.arrow_drop_down_outlined, size: 25),
+          ),
+        ),
+
         ButtonComponent(onTap: controller.createSalon, text: "save".tr),
       ],
     );

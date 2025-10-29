@@ -47,8 +47,8 @@ class BasePageController extends GetxController {
 
   void itemOnTap(int id) {
     selectedId.value = id;
-    if (selectedId.value == 1 && settingController.salonModel == null) {
-      settingController.getSalonById();
+    if (selectedId.value == 1) {
+      settingController.getSalonSummary();
     }
   }
 }

@@ -103,4 +103,11 @@ const Map<String, String> idID = {
   "branch": "Cabang",
   "all_branch": "Semua Cabang",
   "spesific_branch": "Cabang Tertentu",
+  "currency": "Mata Uang",
+  "currency_hint": "Pilih Mata Uang",
+  "nama_cabang": "Nama Cabang",
+  "placeholder_nama_cabang": "Masukkan nama cabang",
+  "alamat_cabang": "Alamat Cabang",
+  "placeholder_alamat_cabang": "Masukkan alamat cabang",
+  "phone_cabang": "Nomor Telepon Cabang",
 };

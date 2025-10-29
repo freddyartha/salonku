@@ -14,6 +14,18 @@ class SalonProvider extends ApiProvider {
     );
   }
 
+  Future<Response> updateSalon(
+    int idSalon,
+    Map<String, dynamic> salonModel,
+  ) async {
+    return await put(
+      ApiConstants.updateSalon(idSalon),
+      data: salonModel,
+      requiresAuth: true,
+      includeFirebaseToken: true,
+    );
+  }
+
   Future<Response> getSalonByKodeSalon(String kodeSalon) async {
     return await get(
       ApiConstants.getSalonByKodeSalon(kodeSalon),
@@ -38,6 +50,7 @@ class SalonProvider extends ApiProvider {
     );
   }
 
+  //Salon Cabang
   Future<Response> getCabangByIdSalon({
     required int idSalon,
     required int pageIndex,
@@ -51,6 +64,40 @@ class SalonProvider extends ApiProvider {
         pageSize: pageSize,
         keyword: keyword,
       ),
+      requiresAuth: true,
+      includeFirebaseToken: true,
+    );
+  }
+
+  Future<Response> createCabang(Map<String, dynamic> model) async {
+    return await post(
+      ApiConstants.postCabang,
+      data: model,
+      requiresAuth: true,
+      includeFirebaseToken: true,
+    );
+  }
+
+  Future<Response> updateCabang(int id, Map<String, dynamic> model) async {
+    return await put(
+      ApiConstants.putCabangById(id),
+      data: model,
+      requiresAuth: true,
+      includeFirebaseToken: true,
+    );
+  }
+
+  Future<Response> getCabangById(int id) async {
+    return await get(
+      ApiConstants.getCabangById(id),
+      requiresAuth: true,
+      includeFirebaseToken: true,
+    );
+  }
+
+  Future<Response> deleteCabangById(int id) async {
+    return await delete(
+      ApiConstants.deleteCabangById(id),
       requiresAuth: true,
       includeFirebaseToken: true,
     );

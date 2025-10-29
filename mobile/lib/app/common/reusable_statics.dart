@@ -1,6 +1,9 @@
+import 'package:currency_picker/currency_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:salonku/app/common/app_colors.dart';
 import 'package:salonku/app/common/radiuses.dart';
+import 'package:salonku/app/components/texts/text_component.dart';
 import 'package:salonku/app/extension/theme_extension.dart';
 import 'package:uuid/uuid.dart';
 
@@ -59,4 +62,42 @@ class ReusableStatics {
     }
     return value != null ? Color(value) : fallbackColor;
   }
+
+  static CurrencyPickerThemeData currencyPickerTheme() =>
+      CurrencyPickerThemeData(
+        backgroundColor: Get.context?.accent2,
+        bottomSheetHeight: Get.height * 0.7,
+        titleTextStyle: TextStyle(color: Get.context?.text),
+        currencySignTextStyle: TextStyle(color: Get.context?.text),
+        subtitleTextStyle: TextStyle(color: Get.context?.text),
+        inputDecoration: InputDecoration(
+          contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+          prefixIcon: Icon(Icons.search),
+          label: TextComponent(value: "currency_hint".tr),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(Radiuses.large),
+            borderSide: BorderSide(
+              color: Get.context?.contrast ?? AppColors.darkContrast,
+            ),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(Radiuses.large),
+            borderSide: BorderSide(
+              color: Get.context?.contrast ?? AppColors.darkContrast,
+            ),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(Radiuses.large),
+            borderSide: BorderSide(
+              color: Get.context?.contrast ?? AppColors.darkContrast,
+            ),
+          ),
+          disabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(Radiuses.large),
+            borderSide: BorderSide(
+              color: Get.context?.contrast ?? AppColors.darkContrast,
+            ),
+          ),
+        ),
+      );
 }

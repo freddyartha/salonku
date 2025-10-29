@@ -59,6 +59,7 @@ dependencies:
   intl_phone_field: ^3.2.0
   shimmer: ^3.0.0
   flutter_slidable: ^4.0.3
+  currency_picker: ^2.0.21
 
 dev_dependencies:
   flutter_test:

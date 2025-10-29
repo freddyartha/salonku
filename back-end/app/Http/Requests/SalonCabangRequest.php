@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreSalonRequest extends FormRequest
+class SalonCabangRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,10 @@ class StoreSalonRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nama_salon'    => 'required|string|max:255',
-            'currency_code' => 'required|string',
-            'alamat'        => 'nullable|string|max:500',
-            'phone'         => 'nullable|string|max:20',
-            'logo_url'      => 'nullable|url|max:255',
+            'id_salon'  => 'integer|exists:m_salon,id',
+            'nama'      => 'required|string|max:255',
+            'alamat'    => 'nullable|string|max:500',
+            'phone'     => 'nullable|string|max:20',
         ];
     }
 }

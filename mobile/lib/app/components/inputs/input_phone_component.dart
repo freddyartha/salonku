@@ -15,7 +15,7 @@ class InputPhoneController extends ChangeNotifier {
   InputPhoneController({this.onTap});
 
   bool _required = false;
-  String _countryCode = "ID";
+  final String _countryCode = "ID";
 
   VoidCallback? onEditingComplete;
   ValueChanged<PhoneNumber>? onChanged;
@@ -34,7 +34,7 @@ class InputPhoneController extends ChangeNotifier {
     if (otherValidator != null) {
       return otherValidator(v);
     }
-    return null;
+    return "";
   }
 
   void _init(Function(VoidCallback fn) setStateX) {
@@ -55,13 +55,13 @@ class InputPhoneController extends ChangeNotifier {
 
   set value(dynamic value) {
     if (value != null) {
-      String beforeDash = "$value".split('-').first;
+      // setState(() {
+      // String beforeDash = "$value".split('-').first;
       String afterDash = "$value".split('-').last;
-      setState(() {
-        _con.text = afterDash;
-        _countryCode = beforeDash;
-        _con.value = TextEditingValue(text: "$value");
-      });
+      _con.text = afterDash;
+      // _countryCode = beforeDash;
+      //   print(_con.text);
+      // });
     }
   }
 
@@ -80,8 +80,6 @@ class InputPhoneComponent extends StatefulWidget {
   final double? marginBottom;
   final FormFieldValidator<PhoneNumber>? validator;
   final Radius? borderRadius;
-  final FocusNode? focusNode;
-  final bool disableInputKeyboard;
   final Color? labelColor;
 
   final bool isPassword;
@@ -95,8 +93,6 @@ class InputPhoneComponent extends StatefulWidget {
     this.marginBottom,
     this.validator,
     this.borderRadius,
-    this.focusNode,
-    this.disableInputKeyboard = false,
     this.labelColor,
     this.isPassword = false,
   });
@@ -152,6 +148,7 @@ class _InputPhoneState extends State<InputPhoneComponent> {
     );
 
     var phoneFormField = IntlPhoneField(
+      initialValue: widget.controller._con.text,
       cursorColor: context.text,
       decoration: decoration,
       initialCountryCode: widget.controller._countryCode,
@@ -168,9 +165,15 @@ class _InputPhoneState extends State<InputPhoneComponent> {
           widget.controller.onChanged!(phone);
         }
       },
+      onCountryChanged: (value) {
+        String afterDash = widget.controller._con.value.text.split('-').last;
+        widget.controller._con.value = TextEditingValue(
+          text: "+${value.dialCode}-$afterDash",
+        );
+      },
       validator: (v) =>
           widget.controller._validator(v, otherValidator: widget.validator),
-      readOnly: !widget.editable || widget.disableInputKeyboard,
+      readOnly: !widget.editable,
       autovalidateMode: AutovalidateMode.always,
     );
 

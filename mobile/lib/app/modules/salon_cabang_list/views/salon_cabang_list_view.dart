@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:salonku/app/common/font_size.dart';
 import 'package:salonku/app/common/font_weight.dart';
-import 'package:salonku/app/common/input_formatter.dart';
 import 'package:salonku/app/common/radiuses.dart';
 import 'package:salonku/app/components/inputs/input_text_component.dart';
 import 'package:salonku/app/components/others/list_component.dart';
@@ -12,19 +11,20 @@ import 'package:salonku/app/components/widgets/reusable_widgets.dart';
 import 'package:salonku/app/extension/theme_extension.dart';
 import 'package:salonku/app/routes/app_pages.dart';
 
-import '../controllers/service_list_controller.dart';
+import '../controllers/salon_cabang_list_controller.dart';
 
-class ServiceListView extends GetView<ServiceListController> {
-  const ServiceListView({super.key});
+class SalonCabangListView extends GetView<SalonCabangListController> {
+  const SalonCabangListView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ReusableWidgets.generalAppBarWidget(title: "service".tr),
+      appBar: ReusableWidgets.generalAppBarWidget(title: "branch".tr),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: ReusableWidgets.generalCreateDataWidget(
         context,
         () => Get.toNamed(
-          Routes.SERVICE_SETUP,
+          Routes.SALON_CABANG_SETUP,
+          arguments: {"idSalon": "${controller.idSalon}"},
         )?.then((v) => controller.serviceListCon.refresh()),
       ),
       body: Column(
@@ -57,11 +57,8 @@ class ServiceListView extends GetView<ServiceListController> {
                 fontWeight: FontWeights.semiBold,
                 fontSize: FontSizes.h6,
               ),
-              subtitle: TextComponent(value: item.deskripsi, maxLines: 3),
-              trailing: TextComponent(
-                value:
-                    "${item.currencyCode} ${InputFormatter.toCurrency(item.harga)}",
-              ),
+              subtitle: TextComponent(value: item.alamat, maxLines: 3),
+              trailing: TextComponent(value: item.phone),
             ),
           ),
         ],

@@ -32,36 +32,32 @@ class SettingsView extends GetView<SettingsController> {
                 clipBehavior: Clip.hardEdge,
                 margin: EdgeInsets.only(bottom: 20),
                 child: ImageComponent(
-                  networkUrl: controller.salonModel?.logoUrl ?? "",
+                  networkUrl: controller.salonModel.value.logoUrl ?? "",
                   height: 100,
                   width: 100,
                   boxFit: BoxFit.contain,
                 ),
               ),
               TextComponent(
-                value: controller.salonModel?.namaSalon,
-                isLoading: controller.isLoading.value,
+                value: controller.salonModel.value.namaSalon,
                 fontWeight: FontWeights.semiBold,
                 fontSize: FontSizes.h5,
                 textAlign: TextAlign.center,
               ),
               TextComponent(
-                value: controller.salonModel?.alamat,
-                isLoading: controller.isLoading.value,
+                value: controller.salonModel.value.alamat,
                 textAlign: TextAlign.center,
               ),
-              if (!controller.isLoading.value) ...[
-                Center(
-                  child: ButtonComponent(
-                    onTap: () {},
-                    text: "Edit Salon",
-                    width: Get.width / 2,
-                    margin: EdgeInsets.only(top: 10, bottom: 30),
-                    padding: EdgeInsets.symmetric(vertical: 5),
-                    borderRadius: Radiuses.large,
-                  ),
+              Center(
+                child: ButtonComponent(
+                  onTap: controller.showEditSalon,
+                  text: "Edit Salon",
+                  width: Get.width / 2,
+                  margin: EdgeInsets.only(top: 10, bottom: 30),
+                  padding: EdgeInsets.symmetric(vertical: 5),
+                  borderRadius: Radiuses.large,
                 ),
-              ],
+              ),
               Container(
                 padding: EdgeInsets.all(10),
                 margin: EdgeInsets.only(bottom: 20),
@@ -195,8 +191,8 @@ class SettingsView extends GetView<SettingsController> {
                                   ),
                                   Container(
                                     padding: EdgeInsets.all(10),
-                                    width: Get.width / 5.5,
-                                    height: Get.width / 5.5,
+                                    width: Get.width / 6,
+                                    height: Get.width / 6,
                                     decoration: BoxDecoration(
                                       color: context.contrast,
                                       borderRadius: BorderRadius.only(

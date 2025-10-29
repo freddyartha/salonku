@@ -14,6 +14,26 @@ class SalonCabangService
         $this->salonCabangRepository = $salonCabangRepository;
     }
 
+    public function getSalonById(int $id)
+    {
+        return $this->salonCabangRepository->findById($id);
+    }
+
+    public function store(array $data)
+    {
+        return $this->salonCabangRepository->create($data);
+    }
+
+    public function update(array $data, int $id)
+    {
+        return $this->salonCabangRepository->update($data, $id);
+    }
+
+    public function deleteById(int $id)
+    {
+        return $this->salonCabangRepository->delete($id);
+    }
+
     public function getPaginatedCabangBySalonId(int $id, Request $request)
     {
         $options = [

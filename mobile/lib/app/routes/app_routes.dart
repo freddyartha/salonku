@@ -18,6 +18,8 @@ abstract class Routes {
   static const OWNER_APPROVAL = _Paths.OWNER_APPROVAL;
   static const SERVICE_LIST = _Paths.SERVICE_LIST;
   static const SERVICE_SETUP = _Paths.SERVICE_SETUP;
+  static const SALON_CABANG_LIST = _Paths.SALON_CABANG_LIST;
+  static const SALON_CABANG_SETUP = _Paths.SALON_CABANG_SETUP;
 }
 
 abstract class _Paths {
@@ -35,4 +37,6 @@ abstract class _Paths {
   static const OWNER_APPROVAL = '/owner-approval';
   static const SERVICE_LIST = '/service-list';
   static const SERVICE_SETUP = '/service-setup';
+  static const SALON_CABANG_LIST = '/salon-cabang-list';
+  static const SALON_CABANG_SETUP = '/salon-cabang-setup';
 }

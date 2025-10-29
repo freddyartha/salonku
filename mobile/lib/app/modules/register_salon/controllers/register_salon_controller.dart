@@ -1,5 +1,7 @@
+import 'package:currency_picker/currency_picker.dart';
 import 'package:get/get.dart';
 import 'package:salonku/app/common/input_formatter.dart';
+import 'package:salonku/app/common/reusable_statics.dart';
 import 'package:salonku/app/components/inputs/input_phone_component.dart';
 import 'package:salonku/app/components/inputs/input_text_component.dart';
 import 'package:salonku/app/core/base/base_controller.dart';
@@ -20,6 +22,9 @@ class RegisterSalonController extends BaseController {
     type: InputTextType.paragraf,
   );
   final InputPhoneController phoneSalonCon = InputPhoneController();
+  final InputTextController currencyCon = InputTextController(
+    type: InputTextType.text,
+  );
 
   //staff
   final InputTextController kodeSalonCon = InputTextController();
@@ -33,6 +38,24 @@ class RegisterSalonController extends BaseController {
     this._salonRepositoryContract,
     this._userSalonRepositoryContract,
     this._localDataSource,
+  );
+
+  @override
+  void onInit() {
+    currencyCon.value = "IDR";
+    currencyOnTap();
+
+    super.onInit();
+  }
+
+  void currencyOnTap() => currencyCon.onTap = () => showCurrencyPicker(
+    context: Get.context!,
+    showFlag: true,
+    showCurrencyName: true,
+    showCurrencyCode: true,
+    favorite: ["IDR", "USD"],
+    onSelect: (Currency currency) => currencyCon.value = currency.code,
+    theme: ReusableStatics.currencyPickerTheme(),
   );
 
   void clearSalonData() {
@@ -66,13 +89,13 @@ class RegisterSalonController extends BaseController {
     if (!namaSalonCon.isValid) return;
     if (!alamatSalonCon.isValid) return;
     if (!phoneSalonCon.isValid) return;
+    if (!currencyCon.isValid) return;
 
     final model = SalonModel(
       id: 0,
       namaSalon: namaSalonCon.value,
       kodeSalon: "",
-      //TODO : Buatkan field untuk currency code
-      currencyCode: "",
+      currencyCode: currencyCon.value,
       alamat: alamatSalonCon.value,
       phone: phoneSalonCon.value,
     );

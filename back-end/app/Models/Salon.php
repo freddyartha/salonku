@@ -16,6 +16,7 @@ class Salon extends Model
     protected $fillable = [
         'nama_salon',
         'kode_salon',
+        'currency_code',
         'alamat',
         'phone',
         'logo_url',

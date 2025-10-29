@@ -118,9 +118,18 @@ class InitialBinding extends Bindings {
     );
 
     // Init Repository
-    Get.lazyPut<UserSalonRepositoryContract>(() => UserSalonRepositoryImpl());
-    Get.lazyPut<SalonRepositoryContract>(() => SalonRepositoryImpl());
-    Get.lazyPut<ServiceRepositoryContract>(() => ServiceRepositoryImpl());
+    Get.lazyPut<UserSalonRepositoryContract>(
+      () => UserSalonRepositoryImpl(),
+      fenix: true,
+    );
+    Get.lazyPut<SalonRepositoryContract>(
+      () => SalonRepositoryImpl(),
+      fenix: true,
+    );
+    Get.lazyPut<ServiceRepositoryContract>(
+      () => ServiceRepositoryImpl(),
+      fenix: true,
+    );
   }
 
   // // ===== PHASE 6: CONTROLLER ( =====

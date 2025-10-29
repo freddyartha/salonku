@@ -18,6 +18,10 @@ import '../modules/register_salon/bindings/register_salon_binding.dart';
 import '../modules/register_salon/views/register_salon_view.dart';
 import '../modules/register_setup/bindings/register_setup_binding.dart';
 import '../modules/register_setup/views/register_setup_view.dart';
+import '../modules/salon_cabang_list/bindings/salon_cabang_list_binding.dart';
+import '../modules/salon_cabang_list/views/salon_cabang_list_view.dart';
+import '../modules/salon_cabang_setup/bindings/salon_cabang_setup_binding.dart';
+import '../modules/salon_cabang_setup/views/salon_cabang_setup_view.dart';
 import '../modules/service_list/bindings/service_list_binding.dart';
 import '../modules/service_list/views/service_list_view.dart';
 import '../modules/service_setup/bindings/service_setup_binding.dart';
@@ -101,6 +105,16 @@ class AppPages {
       name: _Paths.SERVICE_SETUP,
       page: () => const ServiceSetupView(),
       binding: ServiceSetupBinding(),
+    ),
+    GetPage(
+      name: _Paths.SALON_CABANG_LIST,
+      page: () => const SalonCabangListView(),
+      binding: SalonCabangListBinding(),
+    ),
+    GetPage(
+      name: _Paths.SALON_CABANG_SETUP,
+      page: () => const SalonCabangSetupView(),
+      binding: SalonCabangSetupBinding(),
     ),
   ];
 }

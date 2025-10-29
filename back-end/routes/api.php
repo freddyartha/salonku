@@ -35,4 +35,8 @@ Route::middleware('firebase.auth')->group(function () {
 
     //Cabang
     Route::get('/salon/{id}/cabang/list', [SalonCabangController::class, 'getPaginatedCabangBySalonId']);
+    Route::get('/salon/cabang/{id}', [SalonCabangController::class, 'readCabangById']);
+    Route::post('/salon/cabang', [SalonCabangController::class, 'storeCabang']);
+    Route::put('/salon/cabang/{id}', [SalonCabangController::class, 'updateCabang']);
+    Route::delete('/salon/cabang/{id}/delete', [SalonCabangController::class, 'deleteCabang']);
 });

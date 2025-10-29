@@ -9,12 +9,17 @@ class ApiConstants {
   static const String headerContentType = 'Content-Type';
   static const String headerAccept = 'Accept';
   static const String headerAuthorization = 'Authorization';
-  // Endpoint
+  // -- Endpoint --
   static final api = "${EnvironmentConfig.hostUrl}/api";
+
+  //user
   static String getUserSalonByFirebaseId(String userFirebaseId) =>
       "$api/user-salon/$userFirebaseId";
-  static String createSalon = "$api/salon";
   static String registerUser = "$api/user-register";
+
+  //salon
+  static String createSalon = "$api/salon";
+  static String updateSalon(int idSalon) => "$api/salon/$idSalon";
   static String userAddSalon(int userId) => '$api/user-salon/$userId/add-salon';
   static String getSalonByIdSalon(int idSalon) => '$api/salon/$idSalon';
   static String getSalonByKodeSalon(String kodeSalon) =>
@@ -23,6 +28,8 @@ class ApiConstants {
       '$api/user-salon/$userId/remove-salon';
   static String getSalonSummary(int salonId) =>
       '$api/general/salon-summary/$salonId';
+
+  //service
   static String getServiceList({
     required int idSalon,
     required int pageIndex,
@@ -43,6 +50,8 @@ class ApiConstants {
   static String putServiceById(int id) => '$api/service/$id';
   static String getServiceById(int id) => '$api/service/$id';
   static String deleteServiceById(int id) => '$api/service/$id/delete';
+
+  //cabang
   static String getCabangByIdSalon({
     required int idSalon,
     required int pageIndex,
@@ -58,4 +67,9 @@ class ApiConstants {
     final queryString = Uri(queryParameters: queryParams).query;
     return "$api/salon/$idSalon/cabang/list?$queryString";
   }
+
+  static String postCabang = '$api/salon/cabang';
+  static String putCabangById(int id) => '$api/salon/cabang/$id';
+  static String getCabangById(int id) => '$api/salon/cabang/$id';
+  static String deleteCabangById(int id) => '$api/salon/cabang/$id/delete';
 }

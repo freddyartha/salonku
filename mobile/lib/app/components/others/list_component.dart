@@ -155,6 +155,8 @@ class _ListComponentState<T> extends State<ListComponent<T>> {
                         width: MediaQuery.of(context).size.width * 0.7,
                       )
               : ListView.separated(
+                  keyboardDismissBehavior:
+                      ScrollViewKeyboardDismissBehavior.onDrag,
                   padding: EdgeInsets.zero,
                   itemCount: widget.controller._items.length,
                   controller: widget.controller._listViewController,
