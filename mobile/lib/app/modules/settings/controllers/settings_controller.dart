@@ -41,7 +41,7 @@ class SettingsController extends BaseController {
 
     dataUtamaList.addAll([
       MenuItemModel(
-        title: "Servis",
+        title: "service",
         imageLocation: "assets/images/png/settings.png",
         onTab: () => Get.toNamed(
           Routes.SERVICE_LIST,
@@ -49,19 +49,28 @@ class SettingsController extends BaseController {
         ),
       ),
       MenuItemModel(
-        title: "Produk",
+        title: "produk",
         imageLocation: "assets/images/png/settings.png",
-        onTab: () => Get.toNamed(Routes.PROFILE),
+        onTab: () => Get.toNamed(
+          Routes.PRODUCT_LIST,
+          arguments: {"idSalon": "${userData.idSalon}"},
+        ),
       ),
       MenuItemModel(
-        title: "Supplier",
+        title: "supplier",
         imageLocation: "assets/images/png/settings.png",
-        onTab: () => Get.toNamed(Routes.PROFILE),
+        onTab: () => Get.toNamed(
+          Routes.SUPPLIER_LIST,
+          arguments: {"idSalon": "${userData.idSalon}"},
+        ),
       ),
       MenuItemModel(
-        title: "Metode Pembayaran",
+        title: "metode_pembayaran",
         imageLocation: "assets/images/png/settings.png",
-        onTab: () => Get.toNamed(Routes.PROFILE),
+        onTab: () => Get.toNamed(
+          Routes.PAYMENT_METHOD_LIST,
+          arguments: {"idSalon": "${userData.idSalon}"},
+        ),
       ),
     ]);
 

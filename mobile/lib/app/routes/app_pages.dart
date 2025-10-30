@@ -10,6 +10,14 @@ import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
 import '../modules/owner_approval/bindings/owner_approval_binding.dart';
 import '../modules/owner_approval/views/owner_approval_view.dart';
+import '../modules/payment_method_list/bindings/payment_method_list_binding.dart';
+import '../modules/payment_method_list/views/payment_method_list_view.dart';
+import '../modules/payment_method_setup/bindings/payment_method_setup_binding.dart';
+import '../modules/payment_method_setup/views/payment_method_setup_view.dart';
+import '../modules/product_list/bindings/product_list_binding.dart';
+import '../modules/product_list/views/product_list_view.dart';
+import '../modules/product_setup/bindings/product_setup_binding.dart';
+import '../modules/product_setup/views/product_setup_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/register/bindings/register_binding.dart';
@@ -30,6 +38,10 @@ import '../modules/settings/bindings/settings_binding.dart';
 import '../modules/settings/views/settings_view.dart';
 import '../modules/splash_screen/bindings/splash_screen_binding.dart';
 import '../modules/splash_screen/views/splash_screen_view.dart';
+import '../modules/supplier_list/bindings/supplier_list_binding.dart';
+import '../modules/supplier_list/views/supplier_list_view.dart';
+import '../modules/supplier_setup/bindings/supplier_setup_binding.dart';
+import '../modules/supplier_setup/views/supplier_setup_view.dart';
 
 // ignore_for_file: constant_identifier_names
 
@@ -115,6 +127,36 @@ class AppPages {
       name: _Paths.SALON_CABANG_SETUP,
       page: () => const SalonCabangSetupView(),
       binding: SalonCabangSetupBinding(),
+    ),
+    GetPage(
+      name: _Paths.PRODUCT_LIST,
+      page: () => const ProductListView(),
+      binding: ProductListBinding(),
+    ),
+    GetPage(
+      name: _Paths.PRODUCT_SETUP,
+      page: () => const ProductSetupView(),
+      binding: ProductSetupBinding(),
+    ),
+    GetPage(
+      name: _Paths.SUPPLIER_LIST,
+      page: () => const SupplierListView(),
+      binding: SupplierListBinding(),
+    ),
+    GetPage(
+      name: _Paths.SUPPLIER_SETUP,
+      page: () => const SupplierSetupView(),
+      binding: SupplierSetupBinding(),
+    ),
+    GetPage(
+      name: _Paths.PAYMENT_METHOD_LIST,
+      page: () => const PaymentMethodListView(),
+      binding: PaymentMethodListBinding(),
+    ),
+    GetPage(
+      name: _Paths.PAYMENT_METHOD_SETUP,
+      page: () => const PaymentMethodSetupView(),
+      binding: PaymentMethodSetupBinding(),
     ),
   ];
 }

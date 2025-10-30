@@ -72,4 +72,71 @@ class ApiConstants {
   static String putCabangById(int id) => '$api/salon/cabang/$id';
   static String getCabangById(int id) => '$api/salon/cabang/$id';
   static String deleteCabangById(int id) => '$api/salon/cabang/$id/delete';
+
+  //Product
+  static String getProductByIdSalon({
+    required int idSalon,
+    required int pageIndex,
+    required int pageSize,
+    String? keyword,
+  }) {
+    final queryParams = <String, String>{
+      'page': '$pageIndex',
+      'per_page': '$pageSize',
+      if (keyword != null && keyword.isNotEmpty) 'search': keyword,
+    };
+
+    final queryString = Uri(queryParameters: queryParams).query;
+    return "$api/salon/$idSalon/product/list?$queryString";
+  }
+
+  static String postProduct = '$api/salon/product';
+  static String putProductById(int id) => '$api/salon/product/$id';
+  static String getProductById(int id) => '$api/salon/product/$id';
+  static String deleteProductById(int id) => '$api/salon/product/$id/delete';
+
+  //Supplier
+  static String getSupplierByIdSalon({
+    required int idSalon,
+    required int pageIndex,
+    required int pageSize,
+    String? keyword,
+  }) {
+    final queryParams = <String, String>{
+      'page': '$pageIndex',
+      'per_page': '$pageSize',
+      if (keyword != null && keyword.isNotEmpty) 'search': keyword,
+    };
+
+    final queryString = Uri(queryParameters: queryParams).query;
+    return "$api/salon/$idSalon/supplier/list?$queryString";
+  }
+
+  static String postSupplier = '$api/salon/supplier';
+  static String putSupplierById(int id) => '$api/salon/supplier/$id';
+  static String getSupplierById(int id) => '$api/salon/supplier/$id';
+  static String deleteSupplierById(int id) => '$api/salon/supplier/$id/delete';
+
+  //Payment Method
+  static String getPaymentMethodByIdSalon({
+    required int idSalon,
+    required int pageIndex,
+    required int pageSize,
+    String? keyword,
+  }) {
+    final queryParams = <String, String>{
+      'page': '$pageIndex',
+      'per_page': '$pageSize',
+      if (keyword != null && keyword.isNotEmpty) 'search': keyword,
+    };
+
+    final queryString = Uri(queryParameters: queryParams).query;
+    return "$api/salon/$idSalon/payment-method/list?$queryString";
+  }
+
+  static String postPaymentMethod = '$api/salon/payment-method';
+  static String putPaymentMethodById(int id) => '$api/salon/payment-method/$id';
+  static String getPaymentMethodById(int id) => '$api/salon/payment-method/$id';
+  static String deletePaymentMethodById(int id) =>
+      '$api/salon/payment-method/$id/delete';
 }

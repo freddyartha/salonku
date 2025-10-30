@@ -58,7 +58,7 @@ class ServiceSetupView extends GetView<ServiceSetupController> {
           ),
         ],
         saveOnTap: controller.saveOnTap,
-        cancelEditOnTap: controller.cancelEditOnTap,
+        cancelEditOnTap: () => controller.addValueInputFields(controller.model),
       ),
     );
   }

@@ -17,7 +17,7 @@ class SalonCabangController extends Controller
         $this->salonCabangService = $salonCabangService;
     }
 
-    //create salon
+    //create
     public function storeCabang(SalonCabangRequest $request)
     {
         $salon = $this->salonCabangService->store($request->validated());
@@ -27,7 +27,7 @@ class SalonCabangController extends Controller
         );
     }
 
-    //create salon
+    //create
     public function updateCabang(SalonCabangRequest $request, int $id)
     {
         $salon = $this->salonCabangService->update($request->validated(), $id);

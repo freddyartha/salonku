@@ -51,21 +51,26 @@ class ServiceSetupController extends SetupBaseController {
     };
   }
 
-  void _addValueInputFields(ServiceModel model) {
-    namaServiceCon.value = model.nama;
-    deskripsiCon.value = model.deskripsi;
-    hargaCon.value = model.harga;
-    cabangSpesifikCon.value = model.cabang != null && model.cabang!.isNotEmpty
-        ? true
-        : false;
-    showSelectCabang(cabangSpesifikCon.value);
-    if (model.cabang != null && model.cabang!.isNotEmpty) {
-      selectCabangCon.values = model.cabang!
-          .map(
-            (e) =>
-                SelectItemModel(title: e.nama, subtitle: e.phone, value: e.id),
-          )
-          .toList();
+  void addValueInputFields(ServiceModel? model) {
+    if (model != null) {
+      namaServiceCon.value = model.nama;
+      deskripsiCon.value = model.deskripsi;
+      hargaCon.value = model.harga;
+      cabangSpesifikCon.value = model.cabang != null && model.cabang!.isNotEmpty
+          ? true
+          : false;
+      showSelectCabang(cabangSpesifikCon.value);
+      if (model.cabang != null && model.cabang!.isNotEmpty) {
+        selectCabangCon.values = model.cabang!
+            .map(
+              (e) => SelectItemModel(
+                title: e.nama,
+                subtitle: e.phone,
+                value: e.id,
+              ),
+            )
+            .toList();
+      }
     }
   }
 
@@ -77,7 +82,7 @@ class ServiceSetupController extends SetupBaseController {
       ),
       onSuccess: (res) {
         model = res;
-        _addValueInputFields(res);
+        addValueInputFields(res);
       },
       showErrorSnackbar: false,
     );
@@ -119,16 +124,10 @@ class ServiceSetupController extends SetupBaseController {
       onSuccess: (res) {
         isEditable(false);
         itemId = res.id;
-        _addValueInputFields(res);
+        addValueInputFields(res);
       },
       showErrorSnackbar: false,
     );
-  }
-
-  void cancelEditOnTap() {
-    namaServiceCon.value = model?.nama;
-    deskripsiCon.value = model?.deskripsi;
-    hargaCon.value = model?.harga;
   }
 
   bool showConfirmationCondition() {

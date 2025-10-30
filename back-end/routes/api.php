@@ -2,9 +2,12 @@
 
 use App\Http\Controllers\FirebaseAuthController;
 use App\Http\Controllers\GeneralController;
+use App\Http\Controllers\PaymentMethodController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SalonCabangController;
 use App\Http\Controllers\SalonController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserSalonController;
 use Illuminate\Support\Facades\Route;
 
@@ -39,4 +42,25 @@ Route::middleware('firebase.auth')->group(function () {
     Route::post('/salon/cabang', [SalonCabangController::class, 'storeCabang']);
     Route::put('/salon/cabang/{id}', [SalonCabangController::class, 'updateCabang']);
     Route::delete('/salon/cabang/{id}/delete', [SalonCabangController::class, 'deleteCabang']);
+
+    //Product
+    Route::get('/salon/{id}/product/list', [ProductController::class, 'getPaginatedBySalonId']);
+    Route::get('/salon/product/{id}', [ProductController::class, 'readById']);
+    Route::post('/salon/product', [ProductController::class, 'store']);
+    Route::put('/salon/product/{id}', [ProductController::class, 'update']);
+    Route::delete('/salon/product/{id}/delete', [ProductController::class, 'delete']);
+
+    //Supplier
+    Route::get('/salon/{id}/supplier/list', [SupplierController::class, 'getPaginatedBySalonId']);
+    Route::get('/salon/supplier/{id}', [SupplierController::class, 'readById']);
+    Route::post('/salon/supplier', [SupplierController::class, 'store']);
+    Route::put('/salon/supplier/{id}', [SupplierController::class, 'update']);
+    Route::delete('/salon/supplier/{id}/delete', [SupplierController::class, 'delete']);
+
+    //Payment Method
+    Route::get('/salon/{id}/payment-method/list', [PaymentMethodController::class, 'getPaginatedBySalonId']);
+    Route::get('/salon/payment-method/{id}', [PaymentMethodController::class, 'readById']);
+    Route::post('/salon/payment-method', [PaymentMethodController::class, 'store']);
+    Route::put('/salon/payment-method/{id}', [PaymentMethodController::class, 'update']);
+    Route::delete('/salon/payment-method/{id}/delete', [PaymentMethodController::class, 'delete']);
 });
