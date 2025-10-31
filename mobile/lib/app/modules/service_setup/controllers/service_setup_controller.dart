@@ -10,6 +10,7 @@ import 'package:salonku/app/data/providers/local/local_data_source.dart';
 import 'package:salonku/app/data/repositories/contract/salon_repository_contract.dart';
 import 'package:salonku/app/data/repositories/contract/service_repository_contract.dart';
 import 'package:salonku/app/models/salon_cabang_model.dart';
+import 'package:salonku/app/models/select_item_model.dart';
 import 'package:salonku/app/models/service_model.dart';
 
 class ServiceSetupController extends SetupBaseController {

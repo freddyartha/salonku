@@ -5,6 +5,7 @@ import 'package:salonku/app/common/font_size.dart';
 import 'package:salonku/app/common/font_weight.dart';
 import 'package:salonku/app/common/radiuses.dart';
 import 'package:salonku/app/components/buttons/button_component.dart';
+import 'package:salonku/app/components/images/image_component.dart';
 import 'package:salonku/app/components/inputs/input_text_component.dart';
 import 'package:salonku/app/components/others/list_component.dart';
 import 'package:salonku/app/components/texts/rich_text_component.dart';
@@ -13,10 +14,10 @@ import 'package:salonku/app/components/widgets/reusable_widgets.dart';
 import 'package:salonku/app/extension/theme_extension.dart';
 import 'package:salonku/app/models/select_item_model.dart';
 
-class SelectMultipleController<T> extends ChangeNotifier {
+class SelectSingleController<T> extends ChangeNotifier {
   late Function(VoidCallback fn) setState;
 
-  final List<SelectItemModel> _selectedItemList = [];
+  SelectItemModel? _selectedItem;
   String? _errorMessage;
   late bool _required;
   bool _searchConInitialized = false;
@@ -25,15 +26,14 @@ class SelectMultipleController<T> extends ChangeNotifier {
   late final InputTextController _searchCon;
   String keyword = "";
 
-  SelectMultipleController({required this.listController});
+  SelectSingleController({required this.listController});
 
-  List<SelectItemModel> get values {
-    return _selectedItemList;
+  SelectItemModel? get value {
+    return _selectedItem;
   }
 
-  set values(List<SelectItemModel> value) {
-    _selectedItemList.clear();
-    _selectedItemList.addAll(value);
+  set value(SelectItemModel? value) {
+    _selectedItem = value;
     setState(() {});
   }
 
@@ -51,8 +51,8 @@ class SelectMultipleController<T> extends ChangeNotifier {
   }
 
   Future<void> _selectItemOnTap(BuildContext context) async {
-    List<SelectItemModel> selectedItemsTmp = [];
-    selectedItemsTmp.addAll(_selectedItemList);
+    SelectItemModel? selectedItemsTmp;
+    selectedItemsTmp = _selectedItem;
 
     await ReusableWidgets.customBottomSheet(
       title: "select_data".tr,
@@ -71,22 +71,14 @@ class SelectMultipleController<T> extends ChangeNotifier {
               child: ListTile(
                 onTap: () {
                   setState(() {
-                    if (selectedItemsTmp.any((e) => e.value == item.value)) {
-                      selectedItemsTmp.removeWhere(
-                        (element) => element.value == item.value,
-                      );
+                    if (selectedItemsTmp?.value == item.value) {
+                      selectedItemsTmp = null;
                     } else {
-                      selectedItemsTmp.add(
-                        SelectItemModel(
-                          value: item.value,
-                          title: item.title,
-                          subtitle: item.subtitle,
-                        ),
-                      );
+                      selectedItemsTmp = item;
                     }
                   });
                 },
-                leading: selectedItemsTmp.any((e) => e.value == item.value)
+                leading: selectedItemsTmp?.value == item.value
                     ? Icon(
                         Icons.check_circle_outline_rounded,
                         color: context.contrast,
@@ -137,8 +129,7 @@ class SelectMultipleController<T> extends ChangeNotifier {
       ],
     ).then((v) {
       if (v == true) {
-        _selectedItemList.clear();
-        _selectedItemList.addAll(selectedItemsTmp);
+        _selectedItem = selectedItemsTmp;
         setState(() {});
       }
     });
@@ -149,7 +140,7 @@ class SelectMultipleController<T> extends ChangeNotifier {
       _errorMessage = null;
     });
 
-    if (_required && _selectedItemList.isEmpty) {
+    if (_required && _selectedItem == null) {
       setState(() {
         _errorMessage = 'field_is_required'.tr;
       });
@@ -165,13 +156,13 @@ class SelectMultipleController<T> extends ChangeNotifier {
   }
 }
 
-class SelectMultipleComponent<T> extends StatefulWidget {
-  final SelectMultipleController<T> controller;
+class SelectSingleComponent<T> extends StatefulWidget {
+  final SelectSingleController<T> controller;
   final String label;
   final bool editable;
   final bool required;
 
-  const SelectMultipleComponent({
+  const SelectSingleComponent({
     super.key,
     required this.controller,
     required this.label,
@@ -180,12 +171,11 @@ class SelectMultipleComponent<T> extends StatefulWidget {
   });
 
   @override
-  State<SelectMultipleComponent<T>> createState() =>
-      _SelectMultipleComponentState<T>();
+  State<SelectSingleComponent<T>> createState() =>
+      _SelectSingleComponentState<T>();
 }
 
-class _SelectMultipleComponentState<T>
-    extends State<SelectMultipleComponent<T>> {
+class _SelectSingleComponentState<T> extends State<SelectSingleComponent<T>> {
   @override
   void initState() {
     widget.controller.init((fn) {
@@ -219,7 +209,11 @@ class _SelectMultipleComponentState<T>
           ],
         ),
         Container(
-          padding: EdgeInsets.all(10),
+          padding: widget.controller._selectedItem == null
+              ? EdgeInsets.all(10)
+              : widget.controller._selectedItem != null && widget.editable
+              ? EdgeInsets.only(bottom: 10)
+              : null,
           margin: EdgeInsets.only(bottom: 10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(Radiuses.large)),
@@ -233,64 +227,58 @@ class _SelectMultipleComponentState<T>
             mainAxisSize: MainAxisSize.min,
             children: [
               Visibility(
-                visible: widget.controller._selectedItemList.isNotEmpty,
-                child: Padding(
-                  padding: widget.editable
-                      ? EdgeInsets.only(bottom: 20)
-                      : EdgeInsets.zero,
-                  child: ListView.builder(
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: widget.controller._selectedItemList.length,
-
-                    itemBuilder: (context, index) {
-                      var item = widget.controller._selectedItemList[index];
-                      return Container(
-                        margin:
-                            index <
-                                widget.controller._selectedItemList.length - 1
-                            ? EdgeInsets.only(bottom: 5)
-                            : EdgeInsets.zero,
-                        decoration: BoxDecoration(
-                          color: context.accent2.withValues(alpha: 0.7),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(Radiuses.large),
-                          ),
-                          border: Border.all(color: context.contrast),
-                        ),
-                        child: ListTile(
-                          contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                          title: TextComponent(
-                            value: item.title,
-                            fontWeight: FontWeights.semiBold,
-                          ),
-                          subtitle: TextComponent(value: item.subtitle),
-                          trailing: widget.editable
-                              ? GestureDetector(
-                                  onTap: () => setState(() {
-                                    widget.controller._selectedItemList
-                                        .removeWhere(
-                                          (e) => e.value == item.value,
-                                        );
-                                  }),
-                                  child: Container(
-                                    padding: EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: context.accent2,
-                                    ),
-                                    child: Icon(
-                                      Icons.delete_forever,
-                                      color: AppColors.danger,
-                                    ),
-                                  ),
-                                )
-                              : null,
-                        ),
-                      );
-                    },
+                visible:
+                    widget.controller._selectedItem == null && !widget.editable,
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    spacing: 5,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ImageComponent(
+                        localUrl: "assets/images/png/drawer-empty.png",
+                        height: 25,
+                        width: 25,
+                        color: context.text,
+                      ),
+                      TextComponent(
+                        value: "empty_item".tr,
+                        fontSize: FontSizes.h6,
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
                   ),
+                ),
+              ),
+              Visibility(
+                visible: widget.controller._selectedItem != null,
+                child: ListTile(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                  title: TextComponent(
+                    value: widget.controller._selectedItem?.title,
+                    fontWeight: FontWeights.semiBold,
+                  ),
+                  subtitle: TextComponent(
+                    value: widget.controller._selectedItem?.subtitle,
+                  ),
+                  trailing: widget.editable
+                      ? GestureDetector(
+                          onTap: () => setState(() {
+                            widget.controller._selectedItem = null;
+                          }),
+                          child: Container(
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: context.accent2,
+                            ),
+                            child: Icon(
+                              Icons.delete_forever,
+                              color: AppColors.danger,
+                            ),
+                          ),
+                        )
+                      : null,
                 ),
               ),
               Visibility(

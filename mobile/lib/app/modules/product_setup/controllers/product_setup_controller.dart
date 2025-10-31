@@ -1,10 +1,15 @@
 import 'package:salonku/app/common/input_formatter.dart';
 import 'package:salonku/app/components/inputs/input_text_component.dart';
-import 'package:salonku/app/components/others/select_multiple_component.dart';
+import 'package:salonku/app/components/others/list_component.dart';
+import 'package:salonku/app/components/others/select_single_component.dart';
 import 'package:salonku/app/core/base/setup_base_controller.dart';
+import 'package:salonku/app/data/models/result.dart';
 import 'package:salonku/app/data/providers/local/local_data_source.dart';
 import 'package:salonku/app/data/repositories/contract/product_repository_contract.dart';
+import 'package:salonku/app/data/repositories/contract/supplier_repository_contract.dart';
 import 'package:salonku/app/models/product_model.dart';
+import 'package:salonku/app/models/select_item_model.dart';
+import 'package:salonku/app/models/supplier_model.dart';
 
 class ProductSetupController extends SetupBaseController {
   final brandCon = InputTextController();
@@ -15,17 +20,22 @@ class ProductSetupController extends SetupBaseController {
 
   final ProductRepositoryContract _repository;
   final LocalDataSource _localDataSource;
-  ProductSetupController(this._repository, this._localDataSource);
+  final SupplierRepositoryContract _supplierRepository;
+  ProductSetupController(
+    this._repository,
+    this._localDataSource,
+    this._supplierRepository,
+  );
 
   late final String currencyCode = _localDataSource.salonData.currencyCode;
   ProductModel? model;
 
-  late final SelectMultipleController selectSupplierCon;
+  late final SelectSingleController selectSupplierCon;
 
   @override
   void onInit() {
     super.onInit();
-    setupSelectMultipleController();
+    setupSelectSingleController();
     if (itemId != null) {
       getById();
     }
@@ -39,14 +49,13 @@ class ProductSetupController extends SetupBaseController {
       satuanCon.value = model.satuan;
       hargaSatuanCon.value = model.hargaSatuan;
 
-      // if (model.cabang != null && model.cabang!.isNotEmpty) {
-      //   selectCabangCon.values = model.cabang!
-      //       .map(
-      //         (e) =>
-      //             SelectItemModel(title: e.nama, subtitle: e.phone, value: e.id),
-      //       )
-      //       .toList();
-      // }
+      if (model.supplier != null) {
+        selectSupplierCon.value = SelectItemModel(
+          title: model.supplier?.nama ?? "",
+          subtitle: model.supplier?.alamat ?? "",
+          value: model.supplier?.id,
+        );
+      }
     }
   }
 
@@ -73,7 +82,7 @@ class ProductSetupController extends SetupBaseController {
     final model = ProductModel(
       id: 0,
       idSalon: _localDataSource.salonData.id,
-      idSupplier: null,
+      idSupplier: selectSupplierCon.value?.value,
       brand: brandCon.value,
       nama: namaCon.value,
       satuan: satuanCon.value,
@@ -112,41 +121,41 @@ class ProductSetupController extends SetupBaseController {
     }
   }
 
-  void setupSelectMultipleController() {
-    // Future<Success<List<SelectItemModel>>> getCabangByIdSalon(
-    //   int pageIndex,
-    // ) async {
-    //   Success<List<SelectItemModel>> returnData = Success([]);
-    //   await handlePaginationRequest(
-    //     () => _salonRepositoryContract.getCabangByIdSalon(
-    //       idSalon: _localDataSource.salonData.id,
-    //       pageIndex: pageIndex,
-    //       pageSize: 10,
-    //       keyword: selectCabangCon.keyword,
-    //     ),
-    //     onSuccess: (res) {
-    //       returnData = Success(
-    //         res.data
-    //             .map(
-    //               (e) => SelectItemModel(
-    //                 value: e.id,
-    //                 title: e.nama,
-    //                 subtitle: e.phone,
-    //               ),
-    //             )
-    //             .toList(),
-    //         meta: res.meta,
-    //         message: res.message,
-    //       );
-    //     },
-    //   );
-    //   return returnData;
-    // }
+  void setupSelectSingleController() {
+    Future<Success<List<SelectItemModel>>> getSupplierByIdSalon(
+      int pageIndex,
+    ) async {
+      Success<List<SelectItemModel>> returnData = Success([]);
+      await handlePaginationRequest(
+        () => _supplierRepository.getSupplierByIdSalon(
+          idSalon: _localDataSource.salonData.id,
+          pageIndex: pageIndex,
+          pageSize: 10,
+          keyword: selectSupplierCon.keyword,
+        ),
+        onSuccess: (res) {
+          returnData = Success(
+            res.data
+                .map(
+                  (e) => SelectItemModel(
+                    value: e.id,
+                    title: e.nama,
+                    subtitle: e.phone,
+                  ),
+                )
+                .toList(),
+            meta: res.meta,
+            message: res.message,
+          );
+        },
+      );
+      return returnData;
+    }
 
-    // final listCon = ListComponentController(
-    //   getDataResult: getCabangByIdSalon,
-    //   fromDynamic: SalonCabangModel.fromDynamic,
-    // );
-    // selectCabangCon = SelectMultipleController(listController: listCon);
+    final listCon = ListComponentController(
+      getDataResult: getSupplierByIdSalon,
+      fromDynamic: SupplierModel.fromDynamic,
+    );
+    selectSupplierCon = SelectSingleController(listController: listCon);
   }
 }

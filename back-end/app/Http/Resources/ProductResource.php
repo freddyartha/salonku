@@ -18,6 +18,14 @@ class ProductResource extends JsonResource
             'id'            => $this->id,
             'id_salon'      => $this->id_salon,
             'id_supplier'   => $this->id_supplier,
+            'supplier' => $this->whenLoaded('supplier', function () {
+                return [
+                    'id'     => $this->supplier->id ?? null,
+                    'nama'   => $this->supplier->nama ?? null,
+                    'alamat' => $this->supplier->alamat ?? null,
+                    'phone'  => $this->supplier->phone ?? null,
+                ];
+            }),
             'brand'         => $this->brand,
             'nama'          => $this->nama,
             'ukuran'        => $this->ukuran,

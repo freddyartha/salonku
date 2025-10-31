@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:salonku/app/components/inputs/input_text_component.dart';
+import 'package:salonku/app/components/others/select_single_component.dart';
 import 'package:salonku/app/components/widgets/reusable_widgets.dart';
 
 import '../controllers/product_setup_controller.dart';
@@ -53,12 +54,11 @@ class ProductSetupView extends GetView<ProductSetupController> {
             required: true,
           ),
 
-          // SelectMultipleComponent(
-          //   controller: controller.selectSupplierCon,
-          //   label: "supplier".tr,
-          //   required: true,
-          //   editable: controller.isEditable.value,
-          // ),
+          SelectSingleComponent(
+            controller: controller.selectSupplierCon,
+            label: "supplier".tr,
+            editable: controller.isEditable.value,
+          ),
         ],
         saveOnTap: controller.saveOnTap,
         cancelEditOnTap: () => controller.addValueInputFields(controller.model),

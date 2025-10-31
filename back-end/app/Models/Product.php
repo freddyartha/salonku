@@ -32,8 +32,8 @@ class Product extends Model
     /**
      * Relasi ke Supplier
      */
-    public function suppliers()
+    public function supplier()
     {
-        return $this->belongsToMany(Supplier::class, 'm_supplier_product', 'id_product', 'id_supplier');
+        return $this->belongsTo(Supplier::class, 'id_supplier');
     }
 }

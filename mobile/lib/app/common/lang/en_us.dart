@@ -129,4 +129,5 @@ const Map<String, String> enUS = {
   "placeholder_payment_method": "Enter payment method",
   "code": "Code",
   "placeholder_code": "Enter code",
+  "empty_item": "No item selected",
 };

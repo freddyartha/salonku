@@ -49,7 +49,7 @@ class SettingsController extends BaseController {
         ),
       ),
       MenuItemModel(
-        title: "produk",
+        title: "product",
         imageLocation: "assets/images/png/settings.png",
         onTab: () => Get.toNamed(
           Routes.PRODUCT_LIST,

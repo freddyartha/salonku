@@ -9,7 +9,6 @@ abstract class SetupBaseController extends BaseController {
 
   @override
   void onInit() {
-    print(itemId);
     if (itemId == null) {
       isEditable(true);
     } else if (itemId != null &&

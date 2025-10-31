@@ -133,4 +133,5 @@ const Map<String, String> idID = {
   "placeholder_payment_method": "Masukkan metode pembayaran",
   "code": "Kode",
   "placeholder_code": "Masukkan kode",
+  "empty_item": "Tidak ada item yang dipilih",
 };

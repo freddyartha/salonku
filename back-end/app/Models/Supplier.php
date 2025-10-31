@@ -25,10 +25,4 @@ class Supplier extends Model
     {
         return $this->belongsTo(Salon::class, 'id_salon');
     }
-
-     public function products()
-    {
-        return $this->belongsToMany(Product::class, 'm_supplier_product', 'id_supplier', 'id_product');
-    }
-
 }

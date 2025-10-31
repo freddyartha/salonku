@@ -10,6 +10,7 @@ class ProductModel {
   int id;
   int idSalon;
   int? idSupplier;
+  ProductSupplierModel? supplier;
   String brand;
   String nama;
   String? ukuran;
@@ -21,6 +22,7 @@ class ProductModel {
     required this.id,
     required this.idSalon,
     this.idSupplier,
+    this.supplier,
     required this.brand,
     required this.nama,
     this.ukuran,
@@ -39,6 +41,9 @@ class ProductModel {
       id: InputFormatter.dynamicToInt(dynamicData['id']) ?? 0,
       idSalon: InputFormatter.dynamicToInt(dynamicData['id_salon']) ?? 0,
       idSupplier: InputFormatter.dynamicToInt(dynamicData['id_supplier']),
+      supplier: dynamicData['supplier'] != null
+          ? ProductSupplierModel.fromDynamic(dynamicData['supplier'])
+          : null,
       brand: dynamicData['brand'],
       nama: dynamicData['nama'],
       ukuran: dynamicData['ukuran'],
@@ -59,4 +64,32 @@ class ProductModel {
     'satuan': satuan,
     'harga_satuan': hargaSatuan,
   };
+}
+
+class ProductSupplierModel {
+  int id;
+  String nama;
+  String alamat;
+  String phone;
+
+  ProductSupplierModel({
+    required this.id,
+    required this.nama,
+    required this.alamat,
+    required this.phone,
+  });
+
+  static ProductSupplierModel fromJson(String jsonString) {
+    final data = json.decode(jsonString);
+    return fromDynamic(data);
+  }
+
+  static ProductSupplierModel fromDynamic(dynamic dynamicData) {
+    return ProductSupplierModel(
+      id: InputFormatter.dynamicToInt(dynamicData['id']) ?? 0,
+      nama: dynamicData['nama'],
+      alamat: dynamicData['alamat'],
+      phone: dynamicData['phone'],
+    );
+  }
 }

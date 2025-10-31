@@ -9,13 +9,13 @@ class ProductRepository
 {
     public function findById(int $id)
     {
-        return Product::with('salon')->find($id);
+        return Product::with('salon', 'supplier')->find($id);
     }
 
     public function create(array $data): Product
     {
         $res = Product::create($data);
-        return $res->load('salon');
+        return $res->load('salon', 'supplier');
     }
 
     public function update(array $data, $id): Product
@@ -23,7 +23,7 @@ class ProductRepository
         $res = $this->findById($id);
         $res->update($data);
 
-        return $res->load('salon');
+        return $res->load('salon', 'supplier');
     }
 
     public function delete(int $id)
