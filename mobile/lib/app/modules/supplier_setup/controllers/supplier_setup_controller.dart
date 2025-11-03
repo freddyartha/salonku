@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:salonku/app/common/input_formatter.dart';
 import 'package:salonku/app/components/inputs/input_phone_component.dart';
 import 'package:salonku/app/components/inputs/input_text_component.dart';
@@ -12,8 +13,8 @@ class SupplierSetupController extends SetupBaseController {
   final phoneSupplierCon = InputPhoneController();
 
   final SupplierRepositoryContract _repository;
-  final LocalDataSource _localDataSource;
-  SupplierSetupController(this._repository, this._localDataSource);
+  final LocalDataSource _localDataSource = Get.find();
+  SupplierSetupController(this._repository);
 
   late final String currencyCode = _localDataSource.salonData.currencyCode;
   SupplierModel? model;

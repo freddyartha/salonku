@@ -24,14 +24,10 @@ class ServiceSetupController extends SetupBaseController {
     ],
   );
 
-  final SalonRepositoryContract _salonRepositoryContract;
+  final SalonRepositoryContract _salonRepositoryContract = Get.find();
   final ServiceRepositoryContract _serviceRepositoryContract;
-  final LocalDataSource _localDataSource;
-  ServiceSetupController(
-    this._salonRepositoryContract,
-    this._serviceRepositoryContract,
-    this._localDataSource,
-  );
+  final LocalDataSource _localDataSource = Get.find();
+  ServiceSetupController(this._serviceRepositoryContract);
 
   late final String currencyCode = _localDataSource.salonData.currencyCode;
   ServiceModel? model;

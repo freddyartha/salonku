@@ -3,26 +3,14 @@ import 'dart:developer' as developer;
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:salonku/app/core/controllers/auth_controller.dart';
-import 'package:salonku/app/data/providers/api/payment_method_provider.dart';
-import 'package:salonku/app/data/providers/api/product_provider.dart';
 import 'package:salonku/app/data/providers/api/salon_provider.dart';
-import 'package:salonku/app/data/providers/api/service_provider.dart';
-import 'package:salonku/app/data/providers/api/supplier_provider.dart';
 import 'package:salonku/app/data/providers/api/user_salon_provider.dart';
 import 'package:salonku/app/data/providers/local/local_data_source.dart';
 import 'package:salonku/app/data/providers/local/local_data_source_impl.dart';
 import 'package:salonku/app/data/providers/network/dio_client.dart';
-import 'package:salonku/app/data/repositories/contract/payment_method_repository_contract.dart';
-import 'package:salonku/app/data/repositories/contract/product_repository_contract.dart';
 import 'package:salonku/app/data/repositories/contract/salon_repository_contract.dart';
-import 'package:salonku/app/data/repositories/contract/service_repository_contract.dart';
-import 'package:salonku/app/data/repositories/contract/supplier_repository_contract.dart';
 import 'package:salonku/app/data/repositories/contract/user_salon_repository_contract.dart';
-import 'package:salonku/app/data/repositories/implementation/payment_method_repository_impl.dart';
-import 'package:salonku/app/data/repositories/implementation/product_repository_impl.dart';
 import 'package:salonku/app/data/repositories/implementation/salon_repository_impl.dart';
-import 'package:salonku/app/data/repositories/implementation/service_repository_impl.dart';
-import 'package:salonku/app/data/repositories/implementation/supplier_repository_impl.dart';
 import 'package:salonku/app/data/repositories/implementation/user_salon_repository_impl.dart';
 import 'package:salonku/app/services/base_api_service.dart';
 import 'package:salonku/app/services/error_handler_service.dart';
@@ -116,13 +104,6 @@ class InitialBinding extends Bindings {
 
     Get.lazyPut<UserSalonProvider>(() => UserSalonProvider(), fenix: true);
     Get.lazyPut<SalonProvider>(() => SalonProvider(), fenix: true);
-    Get.lazyPut<ServiceProvider>(() => ServiceProvider(), fenix: true);
-    Get.lazyPut<ProductProvider>(() => ProductProvider(), fenix: true);
-    Get.lazyPut<SupplierProvider>(() => SupplierProvider(), fenix: true);
-    Get.lazyPut<PaymentMethodProvider>(
-      () => PaymentMethodProvider(),
-      fenix: true,
-    );
   }
 
   // // ===== PHASE 5: REPOSITORIES (Business Logic) =====
@@ -139,22 +120,6 @@ class InitialBinding extends Bindings {
     );
     Get.lazyPut<SalonRepositoryContract>(
       () => SalonRepositoryImpl(),
-      fenix: true,
-    );
-    Get.lazyPut<ServiceRepositoryContract>(
-      () => ServiceRepositoryImpl(),
-      fenix: true,
-    );
-    Get.lazyPut<ProductRepositoryContract>(
-      () => ProductRepositoryImpl(),
-      fenix: true,
-    );
-    Get.lazyPut<SupplierRepositoryContract>(
-      () => SupplierRepositoryImpl(),
-      fenix: true,
-    );
-    Get.lazyPut<PaymentMethodRepositoryContract>(
-      () => PaymentMethodRepositoryImpl(),
       fenix: true,
     );
   }

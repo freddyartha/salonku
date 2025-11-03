@@ -15,8 +15,7 @@ class ProfileController extends GetxController {
 
   late UserModel userModel;
 
-  final LocalDataSource _localDataSource;
-  ProfileController(this._localDataSource);
+  final LocalDataSource _localDataSource = Get.find();
 
   @override
   void onInit() {

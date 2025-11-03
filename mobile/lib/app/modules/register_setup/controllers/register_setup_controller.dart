@@ -24,8 +24,7 @@ class RegisterSetupController extends BaseController {
   final alamatCon = InputTextController(type: InputTextType.paragraf);
   final phoneCon = InputPhoneController();
 
-  final UserSalonRepositoryContract _userSalonRepositoryContract;
-  RegisterSetupController(this._userSalonRepositoryContract);
+  final UserSalonRepositoryContract _userSalonRepositoryContract = Get.find();
 
   Future<void> registerUser() async {
     if (!namaCon.isValid) return;

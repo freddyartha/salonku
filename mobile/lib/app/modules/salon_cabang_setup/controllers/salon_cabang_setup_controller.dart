@@ -13,8 +13,7 @@ class SalonCabangSetupController extends SetupBaseController {
   final alamatCon = InputTextController(type: InputTextType.paragraf);
   final InputPhoneController phoneCon = InputPhoneController();
 
-  final SalonRepositoryContract _salonRepositoryContract;
-  SalonCabangSetupController(this._salonRepositoryContract);
+  final SalonRepositoryContract _salonRepositoryContract = Get.find();
 
   SalonCabangModel? model;
 

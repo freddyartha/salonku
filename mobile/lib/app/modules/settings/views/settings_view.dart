@@ -69,7 +69,7 @@ class SettingsView extends GetView<SettingsController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextComponent(
-                      value: "Informasi Salon".tr,
+                      value: "salon_information".tr,
                       fontWeight: FontWeights.semiBold,
                       margin: EdgeInsetsGeometry.only(bottom: 10),
                     ),
@@ -103,6 +103,7 @@ class SettingsView extends GetView<SettingsController> {
                                         value: item.title?.tr,
                                         textAlign: TextAlign.right,
                                         height: 1,
+                                        fontWeight: FontWeights.semiBold,
                                       ),
                                     ),
                                   ),
@@ -120,14 +121,19 @@ class SettingsView extends GetView<SettingsController> {
                                     ),
                                     child: Align(
                                       alignment: Alignment.topLeft,
-                                      child: TextComponent(
-                                        value: item.value,
-                                        fontColor: AppColors.darkText,
-                                        fontSize: 45,
-                                        fontWeight: FontWeights.bold,
-                                        textAlign: TextAlign.center,
-                                        height: 0.7,
-                                      ),
+                                      child: controller.isLoading.value
+                                          ? CircularProgressIndicator(
+                                              color: AppColors.darkText,
+                                              strokeWidth: 5,
+                                            )
+                                          : TextComponent(
+                                              value: item.value,
+                                              fontColor: AppColors.darkText,
+                                              fontSize: 45,
+                                              fontWeight: FontWeights.bold,
+                                              textAlign: TextAlign.center,
+                                              height: 0.7,
+                                            ),
                                     ),
                                   ),
                                 ],
@@ -150,7 +156,7 @@ class SettingsView extends GetView<SettingsController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextComponent(
-                      value: "Data Utama".tr,
+                      value: "master_data".tr,
                       fontWeight: FontWeights.semiBold,
                       margin: EdgeInsetsGeometry.only(bottom: 10),
                     ),

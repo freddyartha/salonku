@@ -13,13 +13,13 @@ import 'package:salonku/app/data/repositories/contract/salon_repository_contract
 import 'package:salonku/app/extension/theme_extension.dart';
 import 'package:salonku/app/models/menu_item_model.dart';
 import 'package:salonku/app/models/salon_model.dart';
+import 'package:salonku/app/models/salon_summary_model.dart';
 import 'package:salonku/app/models/user_model.dart';
 import 'package:salonku/app/routes/app_pages.dart';
 
 class SettingsController extends BaseController {
-  final SalonRepositoryContract _salonRepositoryContract;
-  final LocalDataSource _localDataSource;
-  SettingsController(this._salonRepositoryContract, this._localDataSource);
+  final SalonRepositoryContract _salonRepositoryContract = Get.find();
+  final LocalDataSource _localDataSource = Get.find();
 
   final InputTextController namaSalonCon = InputTextController();
   final InputTextController alamatSalonCon = InputTextController(
@@ -78,28 +78,30 @@ class SettingsController extends BaseController {
   }
 
   Future<void> getSalonSummary() async {
+    _initSalonSummaryDatas(null);
     await handleRequest(
       showEasyLoading: false,
       () => _salonRepositoryContract.getSalonSummary(userData.idSalon ?? 0),
-      onSuccess: (res) async {
-        salonSummaryList.clear();
-        salonSummaryList.addAll([
-          MenuItemModel(
-            title: "Jumlah Cabang",
-            value: res.jumlahCabang.toString(),
-            onTab: () => Get.toNamed(
-              Routes.SALON_CABANG_LIST,
-              arguments: {"idSalon": "${userData.idSalon}"},
-            ),
-          ),
-          MenuItemModel(
-            title: "Jumlah Staff",
-            value: res.jumlahStaff.toString(),
-          ),
-        ]);
+      onSuccess: (res) {
+        _initSalonSummaryDatas(res);
       },
       showErrorSnackbar: false,
     );
+  }
+
+  void _initSalonSummaryDatas(SalonSummaryModel? item) {
+    salonSummaryList.clear();
+    salonSummaryList.addAll([
+      MenuItemModel(
+        title: "jumlah_cabang",
+        value: item?.jumlahCabang.toString(),
+        onTab: () => Get.toNamed(
+          Routes.SALON_CABANG_LIST,
+          arguments: {"idSalon": "${userData.idSalon}"},
+        ),
+      ),
+      MenuItemModel(title: "jumlah_staff", value: item?.jumlahStaff.toString()),
+    ]);
   }
 
   Future<void> showEditSalon() async {

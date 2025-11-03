@@ -11,8 +11,7 @@ class SalonCabangListController extends ListBaseController {
   final int idSalon =
       InputFormatter.dynamicToInt(Get.arguments['idSalon']) ?? 0;
 
-  final SalonRepositoryContract _salonRepositoryContract;
-  SalonCabangListController(this._salonRepositoryContract);
+  final SalonRepositoryContract _salonRepositoryContract = Get.find();
 
   late final ListComponentController<SalonCabangModel> serviceListCon;
 

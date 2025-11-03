@@ -31,14 +31,9 @@ class RegisterSalonController extends BaseController {
   SalonModel? salonByKode;
   RxBool isSalonFound = true.obs;
 
-  final SalonRepositoryContract _salonRepositoryContract;
-  final UserSalonRepositoryContract _userSalonRepositoryContract;
-  final LocalDataSource _localDataSource;
-  RegisterSalonController(
-    this._salonRepositoryContract,
-    this._userSalonRepositoryContract,
-    this._localDataSource,
-  );
+  final SalonRepositoryContract _salonRepositoryContract = Get.find();
+  final UserSalonRepositoryContract _userSalonRepositoryContract = Get.find();
+  final LocalDataSource _localDataSource = Get.find();
 
   @override
   void onInit() {

@@ -18,12 +18,8 @@ class OwnerApprovalController extends BaseController {
 
   SalonModel? salonModel;
 
-  final UserSalonRepositoryContract _userSalonRepositoryContract;
-  final SalonRepositoryContract _salonRepositoryContract;
-  OwnerApprovalController(
-    this._userSalonRepositoryContract,
-    this._salonRepositoryContract,
-  );
+  final UserSalonRepositoryContract _userSalonRepositoryContract = Get.find();
+  final SalonRepositoryContract _salonRepositoryContract = Get.find();
 
   @override
   void onInit() {

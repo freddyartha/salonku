@@ -130,4 +130,8 @@ const Map<String, String> enUS = {
   "code": "Code",
   "placeholder_code": "Enter code",
   "empty_item": "No item selected",
+  "salon_information": "Salon Information",
+  "master_data": "Master Data",
+  "jumlah_cabang": "Total Branches",
+  "jumlah_staff": "Total Staff",
 };

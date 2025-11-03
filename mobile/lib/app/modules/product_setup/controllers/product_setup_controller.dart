@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:salonku/app/common/input_formatter.dart';
 import 'package:salonku/app/components/inputs/input_text_component.dart';
 import 'package:salonku/app/components/others/list_component.dart';
@@ -19,13 +20,9 @@ class ProductSetupController extends SetupBaseController {
   final hargaSatuanCon = InputTextController(type: InputTextType.money);
 
   final ProductRepositoryContract _repository;
-  final LocalDataSource _localDataSource;
+  final LocalDataSource _localDataSource = Get.find();
   final SupplierRepositoryContract _supplierRepository;
-  ProductSetupController(
-    this._repository,
-    this._localDataSource,
-    this._supplierRepository,
-  );
+  ProductSetupController(this._repository, this._supplierRepository);
 
   late final String currencyCode = _localDataSource.salonData.currencyCode;
   ProductModel? model;

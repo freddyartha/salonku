@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:salonku/app/common/input_formatter.dart';
 import 'package:salonku/app/components/inputs/input_text_component.dart';
 import 'package:salonku/app/core/base/setup_base_controller.dart';
@@ -10,8 +11,8 @@ class PaymentMethodSetupController extends SetupBaseController {
   final codeCon = InputTextController();
 
   final PaymentMethodRepositoryContract _repository;
-  final LocalDataSource _localDataSource;
-  PaymentMethodSetupController(this._repository, this._localDataSource);
+  final LocalDataSource _localDataSource = Get.find();
+  PaymentMethodSetupController(this._repository);
 
   late final String currencyCode = _localDataSource.salonData.currencyCode;
   PaymentMethodModel? model;

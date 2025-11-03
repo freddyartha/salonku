@@ -134,4 +134,8 @@ const Map<String, String> idID = {
   "code": "Kode",
   "placeholder_code": "Masukkan kode",
   "empty_item": "Tidak ada item yang dipilih",
+  "salon_information": "Informasi Salon",
+  "master_data": "Data Utama",
+  "jumlah_cabang": "Jumlah Cabang",
+  "jumlah_staff": "Jumlah Staff",
 };
