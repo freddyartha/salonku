@@ -18,5 +18,6 @@ class AppColors {
   static const Color danger = Colors.red;
   static const Color warning = Colors.yellow;
   static const Color info = Colors.blue;
+  static const Color success = Color(0xFF25D366);
   static const Color mute = Color(0xFFBDBDBD);
 }

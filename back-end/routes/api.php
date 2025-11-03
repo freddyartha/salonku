@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\FirebaseAuthController;
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\PaymentMethodController;
@@ -63,4 +64,11 @@ Route::middleware('firebase.auth')->group(function () {
     Route::post('/salon/payment-method', [PaymentMethodController::class, 'store']);
     Route::put('/salon/payment-method/{id}', [PaymentMethodController::class, 'update']);
     Route::delete('/salon/payment-method/{id}/delete', [PaymentMethodController::class, 'delete']);
+
+    //Client
+    Route::get('/salon/{id}/client/list', [ClientController::class, 'getPaginatedBySalonId']);
+    Route::get('/salon/client/{id}', [ClientController::class, 'readById']);
+    Route::post('/salon/client', [ClientController::class, 'store']);
+    Route::put('/salon/client/{id}', [ClientController::class, 'update']);
+    Route::delete('/salon/client/{id}/delete', [ClientController::class, 'delete']);
 });

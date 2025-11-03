@@ -2,6 +2,10 @@ import 'package:get/get.dart';
 
 import '../modules/base_page/bindings/base_page_binding.dart';
 import '../modules/base_page/views/base_page_view.dart';
+import '../modules/client_list/bindings/client_list_binding.dart';
+import '../modules/client_list/views/client_list_view.dart';
+import '../modules/client_setup/bindings/client_setup_binding.dart';
+import '../modules/client_setup/views/client_setup_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
@@ -157,6 +161,16 @@ class AppPages {
       name: _Paths.PAYMENT_METHOD_SETUP,
       page: () => const PaymentMethodSetupView(),
       binding: PaymentMethodSetupBinding(),
+    ),
+    GetPage(
+      name: _Paths.CLIENT_LIST,
+      page: () => const ClientListView(),
+      binding: ClientListBinding(),
+    ),
+    GetPage(
+      name: _Paths.CLIENT_SETUP,
+      page: () => const ClientSetupView(),
+      binding: ClientSetupBinding(),
     ),
   ];
 }

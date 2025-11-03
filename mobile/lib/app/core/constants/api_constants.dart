@@ -139,4 +139,26 @@ class ApiConstants {
   static String getPaymentMethodById(int id) => '$api/salon/payment-method/$id';
   static String deletePaymentMethodById(int id) =>
       '$api/salon/payment-method/$id/delete';
+
+  //Client
+  static String getClientByIdSalon({
+    required int idSalon,
+    required int pageIndex,
+    required int pageSize,
+    String? keyword,
+  }) {
+    final queryParams = <String, String>{
+      'page': '$pageIndex',
+      'per_page': '$pageSize',
+      if (keyword != null && keyword.isNotEmpty) 'search': keyword,
+    };
+
+    final queryString = Uri(queryParameters: queryParams).query;
+    return "$api/salon/$idSalon/client/list?$queryString";
+  }
+
+  static String postClient = '$api/salon/client';
+  static String putClientById(int id) => '$api/salon/client/$id';
+  static String getClientById(int id) => '$api/salon/client/$id';
+  static String deleteClientById(int id) => '$api/salon/client/$id/delete';
 }

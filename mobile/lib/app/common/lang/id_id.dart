@@ -138,4 +138,13 @@ const Map<String, String> idID = {
   "master_data": "Data Utama",
   "jumlah_cabang": "Jumlah Cabang",
   "jumlah_staff": "Jumlah Staff",
+  "client": "Klien",
+  "client_name": "Nama Klien",
+  "placeholder_client_name": "Masukkan nama klien",
+  "client_email": "Email Klien",
+  "placeholder_client_email": "Masukkan email klien",
+  "client_alamat": "Alamat Klien",
+  "placeholder_client_alamat": "Masukkan alamat klien",
+  "open_whatsapp_error": "Tidak dapat membuka WhatsApp",
+  "open_email_error": "Tidak dapat membuka Email",
 };

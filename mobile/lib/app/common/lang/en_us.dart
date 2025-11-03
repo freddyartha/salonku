@@ -134,4 +134,13 @@ const Map<String, String> enUS = {
   "master_data": "Master Data",
   "jumlah_cabang": "Total Branches",
   "jumlah_staff": "Total Staff",
+  "client": "Client",
+  "client_name": "Client Name",
+  "placeholder_client_name": "Enter client name",
+  "client_email": "Client Email",
+  "placeholder_client_email": "Enter client email",
+  "client_alamat": "Client Address",
+  "placeholder_client_alamat": "Enter client address",
+  "open_whatsapp_error": "Could not open WhatsApp",
+  "open_email_error": "Could not open Email",
 };

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:salonku/app/common/app_colors.dart';
 import 'package:salonku/app/common/radiuses.dart';
+import 'package:salonku/app/components/inputs/input_radio_component.dart';
 import 'package:salonku/app/components/texts/text_component.dart';
 import 'package:salonku/app/extension/theme_extension.dart';
 import 'package:uuid/uuid.dart';
@@ -100,4 +101,9 @@ class ReusableStatics {
           ),
         ),
       );
+
+  static List<RadioButtonItem> jenisKelaminRadioItem = [
+    RadioButtonItem(text: "male".tr, value: "l"),
+    RadioButtonItem(text: "female".tr, value: "p"),
+  ];
 }

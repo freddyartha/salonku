@@ -82,6 +82,7 @@ class _ButtonComponentState extends State<ButtonComponent> {
                       : Image(
                           image: AssetImage(widget.icon!),
                           width: widget.iconSize ?? 15,
+                          color: widget.textColor,
                         )
                 : SizedBox(),
             if (widget.leading != null) ...[

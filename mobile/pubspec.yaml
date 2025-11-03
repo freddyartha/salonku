@@ -60,6 +60,7 @@ dependencies:
   shimmer: ^3.0.0
   flutter_slidable: ^4.0.3
   currency_picker: ^2.0.21
+  url_launcher: ^6.3.2
 
 dev_dependencies:
   flutter_test:

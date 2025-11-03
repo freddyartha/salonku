@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:salonku/app/common/input_formatter.dart';
+import 'package:salonku/app/common/reusable_statics.dart';
 import 'package:salonku/app/components/inputs/input_datetime_component.dart';
 import 'package:salonku/app/components/inputs/input_phone_component.dart';
 import 'package:salonku/app/components/inputs/input_radio_component.dart';
@@ -15,10 +16,7 @@ class RegisterSetupController extends BaseController {
   final namaCon = InputTextController();
   final nikCon = InputTextController();
   final jenisKelaminCon = InputRadioController(
-    items: [
-      RadioButtonItem(text: "male".tr, value: "l"),
-      RadioButtonItem(text: "female".tr, value: "p"),
-    ],
+    items: ReusableStatics.jenisKelaminRadioItem,
   );
   final tanggalLahirCon = InputDatetimeController();
   final alamatCon = InputTextController(type: InputTextType.paragraf);
