@@ -1034,6 +1034,7 @@ class ReusableWidgets {
     required bool Function() showConfirmationCondition,
     dynamic Function()? saveOnTap,
     dynamic Function()? cancelEditOnTap,
+    bool withBottomSafeArea = true,
   }) {
     return Stack(
       children: [
@@ -1086,6 +1087,7 @@ class ReusableWidgets {
               ],
             ),
             body: SafeArea(
+              bottom: withBottomSafeArea,
               child: ListView(
                 key: GlobalKey(),
                 keyboardDismissBehavior:

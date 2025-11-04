@@ -8,8 +8,10 @@ import 'package:salonku/app/common/radiuses.dart';
 import 'package:salonku/app/common/reusable_statics.dart';
 import 'package:salonku/app/components/images/image_component.dart';
 import 'package:salonku/app/components/texts/text_component.dart';
+import 'package:salonku/app/components/widgets/reusable_widgets.dart';
 
 import 'package:salonku/app/extension/theme_extension.dart';
+import 'package:salonku/app/routes/app_pages.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -18,6 +20,17 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).size.height * 0.08,
+        ),
+        child: ReusableWidgets.generalCreateDataWidget(
+          context,
+          () => Get.toNamed(Routes.SERVICE_MANAGEMENT_SETUP),
+          // ?.then((v) => controller.listCon.refresh()),
+        ),
+      ),
       body: SafeArea(
         child: Column(
           children: [

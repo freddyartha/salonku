@@ -6,6 +6,7 @@ const Map<String, String> enUS = {
   "delete_account": "Delete Account",
   "ok": "OK",
   "yes": "Yes",
+  "no": "No",
   "cancel": "Cancel",
   "save": "Save",
   "success": "Success",
@@ -143,4 +144,15 @@ const Map<String, String> enUS = {
   "placeholder_client_alamat": "Enter client address",
   "open_whatsapp_error": "Could not open WhatsApp",
   "open_email_error": "Could not open Email",
+  "transaction": "Transaction",
+  "select_client": "Select Client",
+  "select_services": "Select Services",
+  "create_custom_service_for_this_client_only":
+      "Create custom service for this client only",
+  "create_custom_services": "Create Custom Services",
+  "select_payment_method": "Select Payment Method",
+  "select_branch": "Select Branch",
+  "catatan": "Notes",
+  "placeholder_catatan": "Enter additional notes here",
+  "grand_total": "Grand Total",
 };

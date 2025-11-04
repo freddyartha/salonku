@@ -4,36 +4,33 @@ import 'package:salonku/app/common/app_colors.dart';
 import 'package:salonku/app/common/font_size.dart';
 import 'package:salonku/app/common/font_weight.dart';
 import 'package:salonku/app/common/radiuses.dart';
-import 'package:salonku/app/components/buttons/button_component.dart';
-import 'package:salonku/app/components/inputs/input_text_component.dart';
-import 'package:salonku/app/components/others/list_component.dart';
 import 'package:salonku/app/components/texts/rich_text_component.dart';
 import 'package:salonku/app/components/texts/text_component.dart';
-import 'package:salonku/app/components/widgets/reusable_widgets.dart';
 import 'package:salonku/app/extension/theme_extension.dart';
 import 'package:salonku/app/models/select_item_model.dart';
 
-class SelectMultipleController<T> extends ChangeNotifier {
+class CustomMultipleController<T> {
   late Function(VoidCallback fn) setState;
 
-  final List<SelectItemModel> _selectedItemList = [];
+  final List<T> _selectedItemList = [];
+  final SelectItemModel Function(T) mapper;
+  final Future<T?> Function() createChildren;
+  Function(List<T> items)? onChanged;
+
   String? _errorMessage;
   late bool _required;
-  bool _searchConInitialized = false;
 
-  final ListComponentController listController;
-  late final InputTextController _searchCon;
-  String keyword = "";
+  CustomMultipleController({
+    required this.mapper,
+    required this.createChildren,
+    this.onChanged,
+  });
 
-  Function(List<SelectItemModel> items)? onChanged;
-
-  SelectMultipleController({required this.listController, this.onChanged});
-
-  List<SelectItemModel> get values {
+  List<T> get values {
     return _selectedItemList;
   }
 
-  set values(List<SelectItemModel> value) {
+  set values(List<T> value) {
     _selectedItemList.clear();
     _selectedItemList.addAll(value);
     setState(() {});
@@ -41,113 +38,16 @@ class SelectMultipleController<T> extends ChangeNotifier {
 
   void init(Function(VoidCallback fn) setStateX, BuildContext context) {
     setState = setStateX;
-    if (!_searchConInitialized) {
-      _searchCon = InputTextController(
-        onChanged: (value) {
-          keyword = value;
-          listController.refresh();
-        },
-      );
-      _searchConInitialized = true;
-    }
   }
 
-  Future<void> _selectItemOnTap(BuildContext context) async {
-    List<SelectItemModel> selectedItemsTmp = [];
-    selectedItemsTmp.addAll(_selectedItemList);
-
-    await ReusableWidgets.customBottomSheet(
-      title: "select_data".tr,
-      children: [
-        InputTextComponent(placeHolder: "search".tr, controller: _searchCon),
-        StatefulBuilder(
-          builder: (context, setState) => ListComponent(
-            withPadding: false,
-            controller: listController,
-            itemBuilder: (item) => Container(
-              decoration: BoxDecoration(
-                color: context.accent2.withValues(alpha: 0.7),
-                borderRadius: BorderRadius.all(Radius.circular(Radiuses.large)),
-                border: Border.all(color: context.contrast),
-              ),
-              child: ListTile(
-                onTap: () {
-                  setState(() {
-                    if (selectedItemsTmp.any((e) => e.value == item.value)) {
-                      selectedItemsTmp.removeWhere(
-                        (element) => element.value == item.value,
-                      );
-                    } else {
-                      selectedItemsTmp.add(
-                        SelectItemModel(
-                          value: item.value,
-                          addedValue: item.addedValue,
-                          title: item.title,
-                          subtitle: item.subtitle,
-                        ),
-                      );
-                    }
-                  });
-                },
-                leading: selectedItemsTmp.any((e) => e.value == item.value)
-                    ? Icon(
-                        Icons.check_circle_outline_rounded,
-                        color: context.contrast,
-                        size: 35,
-                      )
-                    : null,
-
-                contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                title: TextComponent(
-                  value: item.title,
-                  fontWeight: FontWeights.semiBold,
-                ),
-                subtitle: TextComponent(value: item.subtitle),
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(height: 15),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          spacing: 20,
-          children: [
-            Expanded(
-              child: ButtonComponent(
-                text: "cancel".tr,
-                isMultilineText: true,
-                borderColor: Get.context?.contrast,
-                buttonColor: Get.context?.accent,
-                textColor: Get.context?.text,
-                borderRadius: Radiuses.regular,
-                onTap: () {
-                  Get.back(result: false);
-                },
-              ),
-            ),
-            Expanded(
-              child: ButtonComponent(
-                text: "ok".tr,
-                borderRadius: Radiuses.regular,
-                isMultilineText: true,
-                onTap: () {
-                  Get.back(result: true);
-                },
-              ),
-            ),
-          ],
-        ),
-      ],
-    ).then((v) {
-      if (v == true) {
-        _selectedItemList.clear();
-        _selectedItemList.addAll(selectedItemsTmp);
-        if (onChanged != null) {
-          onChanged!(_selectedItemList);
-        }
-        setState(() {});
+  void _selectItemOnTap(BuildContext context) async {
+    var result = await createChildren();
+    if (result != null) {
+      _selectedItemList.add(result);
+      if (onChanged != null) {
+        onChanged!(_selectedItemList);
       }
-    });
+    }
   }
 
   bool get isValid {
@@ -163,21 +63,15 @@ class SelectMultipleController<T> extends ChangeNotifier {
     }
     return true;
   }
-
-  @override
-  void dispose() {
-    _searchCon.dispose();
-    super.dispose();
-  }
 }
 
-class SelectMultipleComponent<T> extends StatefulWidget {
-  final SelectMultipleController<T> controller;
+class CustomMultipleComponent<T> extends StatefulWidget {
+  final CustomMultipleController<T> controller;
   final String label;
   final bool editable;
   final bool required;
 
-  const SelectMultipleComponent({
+  const CustomMultipleComponent({
     super.key,
     required this.controller,
     required this.label,
@@ -186,12 +80,12 @@ class SelectMultipleComponent<T> extends StatefulWidget {
   });
 
   @override
-  State<SelectMultipleComponent<T>> createState() =>
-      _SelectMultipleComponentState<T>();
+  State<CustomMultipleComponent<T>> createState() =>
+      _CustomMultipleComponentState<T>();
 }
 
-class _SelectMultipleComponentState<T>
-    extends State<SelectMultipleComponent<T>> {
+class _CustomMultipleComponentState<T>
+    extends State<CustomMultipleComponent<T>> {
   @override
   void initState() {
     widget.controller.init((fn) {
@@ -251,7 +145,9 @@ class _SelectMultipleComponentState<T>
                     itemCount: widget.controller._selectedItemList.length,
 
                     itemBuilder: (context, index) {
-                      var item = widget.controller._selectedItemList[index];
+                      var item = widget.controller.mapper(
+                        widget.controller._selectedItemList[index],
+                      );
                       return Container(
                         margin:
                             index <
@@ -276,9 +172,8 @@ class _SelectMultipleComponentState<T>
                               ? GestureDetector(
                                   onTap: () => setState(() {
                                     widget.controller._selectedItemList
-                                        .removeWhere(
-                                          (e) => e.value == item.value,
-                                        );
+                                        .removeAt(index);
+
                                     if (widget.controller.onChanged != null) {
                                       widget.controller.onChanged!(
                                         widget.controller._selectedItemList,

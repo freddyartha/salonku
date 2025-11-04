@@ -1,0 +1,105 @@
+import 'package:flutter/material.dart';
+
+import 'package:get/get.dart';
+import 'package:salonku/app/common/font_size.dart';
+import 'package:salonku/app/common/font_weight.dart';
+import 'package:salonku/app/common/input_formatter.dart';
+import 'package:salonku/app/common/radiuses.dart';
+import 'package:salonku/app/components/inputs/input_radio_component.dart';
+import 'package:salonku/app/components/inputs/input_text_component.dart';
+import 'package:salonku/app/components/others/custom_multiple_component.dart';
+import 'package:salonku/app/components/others/select_multiple_component.dart';
+import 'package:salonku/app/components/others/select_single_component.dart';
+import 'package:salonku/app/components/texts/text_component.dart';
+import 'package:salonku/app/components/widgets/reusable_widgets.dart';
+import 'package:salonku/app/extension/theme_extension.dart';
+
+import '../controllers/service_management_setup_controller.dart';
+
+class ServiceManagementSetupView
+    extends GetView<ServiceManagementSetupController> {
+  const ServiceManagementSetupView({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return Obx(
+      () => Column(
+        children: [
+          Expanded(
+            child: ReusableWidgets.generalSetupPageWidget(
+              context,
+              controller,
+              title: "transaction".tr,
+              showConfirmationCondition: controller.showConfirmationCondition,
+              withBottomSafeArea: false,
+              children: [
+                SelectSingleComponent(
+                  controller: controller.selectClientCon,
+                  label: "select_client".tr,
+                ),
+
+                SelectMultipleComponent(
+                  controller: controller.selectServicesCon,
+                  label: "select_services".tr,
+                ),
+                InputRadioComponent(
+                  controller: controller.showCustomServiceCon,
+                  label: "create_custom_service_for_this_client_only".tr,
+                ),
+                Visibility(
+                  visible: controller.customService.value,
+                  child: CustomMultipleComponent(
+                    controller: controller.customServicesCon,
+                    label: "create_custom_services".tr,
+                  ),
+                ),
+
+                SelectSingleComponent(
+                  controller: controller.selectPaymentCon,
+                  required: true,
+                  label: "select_payment_method".tr,
+                ),
+                SelectSingleComponent(
+                  controller: controller.selectCabangCon,
+                  required: true,
+                  label: "select_branch".tr,
+                ),
+                InputTextComponent(
+                  label: "catatan".tr,
+                  placeHolder: "placeholder_catatan".tr,
+                  controller: controller.catatanCon,
+                  editable: controller.isEditable.value,
+                ),
+              ],
+              saveOnTap: controller.saveOnTap,
+              cancelEditOnTap: () =>
+                  controller.addValueInputFields(controller.model),
+            ),
+          ),
+          SafeArea(
+            top: false,
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(Radiuses.large)),
+                border: Border.all(color: context.contrast),
+              ),
+              child: ListTile(
+                contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                title: TextComponent(
+                  value: "grand_total".tr,
+                  fontWeight: FontWeights.semiBold,
+                ),
+                trailing: TextComponent(
+                  fontWeight: FontWeights.bold,
+                  fontSize: FontSizes.h4,
+                  value:
+                      "${controller.currencyCode} ${InputFormatter.toCurrency(controller.grandTotal.value)}",
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

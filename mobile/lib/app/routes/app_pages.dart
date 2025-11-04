@@ -36,6 +36,10 @@ import '../modules/salon_cabang_setup/bindings/salon_cabang_setup_binding.dart';
 import '../modules/salon_cabang_setup/views/salon_cabang_setup_view.dart';
 import '../modules/service_list/bindings/service_list_binding.dart';
 import '../modules/service_list/views/service_list_view.dart';
+import '../modules/service_management_list/bindings/service_management_list_binding.dart';
+import '../modules/service_management_list/views/service_management_list_view.dart';
+import '../modules/service_management_setup/bindings/service_management_setup_binding.dart';
+import '../modules/service_management_setup/views/service_management_setup_view.dart';
 import '../modules/service_setup/bindings/service_setup_binding.dart';
 import '../modules/service_setup/views/service_setup_view.dart';
 import '../modules/settings/bindings/settings_binding.dart';
@@ -171,6 +175,16 @@ class AppPages {
       name: _Paths.CLIENT_SETUP,
       page: () => const ClientSetupView(),
       binding: ClientSetupBinding(),
+    ),
+    GetPage(
+      name: _Paths.SERVICE_MANAGEMENT_LIST,
+      page: () => const ServiceManagementListView(),
+      binding: ServiceManagementListBinding(),
+    ),
+    GetPage(
+      name: _Paths.SERVICE_MANAGEMENT_SETUP,
+      page: () => const ServiceManagementSetupView(),
+      binding: ServiceManagementSetupBinding(),
     ),
   ];
 }

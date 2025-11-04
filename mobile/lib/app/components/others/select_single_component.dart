@@ -26,7 +26,9 @@ class SelectSingleController<T> extends ChangeNotifier {
   late final InputTextController _searchCon;
   String keyword = "";
 
-  SelectSingleController({required this.listController});
+  Function(SelectItemModel? item)? onChanged;
+
+  SelectSingleController({required this.listController, this.onChanged});
 
   SelectItemModel? get value {
     return _selectedItem;
@@ -130,6 +132,9 @@ class SelectSingleController<T> extends ChangeNotifier {
     ).then((v) {
       if (v == true) {
         _selectedItem = selectedItemsTmp;
+        if (onChanged != null) {
+          onChanged!(_selectedItem);
+        }
         setState(() {});
       }
     });
@@ -265,6 +270,11 @@ class _SelectSingleComponentState<T> extends State<SelectSingleComponent<T>> {
                       ? GestureDetector(
                           onTap: () => setState(() {
                             widget.controller._selectedItem = null;
+                            if (widget.controller.onChanged != null) {
+                              widget.controller.onChanged!(
+                                widget.controller._selectedItem,
+                              );
+                            }
                           }),
                           child: Container(
                             padding: EdgeInsets.all(10),

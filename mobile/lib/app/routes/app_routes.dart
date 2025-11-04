@@ -28,6 +28,8 @@ abstract class Routes {
   static const PAYMENT_METHOD_SETUP = _Paths.PAYMENT_METHOD_SETUP;
   static const CLIENT_LIST = _Paths.CLIENT_LIST;
   static const CLIENT_SETUP = _Paths.CLIENT_SETUP;
+  static const SERVICE_MANAGEMENT_LIST = _Paths.SERVICE_MANAGEMENT_LIST;
+  static const SERVICE_MANAGEMENT_SETUP = _Paths.SERVICE_MANAGEMENT_SETUP;
 }
 
 abstract class _Paths {
@@ -55,4 +57,6 @@ abstract class _Paths {
   static const PAYMENT_METHOD_SETUP = '/payment-method-setup';
   static const CLIENT_LIST = '/client-list';
   static const CLIENT_SETUP = '/client-setup';
+  static const SERVICE_MANAGEMENT_LIST = '/service-management-list';
+  static const SERVICE_MANAGEMENT_SETUP = '/service-management-setup';
 }

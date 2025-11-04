@@ -8,6 +8,7 @@ const Map<String, String> idID = {
   "delete_account": "Hapus Akun",
   "ok": "Oke",
   "yes": "Ya",
+  "no": "Tidak",
   "cancel": "Batal",
   "save": "Simpan",
   "success": "Berhasil",
@@ -147,4 +148,15 @@ const Map<String, String> idID = {
   "placeholder_client_alamat": "Masukkan alamat klien",
   "open_whatsapp_error": "Tidak dapat membuka WhatsApp",
   "open_email_error": "Tidak dapat membuka Email",
+  "transaction": "Transaksi",
+  "select_client": "Pilih Klien",
+  "select_services": "Pilih Layanan",
+  "create_custom_service_for_this_client_only":
+      "Buat layanan khusus untuk klien ini saja",
+  "create_custom_services": "Buat Layanan Khusus",
+  "select_payment_method": "Pilih Metode Pembayaran",
+  "select_branch": "Pilih Cabang",
+  "catatan": "Catatan",
+  "placeholder_catatan": "Masukkan catatan tambahan di sini",
+  "grand_total": "Total Keseluruhan",
 };
