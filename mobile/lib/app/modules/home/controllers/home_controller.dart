@@ -23,6 +23,14 @@ class HomeController extends BaseController {
           arguments: {"idSalon": "${userData.idSalon}"},
         ),
       ),
+      MenuItemModel(
+        title: "transaction",
+        imageLocation: "assets/images/png/settings.png",
+        onTab: () => Get.toNamed(
+          Routes.SERVICE_MANAGEMENT_LIST,
+          arguments: {"idSalon": "${userData.idSalon}"},
+        ),
+      ),
     ]);
     super.onInit();
   }

@@ -219,7 +219,9 @@ class _SelectSingleComponentState<T> extends State<SelectSingleComponent<T>> {
               : widget.controller._selectedItem != null && widget.editable
               ? EdgeInsets.only(bottom: 10)
               : null,
-          margin: EdgeInsets.only(bottom: 10),
+          margin: EdgeInsets.only(
+            bottom: widget.controller._errorMessage != null ? 0 : 15,
+          ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(Radiuses.large)),
             border: Border.all(
@@ -319,6 +321,7 @@ class _SelectSingleComponentState<T> extends State<SelectSingleComponent<T>> {
           child: TextComponent(
             value: widget.controller._errorMessage?.tr,
             fontColor: AppColors.danger,
+            margin: EdgeInsetsGeometry.only(bottom: 15),
           ),
         ),
       ],

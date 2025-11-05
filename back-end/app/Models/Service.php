@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -32,4 +33,13 @@ class Service extends Model
         )->withTimestamps();
     }
 
+    public function serviceManagements()
+    {
+        return $this->belongsToMany(
+            ServiceManagement::class,
+            'tr_id_service_management',
+            'id_service',
+            'id_service_management'
+        )->withTimestamps();
+    }
 }

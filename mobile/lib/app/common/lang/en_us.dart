@@ -147,8 +147,8 @@ const Map<String, String> enUS = {
   "transaction": "Transaction",
   "select_client": "Select Client",
   "select_services": "Select Services",
-  "create_custom_service_for_this_client_only":
-      "Create custom service for this client only",
+  "create_custom_service_for_this_transaction_only":
+      "Create custom service for this transaction only",
   "create_custom_services": "Create Custom Services",
   "select_payment_method": "Select Payment Method",
   "select_branch": "Select Branch",

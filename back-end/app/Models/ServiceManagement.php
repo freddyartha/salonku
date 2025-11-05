@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -13,9 +14,7 @@ class ServiceManagement extends Model
         'id_service',
         'id_salon',
         'id_cabang',
-        'nama',
-        'deskripsi',
-        'harga',
+        'catatan',
     ];
 
     // Relasi
@@ -29,9 +28,14 @@ class ServiceManagement extends Model
         return $this->belongsTo(PaymentMethod::class, 'id_payment_method');
     }
 
-    public function service()
+    public function services()
     {
-        return $this->belongsTo(Service::class, 'id_service');
+        return $this->belongsToMany(
+            Service::class,
+            'tr_id_service_management', // nama tabel pivot
+            'id_service_management',    // foreign key ke ServiceManagement
+            'id_service'                // foreign key ke Service
+        )->withTimestamps();
     }
 
     public function salon()
@@ -42,5 +46,18 @@ class ServiceManagement extends Model
     public function cabang()
     {
         return $this->belongsTo(SalonCabang::class, 'id_cabang');
+    }
+
+    public function serviceItems()
+    {
+        return $this->hasMany(ServiceItem::class, 'id_service_management');
+    }
+
+
+    protected static function booted()
+    {
+        static::deleting(function ($management) {
+            $management->serviceItems()->delete();
+        });
     }
 }

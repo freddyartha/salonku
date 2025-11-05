@@ -35,33 +35,38 @@ class ServiceManagementSetupView
                 SelectSingleComponent(
                   controller: controller.selectClientCon,
                   label: "select_client".tr,
+                  editable: controller.isEditable.value,
                 ),
-
                 SelectMultipleComponent(
                   controller: controller.selectServicesCon,
                   label: "select_services".tr,
+                  editable: controller.isEditable.value,
                 ),
                 InputRadioComponent(
                   controller: controller.showCustomServiceCon,
-                  label: "create_custom_service_for_this_client_only".tr,
+                  label: "create_custom_service_for_this_transaction_only".tr,
+                  editable: controller.isEditable.value,
                 ),
                 Visibility(
                   visible: controller.customService.value,
                   child: CustomMultipleComponent(
                     controller: controller.customServicesCon,
                     label: "create_custom_services".tr,
+                    required: true,
+                    editable: controller.isEditable.value,
                   ),
                 ),
-
                 SelectSingleComponent(
                   controller: controller.selectPaymentCon,
                   required: true,
                   label: "select_payment_method".tr,
+                  editable: controller.isEditable.value,
                 ),
                 SelectSingleComponent(
                   controller: controller.selectCabangCon,
                   required: true,
                   label: "select_branch".tr,
+                  editable: controller.isEditable.value,
                 ),
                 InputTextComponent(
                   label: "catatan".tr,

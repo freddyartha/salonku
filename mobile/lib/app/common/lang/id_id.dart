@@ -151,8 +151,8 @@ const Map<String, String> idID = {
   "transaction": "Transaksi",
   "select_client": "Pilih Klien",
   "select_services": "Pilih Layanan",
-  "create_custom_service_for_this_client_only":
-      "Buat layanan khusus untuk klien ini saja",
+  "create_custom_service_for_this_transaction_only":
+      "Buat layanan khusus untuk transaksi ini saja",
   "create_custom_services": "Buat Layanan Khusus",
   "select_payment_method": "Pilih Metode Pembayaran",
   "select_branch": "Pilih Cabang",

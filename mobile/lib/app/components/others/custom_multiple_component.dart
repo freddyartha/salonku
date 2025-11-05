@@ -14,7 +14,7 @@ class CustomMultipleController<T> {
 
   final List<T> _selectedItemList = [];
   final SelectItemModel Function(T) mapper;
-  final Future<T?> Function() createChildren;
+  final Future<T?> Function(T? selectedItem) createChildren;
   Function(List<T> items)? onChanged;
 
   String? _errorMessage;
@@ -41,7 +41,7 @@ class CustomMultipleController<T> {
   }
 
   void _selectItemOnTap(BuildContext context) async {
-    var result = await createChildren();
+    var result = await createChildren(null);
     if (result != null) {
       _selectedItemList.add(result);
       if (onChanged != null) {
@@ -120,7 +120,9 @@ class _CustomMultipleComponentState<T>
         ),
         Container(
           padding: EdgeInsets.all(10),
-          margin: EdgeInsets.only(bottom: 10),
+          margin: EdgeInsets.only(
+            bottom: widget.controller._errorMessage != null ? 0 : 15,
+          ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(Radiuses.large)),
             border: Border.all(
@@ -162,6 +164,17 @@ class _CustomMultipleComponentState<T>
                           border: Border.all(color: context.contrast),
                         ),
                         child: ListTile(
+                          onTap: () => widget.controller
+                              .createChildren(
+                                widget.controller._selectedItemList[index],
+                              )
+                              .then((v) {
+                                if (widget.controller.onChanged != null) {
+                                  widget.controller.onChanged!(
+                                    widget.controller._selectedItemList,
+                                  );
+                                }
+                              }),
                           contentPadding: EdgeInsets.symmetric(horizontal: 10),
                           title: TextComponent(
                             value: item.title,
@@ -227,6 +240,7 @@ class _CustomMultipleComponentState<T>
           child: TextComponent(
             value: widget.controller._errorMessage?.tr,
             fontColor: AppColors.danger,
+            margin: EdgeInsetsGeometry.only(bottom: 15),
           ),
         ),
       ],

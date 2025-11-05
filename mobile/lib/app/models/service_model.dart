@@ -9,7 +9,7 @@ class ServiceModel {
   String nama;
   String deskripsi;
   double harga;
-  String currencyCode;
+  String? currencyCode;
   List<ServiceCabangModel>? cabang;
 
   ServiceModel({

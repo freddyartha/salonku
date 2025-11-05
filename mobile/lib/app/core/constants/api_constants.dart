@@ -161,4 +161,29 @@ class ApiConstants {
   static String putClientById(int id) => '$api/salon/client/$id';
   static String getClientById(int id) => '$api/salon/client/$id';
   static String deleteClientById(int id) => '$api/salon/client/$id/delete';
+
+  //Service Management
+  static String getServiceManagementByIdSalon({
+    required int idSalon,
+    required int pageIndex,
+    required int pageSize,
+    String? keyword,
+  }) {
+    final queryParams = <String, String>{
+      'page': '$pageIndex',
+      'per_page': '$pageSize',
+      if (keyword != null && keyword.isNotEmpty) 'search': keyword,
+    };
+
+    final queryString = Uri(queryParameters: queryParams).query;
+    return "$api/salon/$idSalon/service-management/list?$queryString";
+  }
+
+  static String postServiceManagement = '$api/salon/service-management';
+  static String putServiceManagementById(int id) =>
+      '$api/salon/service-management/$id';
+  static String getServiceManagementById(int id) =>
+      '$api/salon/service-management/$id';
+  static String deleteServiceManagementById(int id) =>
+      '$api/salon/service-management/$id/delete';
 }
