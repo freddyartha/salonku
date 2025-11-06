@@ -10,11 +10,18 @@ class ServiceRepository
 
     public function getPaginatedService(int $salonId, array $options): LengthAwarePaginator
     {
+        $cabangId = $options['cabang_id'];
         $perPage = $options['per_page'] ?? 10;
         $search = $options['search'];
         $sort = $options['sort'] ?? 'desc';
 
         $query = Service::query()->with('cabangs', 'salon')->where("id_Salon", $salonId);
+
+        if ($cabangId != null) {
+            $query->whereHas('cabangs', function ($q) use ($cabangId) {
+                $q->where('id_cabang', $cabangId);
+            })->orDoesntHave('cabangs');
+        }
 
         if ($search) {
             $query->where(function ($q) use ($search) {

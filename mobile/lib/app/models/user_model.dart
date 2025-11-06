@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:salonku/app/common/input_formatter.dart';
+import 'package:salonku/app/models/salon_cabang_model.dart';
 
-// String userModelToJson(UserModel data) => json.encode(data.toJson());
 Map<String, dynamic> userModelToJson(UserModel data) => data.toJson();
 
 UserModel userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
@@ -22,8 +22,7 @@ class UserModel {
   DateTime tanggalLahir;
   String alamat;
   String? avatarUrl;
-  DateTime? createdAt;
-  DateTime? updatedAt;
+  List<SalonCabangModel>? cabangs;
 
   UserModel({
     required this.id,
@@ -41,8 +40,7 @@ class UserModel {
     required this.tanggalLahir,
     required this.alamat,
     this.avatarUrl,
-    this.createdAt,
-    this.updatedAt,
+    this.cabangs,
   });
 
   static UserModel fromJson(String jsonString) {
@@ -74,10 +72,13 @@ class UserModel {
           DateTime.now(),
       alamat: dynamicData['alamat'],
       avatarUrl: dynamicData['avatar_url'] ?? "",
-      createdAt:
-          InputFormatter.dynamicToDateTime(dynamicData['created_at']) ??
-          DateTime.now(),
-      updatedAt: InputFormatter.dynamicToDateTime(dynamicData['updated_at']),
+      cabangs: dynamicData['cabangs'] != null
+          ? List<SalonCabangModel>.from(
+              dynamicData['cabangs'].map(
+                (x) => SalonCabangModel.fromDynamic(x),
+              ),
+            )
+          : [],
     );
   }
 
@@ -97,5 +98,6 @@ class UserModel {
     'tanggal_lahir': InputFormatter.dateToString(tanggalLahir),
     'alamat': alamat,
     'avatar_url': avatarUrl,
+    'cabangs': cabangs?.map((item) => item.toJson()).toList() ?? [],
   };
 }

@@ -22,6 +22,7 @@ abstract class SalonRepositoryContract {
     required int idSalon,
     required int pageIndex,
     required int pageSize,
+    int? idCabang,
     String? keyword,
   });
 

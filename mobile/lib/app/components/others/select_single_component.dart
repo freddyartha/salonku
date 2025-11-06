@@ -27,8 +27,13 @@ class SelectSingleController<T> extends ChangeNotifier {
   String keyword = "";
 
   Function(SelectItemModel? item)? onChanged;
+  dynamic Function()? addOnTap;
 
-  SelectSingleController({required this.listController, this.onChanged});
+  SelectSingleController({
+    required this.listController,
+    this.addOnTap,
+    this.onChanged,
+  });
 
   SelectItemModel? get value {
     return _selectedItem;
@@ -52,84 +57,123 @@ class SelectSingleController<T> extends ChangeNotifier {
     }
   }
 
-  Future<void> _selectItemOnTap(BuildContext context) async {
+  Future<void> _selectItemOnTap(BuildContext context, String label) async {
     SelectItemModel? selectedItemsTmp;
     selectedItemsTmp = _selectedItem;
 
     await ReusableWidgets.customBottomSheet(
-      title: "select_data".tr,
+      title: label,
       children: [
-        InputTextComponent(placeHolder: "search".tr, controller: _searchCon),
-        StatefulBuilder(
-          builder: (context, setState) => ListComponent(
-            withPadding: false,
-            controller: listController,
-            itemBuilder: (item) => Container(
-              decoration: BoxDecoration(
-                color: context.accent2.withValues(alpha: 0.7),
-                borderRadius: BorderRadius.all(Radius.circular(Radiuses.large)),
-                border: Border.all(color: context.contrast),
-              ),
-              child: ListTile(
-                onTap: () {
-                  setState(() {
-                    if (selectedItemsTmp?.value == item.value) {
-                      selectedItemsTmp = null;
-                    } else {
-                      selectedItemsTmp = item;
-                    }
-                  });
-                },
-                leading: selectedItemsTmp?.value == item.value
-                    ? Icon(
-                        Icons.check_circle_outline_rounded,
-                        color: context.contrast,
-                        size: 35,
-                      )
-                    : null,
+        Flexible(
+          child: Stack(
+            children: [
+              Column(
+                children: [
+                  InputTextComponent(
+                    placeHolder: "search".tr,
+                    controller: _searchCon,
+                  ),
+                  StatefulBuilder(
+                    builder: (context, setState) => ListComponent(
+                      withPadding: false,
+                      controller: listController,
+                      itemBuilder: (item) => Container(
+                        decoration: BoxDecoration(
+                          color: context.accent2.withValues(alpha: 0.7),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(Radiuses.large),
+                          ),
+                          border: Border.all(color: context.contrast),
+                        ),
+                        child: ListTile(
+                          onTap: () {
+                            setState(() {
+                              if (selectedItemsTmp?.value == item.value) {
+                                selectedItemsTmp = null;
+                              } else {
+                                selectedItemsTmp = item;
+                              }
+                            });
+                          },
+                          leading: selectedItemsTmp?.value == item.value
+                              ? Icon(
+                                  Icons.check_circle_outline_rounded,
+                                  color: context.contrast,
+                                  size: 35,
+                                )
+                              : null,
 
-                contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                title: TextComponent(
-                  value: item.title,
-                  fontWeight: FontWeights.semiBold,
+                          contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                          title: TextComponent(
+                            value: item.title,
+                            fontWeight: FontWeights.semiBold,
+                          ),
+                          subtitle: TextComponent(value: item.subtitle),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    spacing: 20,
+                    children: [
+                      Expanded(
+                        child: ButtonComponent(
+                          text: "cancel".tr,
+                          isMultilineText: true,
+                          borderColor: Get.context?.contrast,
+                          buttonColor: Get.context?.accent,
+                          textColor: Get.context?.text,
+                          borderRadius: Radiuses.regular,
+                          onTap: () {
+                            Get.back(result: false);
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        child: ButtonComponent(
+                          text: "ok".tr,
+                          borderRadius: Radiuses.regular,
+                          isMultilineText: true,
+                          onTap: () {
+                            Get.back(result: true);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              if (addOnTap != null) ...[
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 70, right: 15),
+                  child: Align(
+                    alignment: Alignment.bottomRight,
+                    child: InkWell(
+                      onTap: addOnTap,
+                      child: Container(
+                        padding: EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: context.contrast,
+                        ),
+                        child: Icon(
+                          Icons.add_circle_outline_outlined,
+                          color: AppColors.darkText,
+                          size: 40,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-                subtitle: TextComponent(value: item.subtitle),
-              ),
-            ),
+              ],
+            ],
           ),
-        ),
-        const SizedBox(height: 15),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          spacing: 20,
-          children: [
-            Expanded(
-              child: ButtonComponent(
-                text: "cancel".tr,
-                isMultilineText: true,
-                borderColor: Get.context?.contrast,
-                buttonColor: Get.context?.accent,
-                textColor: Get.context?.text,
-                borderRadius: Radiuses.regular,
-                onTap: () {
-                  Get.back(result: false);
-                },
-              ),
-            ),
-            Expanded(
-              child: ButtonComponent(
-                text: "ok".tr,
-                borderRadius: Radiuses.regular,
-                isMultilineText: true,
-                onTap: () {
-                  Get.back(result: true);
-                },
-              ),
-            ),
-          ],
         ),
       ],
     ).then((v) {
+      _searchCon.value = null;
       if (v == true) {
         _selectedItem = selectedItemsTmp;
         if (onChanged != null) {
@@ -296,7 +340,8 @@ class _SelectSingleComponentState<T> extends State<SelectSingleComponent<T>> {
               Visibility(
                 visible: widget.editable,
                 child: InkWell(
-                  onTap: () => widget.controller._selectItemOnTap(context),
+                  onTap: () =>
+                      widget.controller._selectItemOnTap(context, widget.label),
                   child: Center(
                     child: Container(
                       padding: EdgeInsets.all(5),

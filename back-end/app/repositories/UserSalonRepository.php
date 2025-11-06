@@ -24,7 +24,7 @@ class UserSalonRepository
 
     public function findByFirebaseId(string $firebaseId)
     {
-        return UserSalon::where("id_user_firebase", $firebaseId)->first();
+        return UserSalon::with('cabangs')->where("id_user_firebase", $firebaseId)->first();
     }
 
     public function register(array $data): UserSalon

@@ -46,6 +46,10 @@ import '../modules/settings/bindings/settings_binding.dart';
 import '../modules/settings/views/settings_view.dart';
 import '../modules/splash_screen/bindings/splash_screen_binding.dart';
 import '../modules/splash_screen/views/splash_screen_view.dart';
+import '../modules/staff_list/bindings/staff_list_binding.dart';
+import '../modules/staff_list/views/staff_list_view.dart';
+import '../modules/staff_setup/bindings/staff_setup_binding.dart';
+import '../modules/staff_setup/views/staff_setup_view.dart';
 import '../modules/supplier_list/bindings/supplier_list_binding.dart';
 import '../modules/supplier_list/views/supplier_list_view.dart';
 import '../modules/supplier_setup/bindings/supplier_setup_binding.dart';
@@ -185,6 +189,16 @@ class AppPages {
       name: _Paths.SERVICE_MANAGEMENT_SETUP,
       page: () => const ServiceManagementSetupView(),
       binding: ServiceManagementSetupBinding(),
+    ),
+    GetPage(
+      name: _Paths.STAFF_LIST,
+      page: () => const StaffListView(),
+      binding: StaffListBinding(),
+    ),
+    GetPage(
+      name: _Paths.STAFF_SETUP,
+      page: () => const StaffSetupView(),
+      binding: StaffSetupBinding(),
     ),
   ];
 }

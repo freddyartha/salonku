@@ -5,6 +5,7 @@ import 'package:salonku/app/common/font_size.dart';
 import 'package:salonku/app/common/font_weight.dart';
 import 'package:salonku/app/common/radiuses.dart';
 import 'package:salonku/app/components/buttons/button_component.dart';
+import 'package:salonku/app/components/images/image_component.dart';
 import 'package:salonku/app/components/inputs/input_text_component.dart';
 import 'package:salonku/app/components/others/list_component.dart';
 import 'package:salonku/app/components/texts/rich_text_component.dart';
@@ -26,8 +27,13 @@ class SelectMultipleController<T> extends ChangeNotifier {
   String keyword = "";
 
   Function(List<SelectItemModel> items)? onChanged;
+  dynamic Function()? addOnTap;
 
-  SelectMultipleController({required this.listController, this.onChanged});
+  SelectMultipleController({
+    required this.listController,
+    this.addOnTap,
+    this.onChanged,
+  });
 
   List<SelectItemModel> get values {
     return _selectedItemList;
@@ -52,93 +58,135 @@ class SelectMultipleController<T> extends ChangeNotifier {
     }
   }
 
-  Future<void> _selectItemOnTap(BuildContext context) async {
+  Future<void> _selectItemOnTap(BuildContext context, String label) async {
     List<SelectItemModel> selectedItemsTmp = [];
     selectedItemsTmp.addAll(_selectedItemList);
 
     await ReusableWidgets.customBottomSheet(
-      title: "select_data".tr,
+      title: label,
       children: [
-        InputTextComponent(placeHolder: "search".tr, controller: _searchCon),
-        StatefulBuilder(
-          builder: (context, setState) => ListComponent(
-            withPadding: false,
-            controller: listController,
-            itemBuilder: (item) => Container(
-              decoration: BoxDecoration(
-                color: context.accent2.withValues(alpha: 0.7),
-                borderRadius: BorderRadius.all(Radius.circular(Radiuses.large)),
-                border: Border.all(color: context.contrast),
-              ),
-              child: ListTile(
-                onTap: () {
-                  setState(() {
-                    if (selectedItemsTmp.any((e) => e.value == item.value)) {
-                      selectedItemsTmp.removeWhere(
-                        (element) => element.value == item.value,
-                      );
-                    } else {
-                      selectedItemsTmp.add(
-                        SelectItemModel(
-                          value: item.value,
-                          addedValue: item.addedValue,
-                          title: item.title,
-                          subtitle: item.subtitle,
+        Flexible(
+          child: Stack(
+            children: [
+              Column(
+                children: [
+                  InputTextComponent(
+                    placeHolder: "search".tr,
+                    controller: _searchCon,
+                  ),
+                  StatefulBuilder(
+                    builder: (context, setState) => ListComponent(
+                      withPadding: false,
+                      controller: listController,
+                      itemBuilder: (item) => Container(
+                        decoration: BoxDecoration(
+                          color: context.accent2.withValues(alpha: 0.7),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(Radiuses.large),
+                          ),
+                          border: Border.all(color: context.contrast),
                         ),
-                      );
-                    }
-                  });
-                },
-                leading: selectedItemsTmp.any((e) => e.value == item.value)
-                    ? Icon(
-                        Icons.check_circle_outline_rounded,
-                        color: context.contrast,
-                        size: 35,
-                      )
-                    : null,
+                        child: ListTile(
+                          onTap: () {
+                            setState(() {
+                              if (selectedItemsTmp.any(
+                                (e) => e.value == item.value,
+                              )) {
+                                selectedItemsTmp.removeWhere(
+                                  (element) => element.value == item.value,
+                                );
+                              } else {
+                                selectedItemsTmp.add(
+                                  SelectItemModel(
+                                    value: item.value,
+                                    addedValue: item.addedValue,
+                                    title: item.title,
+                                    subtitle: item.subtitle,
+                                  ),
+                                );
+                              }
+                            });
+                          },
+                          leading:
+                              selectedItemsTmp.any((e) => e.value == item.value)
+                              ? Icon(
+                                  Icons.check_circle_outline_rounded,
+                                  color: context.contrast,
+                                  size: 35,
+                                )
+                              : null,
 
-                contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                title: TextComponent(
-                  value: item.title,
-                  fontWeight: FontWeights.semiBold,
+                          contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                          title: TextComponent(
+                            value: item.title,
+                            fontWeight: FontWeights.semiBold,
+                          ),
+                          subtitle: TextComponent(value: item.subtitle),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    spacing: 20,
+                    children: [
+                      Expanded(
+                        child: ButtonComponent(
+                          text: "cancel".tr,
+                          isMultilineText: true,
+                          borderColor: Get.context?.contrast,
+                          buttonColor: Get.context?.accent,
+                          textColor: Get.context?.text,
+                          borderRadius: Radiuses.regular,
+                          onTap: () {
+                            Get.back(result: false);
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        child: ButtonComponent(
+                          text: "ok".tr,
+                          borderRadius: Radiuses.regular,
+                          isMultilineText: true,
+                          onTap: () {
+                            Get.back(result: true);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              if (addOnTap != null) ...[
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 70, right: 15),
+                  child: Align(
+                    alignment: Alignment.bottomRight,
+                    child: InkWell(
+                      onTap: addOnTap,
+                      child: Container(
+                        padding: EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: context.contrast,
+                        ),
+                        child: Icon(
+                          Icons.add_circle_outline_outlined,
+                          color: AppColors.darkText,
+                          size: 40,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-                subtitle: TextComponent(value: item.subtitle),
-              ),
-            ),
+              ],
+            ],
           ),
-        ),
-        const SizedBox(height: 15),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          spacing: 20,
-          children: [
-            Expanded(
-              child: ButtonComponent(
-                text: "cancel".tr,
-                isMultilineText: true,
-                borderColor: Get.context?.contrast,
-                buttonColor: Get.context?.accent,
-                textColor: Get.context?.text,
-                borderRadius: Radiuses.regular,
-                onTap: () {
-                  Get.back(result: false);
-                },
-              ),
-            ),
-            Expanded(
-              child: ButtonComponent(
-                text: "ok".tr,
-                borderRadius: Radiuses.regular,
-                isMultilineText: true,
-                onTap: () {
-                  Get.back(result: true);
-                },
-              ),
-            ),
-          ],
         ),
       ],
     ).then((v) {
+      _searchCon.value = null;
       if (v == true) {
         _selectedItemList.clear();
         _selectedItemList.addAll(selectedItemsTmp);
@@ -241,6 +289,31 @@ class _SelectMultipleComponentState<T>
             mainAxisSize: MainAxisSize.min,
             children: [
               Visibility(
+                visible:
+                    widget.controller._selectedItemList.isEmpty &&
+                    !widget.editable,
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    spacing: 5,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ImageComponent(
+                        localUrl: "assets/images/png/drawer-empty.png",
+                        height: 25,
+                        width: 25,
+                        color: context.text,
+                      ),
+                      TextComponent(
+                        value: "empty_item".tr,
+                        fontSize: FontSizes.h6,
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Visibility(
                 visible: widget.controller._selectedItemList.isNotEmpty,
                 child: Padding(
                   padding: widget.editable
@@ -309,7 +382,8 @@ class _SelectMultipleComponentState<T>
               Visibility(
                 visible: widget.editable,
                 child: InkWell(
-                  onTap: () => widget.controller._selectItemOnTap(context),
+                  onTap: () =>
+                      widget.controller._selectItemOnTap(context, widget.label),
                   child: Center(
                     child: Container(
                       padding: EdgeInsets.all(5),

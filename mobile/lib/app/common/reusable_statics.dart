@@ -6,6 +6,7 @@ import 'package:salonku/app/common/radiuses.dart';
 import 'package:salonku/app/components/inputs/input_radio_component.dart';
 import 'package:salonku/app/components/texts/text_component.dart';
 import 'package:salonku/app/extension/theme_extension.dart';
+import 'package:salonku/app/models/user_model.dart';
 import 'package:uuid/uuid.dart';
 
 class ReusableStatics {
@@ -106,4 +107,22 @@ class ReusableStatics {
     RadioButtonItem(text: "male".tr, value: "l"),
     RadioButtonItem(text: "female".tr, value: "p"),
   ];
+
+  static bool checkIsUserStaffWithCabang(UserModel userModel) {
+    if (userModel.level == 2 &&
+        userModel.cabangs != null &&
+        userModel.cabangs!.isNotEmpty) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  static bool userIsStaff(UserModel userModel) {
+    if (userModel.level == 2) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

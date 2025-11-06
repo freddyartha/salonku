@@ -17,6 +17,7 @@ class ServiceService
     public function getPaginatedService(int $id, Request $request)
     {
         $options = [
+            'cabang_id' => $request->query('cabang_id') ?? null,
             'per_page' => $request->query('per_page', 10),
             'search' => $request->query('search'),
             'sort' => $request->query('sort') ?? 'desc',

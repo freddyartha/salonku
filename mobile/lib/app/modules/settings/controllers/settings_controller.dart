@@ -64,29 +64,35 @@ class SettingsController extends BaseController {
           arguments: {"idSalon": "${userData.idSalon}"},
         ),
       ),
-      MenuItemModel(
-        title: "metode_pembayaran",
-        imageLocation: "assets/images/png/settings.png",
-        onTab: () => Get.toNamed(
-          Routes.PAYMENT_METHOD_LIST,
-          arguments: {"idSalon": "${userData.idSalon}"},
-        ),
-      ),
     ]);
+    if (!ReusableStatics.userIsStaff(userData)) {
+      dataUtamaList.add(
+        MenuItemModel(
+          title: "metode_pembayaran",
+          imageLocation: "assets/images/png/settings.png",
+          onTab: () => Get.toNamed(
+            Routes.PAYMENT_METHOD_LIST,
+            arguments: {"idSalon": "${userData.idSalon}"},
+          ),
+        ),
+      );
+    }
 
     super.onInit();
   }
 
   Future<void> getSalonSummary() async {
-    _initSalonSummaryDatas(null);
-    await handleRequest(
-      showEasyLoading: false,
-      () => _salonRepositoryContract.getSalonSummary(userData.idSalon ?? 0),
-      onSuccess: (res) {
-        _initSalonSummaryDatas(res);
-      },
-      showErrorSnackbar: false,
-    );
+    if (!ReusableStatics.userIsStaff(userData)) {
+      _initSalonSummaryDatas(null);
+      await handleRequest(
+        showEasyLoading: false,
+        () => _salonRepositoryContract.getSalonSummary(userData.idSalon ?? 0),
+        onSuccess: (res) {
+          _initSalonSummaryDatas(res);
+        },
+        showErrorSnackbar: false,
+      );
+    }
   }
 
   void _initSalonSummaryDatas(SalonSummaryModel? item) {
@@ -100,7 +106,14 @@ class SettingsController extends BaseController {
           arguments: {"idSalon": "${userData.idSalon}"},
         ),
       ),
-      MenuItemModel(title: "jumlah_staff", value: item?.jumlahStaff.toString()),
+      MenuItemModel(
+        title: "jumlah_staff",
+        value: item?.jumlahStaff.toString(),
+        onTab: () => Get.toNamed(
+          Routes.STAFF_LIST,
+          arguments: {"idSalon": "${userData.idSalon}"},
+        ),
+      ),
     ]);
   }
 

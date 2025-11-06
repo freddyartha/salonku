@@ -2,14 +2,14 @@
 
 namespace App\Services;
 
-use App\Repositories\ServiceManagementRepository;
+use App\Repositories\StaffRepository;
 use Illuminate\Http\Request;
 
-class ServiceManagementService
+class StaffService
 {
     protected $repository;
 
-    public function __construct(ServiceManagementRepository $repository)
+    public function __construct(StaffRepository $repository)
     {
         $this->repository = $repository;
     }
@@ -19,25 +19,14 @@ class ServiceManagementService
         return $this->repository->findById($id);
     }
 
-    public function store(array $data)
-    {
-        return $this->repository->create($data);
-    }
-
     public function update(array $data, int $id)
     {
         return $this->repository->update($data, $id);
     }
 
-    public function deleteById(int $id)
-    {
-        return $this->repository->delete($id);
-    }
-
     public function getPaginatedBySalonId(int $id, Request $request)
     {
         $options = [
-            'cabang_id' => $request->query('cabang_id') ?? null,
             'per_page' => $request->query('per_page', 10),
             'search' => $request->query('search'),
             'sort' => $request->query('sort') ?? 'desc',

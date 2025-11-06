@@ -68,7 +68,7 @@ class ServiceManagementListView
                 contentPadding: EdgeInsets.symmetric(horizontal: 15),
                 onTap: () => controller.itemOnTap(item.id, false),
                 title: TextComponent(
-                  value: item.client?.nama ?? "",
+                  value: item.client?.nama ?? "anonymous".tr,
                   fontWeight: FontWeights.semiBold,
                   fontSize: FontSizes.h6,
                 ),

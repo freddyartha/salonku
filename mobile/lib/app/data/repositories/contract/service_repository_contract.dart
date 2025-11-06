@@ -7,6 +7,7 @@ abstract class ServiceRepositoryContract {
     required int pageIndex,
     required int pageSize,
     String? keyword,
+    int? idCabang,
   });
 
   Future<Result<ServiceModel>> getServiceById(int id);

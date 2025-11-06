@@ -55,6 +55,7 @@ class SalonProvider extends ApiProvider {
     required int idSalon,
     required int pageIndex,
     required int pageSize,
+    int? idCabang,
     String? keyword,
   }) async {
     return await get(
@@ -62,6 +63,7 @@ class SalonProvider extends ApiProvider {
         idSalon: idSalon,
         pageIndex: pageIndex,
         pageSize: pageSize,
+        idCabang: idCabang,
         keyword: keyword,
       ),
       requiresAuth: true,

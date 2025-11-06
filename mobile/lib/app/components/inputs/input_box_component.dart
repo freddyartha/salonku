@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:salonku/app/common/app_colors.dart';
 import 'package:salonku/app/common/font_size.dart';
 import 'package:salonku/app/common/font_weight.dart';
+import 'package:salonku/app/components/texts/rich_text_component.dart';
 import 'package:salonku/app/components/texts/text_component.dart';
 import 'package:salonku/app/extension/theme_extension.dart';
 
@@ -44,30 +45,25 @@ class InputBoxComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Visibility(
           visible: label != null,
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 8),
-            child: Row(
-              children: [
-                TextComponent(
-                  value: label ?? '-',
-                  fontColor: labelColor,
-                  fontSize: FontSizes.h6,
-                  fontWeight: FontWeights.semiBold,
-                ),
-                Visibility(
-                  visible: isRequired == true,
-                  child: TextComponent(
-                    value: "*",
-                    fontSize: FontSizes.h6,
-                    fontWeight: FontWeight.w500,
-                    fontColor: AppColors.danger,
-                  ),
-                ),
-              ],
-            ),
+          child: RichTextComponent(
+            margin: const EdgeInsets.only(bottom: 8),
+            teks: [
+              RichTextItem(
+                text: label ?? '-',
+                fontSize: FontSizes.h6,
+                fontWeight: FontWeights.semiBold,
+              ),
+              RichTextItem(
+                text: isRequired == true ? "*" : "",
+                fontSize: FontSizes.h6,
+                fontWeight: FontWeight.w500,
+                fontColor: AppColors.danger,
+              ),
+            ],
           ),
         ),
         Visibility(

@@ -159,4 +159,10 @@ const Map<String, String> idID = {
   "catatan": "Catatan",
   "placeholder_catatan": "Masukkan catatan tambahan di sini",
   "grand_total": "Total Keseluruhan",
+  "anonymous": "Klien Anonim",
+  "transaction_not_valid": "Transaksi tidak valid",
+  "minimal_one_service_for_this_transaction":
+      "Minimal satu layanan diperlukan untuk transaksi ini",
+  "approved_date": "Tanggal disetujui Owner",
+  "placeholder_approved_date": "Tanggal persetujuan Owner",
 };

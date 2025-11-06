@@ -79,6 +79,7 @@ class LoginView extends GetView<LoginController> {
                                 icon: "assets/images/png/google.png",
                                 fontWeight: FontWeights.semiBold,
                                 textColor: context.text,
+                                iconColorFollowText: false,
                                 iconSize: 25,
                               ),
                             ),

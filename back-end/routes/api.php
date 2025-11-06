@@ -9,6 +9,7 @@ use App\Http\Controllers\SalonCabangController;
 use App\Http\Controllers\SalonController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ServiceManagementController;
+use App\Http\Controllers\StaffController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserSalonController;
 use Illuminate\Support\Facades\Route;
@@ -79,4 +80,9 @@ Route::middleware('firebase.auth')->group(function () {
     Route::post('/salon/service-management', [ServiceManagementController::class, 'store']);
     Route::put('/salon/service-management/{id}', [ServiceManagementController::class, 'update']);
     Route::delete('/salon/service-management/{id}/delete', [ServiceManagementController::class, 'delete']);
+
+    //Staff
+    Route::get('/salon/{id}/staff/list', [StaffController::class, 'getPaginatedBySalonId']);
+    Route::get('/salon/staff/{id}', [StaffController::class, 'readById']);
+    Route::put('/salon/staff/{id}', [StaffController::class, 'update']);
 });

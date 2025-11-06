@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:salonku/app/common/input_formatter.dart';
 import 'package:salonku/app/common/radiuses.dart';
+import 'package:salonku/app/common/reusable_statics.dart';
 import 'package:salonku/app/components/buttons/button_component.dart';
 import 'package:salonku/app/components/inputs/input_radio_component.dart';
 import 'package:salonku/app/components/inputs/input_text_component.dart';
@@ -26,7 +27,9 @@ import 'package:salonku/app/models/select_item_model.dart';
 import 'package:salonku/app/models/service_item_model.dart';
 import 'package:salonku/app/models/service_management_model.dart';
 import 'package:salonku/app/models/service_model.dart';
+import 'package:salonku/app/models/user_model.dart';
 import 'package:salonku/app/models/widget_service_model.dart';
+import 'package:salonku/app/routes/app_pages.dart';
 
 class ServiceManagementSetupController extends SetupBaseController {
   final catatanCon = InputTextController(type: InputTextType.paragraf);
@@ -62,7 +65,9 @@ class ServiceManagementSetupController extends SetupBaseController {
   );
 
   late final String currencyCode = _localDataSource.salonData.currencyCode;
+  late final UserModel userModel = _localDataSource.userData;
   ServiceManagementModel? model;
+  late final userCabang = _localDataSource.userData.cabangs;
 
   @override
   void onInit() {
@@ -73,6 +78,18 @@ class ServiceManagementSetupController extends SetupBaseController {
     showCustomServiceCon.value = false;
     showCustomServiceCon.onChanged = (v) => customService(v.value);
     _initSelectComponents();
+  }
+
+  @override
+  void onReady() {
+    if (userModel.cabangs != null && userModel.cabangs!.isNotEmpty) {
+      selectCabangCon.value = SelectItemModel(
+        title: userModel.cabangs!.first.nama,
+        subtitle: userModel.cabangs!.first.phone,
+        value: userModel.cabangs!.first.id,
+      );
+    }
+    super.onReady();
   }
 
   void addValueInputFields(ServiceManagementModel? model) {
@@ -165,6 +182,13 @@ class ServiceManagementSetupController extends SetupBaseController {
     if (!showCustomServiceCon.isValid) return;
     if (customService.value) {
       if (!customServicesCon.isValid) return;
+    }
+    if (selectServicesCon.values.isEmpty && customServicesCon.values.isEmpty) {
+      ReusableWidgets.notifBottomSheet(
+        title: "transaction_not_valid".tr,
+        subtitle: "minimal_one_service_for_this_transaction".tr,
+      );
+      return;
     }
     if (!selectCabangCon.isValid) return;
     if (!catatanCon.isValid) return;
@@ -372,7 +396,11 @@ class ServiceManagementSetupController extends SetupBaseController {
       getDataResult: getListData,
       fromDynamic: ClientModel.fromDynamic,
     );
-    selectClientCon = SelectSingleController(listController: listCon);
+    selectClientCon = SelectSingleController(
+      listController: listCon,
+      addOnTap: () =>
+          Get.toNamed(Routes.CLIENT_SETUP)?.then((v) => listCon.refresh()),
+    );
   }
 
   void setupSelectPaymentController() {
@@ -408,7 +436,12 @@ class ServiceManagementSetupController extends SetupBaseController {
       getDataResult: getListData,
       fromDynamic: PaymentMethodModel.fromDynamic,
     );
-    selectPaymentCon = SelectSingleController(listController: listCon);
+    selectPaymentCon = SelectSingleController(
+      listController: listCon,
+      addOnTap: () => Get.toNamed(
+        Routes.PAYMENT_METHOD_SETUP,
+      )?.then((v) => listCon.refresh()),
+    );
   }
 
   void setupSelectCabangController() {
@@ -419,6 +452,9 @@ class ServiceManagementSetupController extends SetupBaseController {
           idSalon: _localDataSource.salonData.id,
           pageIndex: pageIndex,
           pageSize: 10,
+          idCabang: ReusableStatics.checkIsUserStaffWithCabang(userModel)
+              ? userModel.cabangs!.first.id
+              : null,
           keyword: selectCabangCon.keyword,
         ),
         onSuccess: (res) {
@@ -457,6 +493,12 @@ class ServiceManagementSetupController extends SetupBaseController {
           pageIndex: pageIndex,
           pageSize: 10,
           keyword: selectCabangCon.keyword,
+          idCabang:
+              ReusableStatics.checkIsUserStaffWithCabang(
+                _localDataSource.userData,
+              )
+              ? _localDataSource.userData.cabangs!.first.id
+              : null,
         ),
         onSuccess: (res) {
           returnData = Success(
@@ -483,7 +525,12 @@ class ServiceManagementSetupController extends SetupBaseController {
       getDataResult: getListData,
       fromDynamic: ServiceModel.fromDynamic,
     );
-    selectServicesCon = SelectMultipleController(listController: listCon);
+    selectServicesCon = SelectMultipleController(
+      listController: listCon,
+      addOnTap: () =>
+          Get.toNamed(Routes.SERVICE_SETUP)?.then((v) => listCon.refresh()),
+    );
+
     selectServicesCon.onChanged = (items) {
       totalServices = items.fold(
         0.0,

@@ -34,12 +34,14 @@ class ApiConstants {
     required int idSalon,
     required int pageIndex,
     required int pageSize,
+    int? idCabang,
     String? keyword,
   }) {
     final queryParams = <String, String>{
       'page': '$pageIndex',
       'per_page': '$pageSize',
       if (keyword != null && keyword.isNotEmpty) 'search': keyword,
+      if (idCabang != null) 'cabang_id': '$idCabang',
     };
 
     final queryString = Uri(queryParameters: queryParams).query;
@@ -56,12 +58,14 @@ class ApiConstants {
     required int idSalon,
     required int pageIndex,
     required int pageSize,
+    int? idCabang,
     String? keyword,
   }) {
     final queryParams = <String, String>{
       'page': '$pageIndex',
       'per_page': '$pageSize',
       if (keyword != null && keyword.isNotEmpty) 'search': keyword,
+      if (idCabang != null) 'cabang_id': '$idCabang',
     };
 
     final queryString = Uri(queryParameters: queryParams).query;
@@ -167,12 +171,14 @@ class ApiConstants {
     required int idSalon,
     required int pageIndex,
     required int pageSize,
+    int? idCabang,
     String? keyword,
   }) {
     final queryParams = <String, String>{
       'page': '$pageIndex',
       'per_page': '$pageSize',
       if (keyword != null && keyword.isNotEmpty) 'search': keyword,
+      if (idCabang != null) 'cabang_id': '$idCabang',
     };
 
     final queryString = Uri(queryParameters: queryParams).query;
@@ -186,4 +192,24 @@ class ApiConstants {
       '$api/salon/service-management/$id';
   static String deleteServiceManagementById(int id) =>
       '$api/salon/service-management/$id/delete';
+
+  //Staff
+  static String getStaffByIdSalon({
+    required int idSalon,
+    required int pageIndex,
+    required int pageSize,
+    String? keyword,
+  }) {
+    final queryParams = <String, String>{
+      'page': '$pageIndex',
+      'per_page': '$pageSize',
+      if (keyword != null && keyword.isNotEmpty) 'search': keyword,
+    };
+
+    final queryString = Uri(queryParameters: queryParams).query;
+    return "$api/salon/$idSalon/staff/list?$queryString";
+  }
+
+  static String putStaffById(int id) => '$api/salon/staff/$id';
+  static String getStaffById(int id) => '$api/salon/staff/$id';
 }

@@ -24,6 +24,7 @@ class ButtonComponent extends StatefulWidget {
   final double? iconSize;
   final Widget? trailing;
   final Widget? leading;
+  final bool iconColorFollowText;
 
   const ButtonComponent({
     super.key,
@@ -44,6 +45,7 @@ class ButtonComponent extends StatefulWidget {
     this.iconSize,
     this.trailing,
     this.leading,
+    this.iconColorFollowText = true,
   });
 
   @override
@@ -75,14 +77,18 @@ class _ButtonComponentState extends State<ButtonComponent> {
                           widget.icon!,
                           width: widget.iconSize ?? 15,
                           colorFilter: ColorFilter.mode(
-                            widget.textColor ?? AppColors.darkText,
+                            widget.iconColorFollowText
+                                ? widget.textColor ?? AppColors.darkText
+                                : AppColors.darkText,
                             BlendMode.srcIn,
                           ),
                         )
                       : Image(
                           image: AssetImage(widget.icon!),
                           width: widget.iconSize ?? 15,
-                          color: widget.textColor,
+                          color: widget.iconColorFollowText
+                              ? widget.textColor
+                              : null,
                         )
                 : SizedBox(),
             if (widget.leading != null) ...[

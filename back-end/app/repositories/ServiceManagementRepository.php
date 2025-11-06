@@ -116,11 +116,16 @@ class ServiceManagementRepository
 
     public function getPaginatedBySalonId(int $salonId, array $options): LengthAwarePaginator
     {
+        $cabangId = $options['cabang_id'];
         $perPage = $options['per_page'] ?? 10;
         $search = $options['search'];
         $sort = $options['sort'] ?? 'desc';
 
         $query = ServiceManagement::with(['serviceItems', 'client', 'services', 'paymentMethod', 'salon', 'cabang'])->where("id_Salon", $salonId);
+
+        if ($cabangId != null) {
+            $query->where("id_cabang", $cabangId);
+        }
 
         if ($search) {
             $query->where(function ($q) use ($search) {

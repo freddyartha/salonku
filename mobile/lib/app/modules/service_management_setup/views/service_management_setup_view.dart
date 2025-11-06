@@ -42,10 +42,13 @@ class ServiceManagementSetupView
                   label: "select_services".tr,
                   editable: controller.isEditable.value,
                 ),
-                InputRadioComponent(
-                  controller: controller.showCustomServiceCon,
-                  label: "create_custom_service_for_this_transaction_only".tr,
-                  editable: controller.isEditable.value,
+                SizedBox(
+                  width: Get.width,
+                  child: InputRadioComponent(
+                    controller: controller.showCustomServiceCon,
+                    label: "create_custom_service_for_this_transaction_only".tr,
+                    editable: controller.isEditable.value,
+                  ),
                 ),
                 Visibility(
                   visible: controller.customService.value,
@@ -66,7 +69,11 @@ class ServiceManagementSetupView
                   controller: controller.selectCabangCon,
                   required: true,
                   label: "select_branch".tr,
-                  editable: controller.isEditable.value,
+                  editable:
+                      controller.userModel.cabangs != null &&
+                          controller.userModel.cabangs!.isNotEmpty
+                      ? false
+                      : controller.isEditable.value,
                 ),
                 InputTextComponent(
                   label: "catatan".tr,

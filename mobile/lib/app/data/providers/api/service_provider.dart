@@ -10,10 +10,12 @@ class ServiceProvider extends ApiProvider {
     required int pageIndex,
     required int pageSize,
     String? keyword,
+    int? idCabang,
   }) async {
     return await get(
       ApiConstants.getServiceList(
         idSalon: idSalon,
+        idCabang: idCabang,
         pageIndex: pageIndex,
         pageSize: pageSize,
         keyword: keyword,

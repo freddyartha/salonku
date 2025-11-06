@@ -4,6 +4,7 @@ import 'package:salonku/app/common/app_colors.dart';
 import 'package:salonku/app/common/font_size.dart';
 import 'package:salonku/app/common/font_weight.dart';
 import 'package:salonku/app/common/radiuses.dart';
+import 'package:salonku/app/components/images/image_component.dart';
 import 'package:salonku/app/components/texts/rich_text_component.dart';
 import 'package:salonku/app/components/texts/text_component.dart';
 import 'package:salonku/app/extension/theme_extension.dart';
@@ -134,6 +135,31 @@ class _CustomMultipleComponentState<T>
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              Visibility(
+                visible:
+                    widget.controller._selectedItemList.isEmpty &&
+                    !widget.editable,
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    spacing: 5,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ImageComponent(
+                        localUrl: "assets/images/png/drawer-empty.png",
+                        height: 25,
+                        width: 25,
+                        color: context.text,
+                      ),
+                      TextComponent(
+                        value: "empty_item".tr,
+                        fontSize: FontSizes.h6,
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               Visibility(
                 visible: widget.controller._selectedItemList.isNotEmpty,
                 child: Padding(

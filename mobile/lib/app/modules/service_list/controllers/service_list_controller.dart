@@ -1,8 +1,10 @@
 import 'package:get/get.dart';
 import 'package:salonku/app/common/input_formatter.dart';
+import 'package:salonku/app/common/reusable_statics.dart';
 import 'package:salonku/app/components/others/list_component.dart';
 import 'package:salonku/app/core/base/list_base_controller.dart';
 import 'package:salonku/app/data/models/result.dart';
+import 'package:salonku/app/data/providers/local/local_data_source.dart';
 import 'package:salonku/app/data/repositories/contract/service_repository_contract.dart';
 import 'package:salonku/app/models/service_model.dart';
 import 'package:salonku/app/routes/app_pages.dart';
@@ -11,6 +13,7 @@ class ServiceListController extends ListBaseController {
   final int idSalon =
       InputFormatter.dynamicToInt(Get.arguments['idSalon']) ?? 0;
 
+  final LocalDataSource _localDataSource = Get.find();
   final ServiceRepositoryContract _serviceRepositoryContract;
   ServiceListController(this._serviceRepositoryContract);
 
@@ -29,11 +32,18 @@ class ServiceListController extends ListBaseController {
 
   Future<Success<List<ServiceModel>>> _getServiceList(int pageIndex) async {
     Success<List<ServiceModel>> returnData = Success([]);
+
     await handlePaginationRequest(
       () => _serviceRepositoryContract.getServiceList(
         idSalon: idSalon,
         pageIndex: pageIndex,
         pageSize: 10,
+        idCabang:
+            ReusableStatics.checkIsUserStaffWithCabang(
+              _localDataSource.userData,
+            )
+            ? _localDataSource.userData.cabangs!.first.id
+            : null,
         keyword: searchController.value,
       ),
       onSuccess: (res) {

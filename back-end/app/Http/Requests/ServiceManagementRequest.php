@@ -34,6 +34,5 @@ class ServiceManagementRequest extends FormRequest
             'service_items.*.deskripsi' => 'nullable|string',
             'service_items.*.harga' => 'required|numeric',
         ];
-        // {id: 0, id_client: 1, id_payment_method: 1, id_salon: 7, id_cabang: 4, catatan: null, services: [2, 5], service_items: [{id: 0, id_service_management: 0, nama_service: hair color custom, harga: 50000.0, deskripsi: deskripsi hair color custom}, {id: 0, id_service_management: 0, nama_service: hair cut custom, harga: 200000.0, deskripsi: deskripsi hair cut custom}]}
     }
 }

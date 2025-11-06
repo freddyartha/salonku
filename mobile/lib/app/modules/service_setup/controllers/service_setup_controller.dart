@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:salonku/app/common/input_formatter.dart';
+import 'package:salonku/app/common/reusable_statics.dart';
 import 'package:salonku/app/components/inputs/input_radio_component.dart';
 import 'package:salonku/app/components/inputs/input_text_component.dart';
 import 'package:salonku/app/components/others/list_component.dart';
@@ -89,7 +90,9 @@ class ServiceSetupController extends SetupBaseController {
     if (!namaServiceCon.isValid) return;
     if (!deskripsiCon.isValid) return;
     if (!hargaCon.isValid) return;
-    if (!selectCabangCon.isValid) return;
+    if (showSelectCabang.value) {
+      if (!selectCabangCon.isValid) return;
+    }
 
     final model = ServiceModel(
       id: 0,
@@ -148,6 +151,12 @@ class ServiceSetupController extends SetupBaseController {
           idSalon: _localDataSource.salonData.id,
           pageIndex: pageIndex,
           pageSize: 10,
+          idCabang:
+              ReusableStatics.checkIsUserStaffWithCabang(
+                _localDataSource.userData,
+              )
+              ? _localDataSource.userData.cabangs!.first.id
+              : null,
           keyword: selectCabangCon.keyword,
         ),
         onSuccess: (res) {

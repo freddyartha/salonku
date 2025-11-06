@@ -18,6 +18,7 @@ class ServiceManagementRepositoryImpl extends BaseRepository
     required int pageIndex,
     required int pageSize,
     String? keyword,
+    int? idCabang,
   }) {
     return executeRequest(
       () => _provider.getServiceManagementByIdSalon(
@@ -25,6 +26,7 @@ class ServiceManagementRepositoryImpl extends BaseRepository
         pageIndex: pageIndex,
         pageSize: pageSize,
         keyword: keyword,
+        idCabang: idCabang,
       ),
       PagedApiResponseParser(ServiceManagementModel.fromDynamic),
     );

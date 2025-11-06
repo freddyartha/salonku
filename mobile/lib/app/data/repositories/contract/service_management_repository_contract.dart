@@ -7,6 +7,7 @@ abstract class ServiceManagementRepositoryContract {
     required int pageIndex,
     required int pageSize,
     String? keyword,
+    int? idCabang,
   });
 
   Future<Result<ServiceManagementModel>> getServiceManagementById(int id);

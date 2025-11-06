@@ -11,10 +11,12 @@ class ServiceManagementProvider extends ApiProvider {
     required int pageIndex,
     required int pageSize,
     String? keyword,
+    int? idCabang,
   }) async {
     return await get(
       ApiConstants.getServiceManagementByIdSalon(
         idSalon: idSalon,
+        idCabang: idCabang,
         pageIndex: pageIndex,
         pageSize: pageSize,
         keyword: keyword,

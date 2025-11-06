@@ -155,4 +155,10 @@ const Map<String, String> enUS = {
   "catatan": "Notes",
   "placeholder_catatan": "Enter additional notes here",
   "grand_total": "Grand Total",
+  "anonymous": "Anonymous Client",
+  "transaction_not_valid": "Transaction not valid",
+  "minimal_one_service_for_this_transaction":
+      "At least one service is required for this transaction",
+  "approved_date": "Date Approved by Owner",
+  "placeholder_approved_date": "Owner approval date",
 };

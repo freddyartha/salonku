@@ -17,7 +17,7 @@ ServiceManagementModel serviceManagementModelFromJson(String str) =>
 
 class ServiceManagementModel {
   int id;
-  int idClient;
+  int? idClient;
   int idPaymentMethod;
   int idSalon;
   int? idCabang;
@@ -31,7 +31,7 @@ class ServiceManagementModel {
 
   ServiceManagementModel({
     required this.id,
-    required this.idClient,
+    this.idClient,
     required this.idPaymentMethod,
     required this.idSalon,
     this.idCabang,

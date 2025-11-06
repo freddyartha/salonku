@@ -51,6 +51,7 @@ class SalonRepositoryImpl extends BaseRepository
     required int idSalon,
     required int pageIndex,
     required int pageSize,
+    int? idCabang,
     String? keyword,
   }) {
     return executeRequest(
@@ -58,6 +59,7 @@ class SalonRepositoryImpl extends BaseRepository
         idSalon: idSalon,
         pageIndex: pageIndex,
         pageSize: pageSize,
+        idCabang: idCabang,
         keyword: keyword,
       ),
       PagedApiResponseParser(SalonCabangModel.fromDynamic),
