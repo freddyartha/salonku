@@ -286,8 +286,7 @@ class _InputDatetimeComponentState extends State<InputDatetimeComponent> {
     return Column(
       children: [
         InputBoxComponent(
-          borderRadius:
-              widget.borderRadius ?? Radius.circular(Radiuses.regular),
+          borderRadius: widget.borderRadius ?? Radius.circular(Radiuses.large),
           label: widget.label,
           editable: widget.editable,
           isRequired: widget.required,

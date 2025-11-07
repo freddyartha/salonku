@@ -161,4 +161,8 @@ const Map<String, String> enUS = {
       "At least one service is required for this transaction",
   "approved_date": "Date Approved by Owner",
   "placeholder_approved_date": "Owner approval date",
+  "deactivate_staff_confirm":
+      "Are you sure you want to deactivate this staff? Once deactivated, the staff will be considered as having finished their work and will no longer be able to input data.",
+  "promote_staff_to_coowner": "Promote Staff to be Co-Owner",
+  "demote_coowner_to_staff": "Demote Co-Owner to be Staff",
 };

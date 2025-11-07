@@ -40,4 +40,20 @@ class StaffProvider extends ApiProvider {
       includeFirebaseToken: true,
     );
   }
+
+  Future<Response> deactivateStaff(int idStaff) async {
+    return await patch(
+      ApiConstants.deactivateStaff(idStaff),
+      requiresAuth: true,
+      includeFirebaseToken: true,
+    );
+  }
+
+  Future<Response> promoteDemoteStaff(int idStaff, bool promote) async {
+    return await patch(
+      ApiConstants.promoteDemoteStaff(idStaff, promote),
+      requiresAuth: true,
+      includeFirebaseToken: true,
+    );
+  }
 }

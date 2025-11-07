@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:salonku/app/core/base/base_repository.dart';
 import 'package:salonku/app/data/network/general_api_response_parser.dart';
 import 'package:salonku/app/data/network/paged_api_response_parser.dart';
+import 'package:salonku/app/data/network/simple_api_response_parser.dart';
 import 'package:salonku/app/data/providers/api/staff_provider.dart';
 import 'package:salonku/app/data/repositories/contract/staff_repository_contract.dart';
 import 'package:salonku/app/models/user_model.dart';
@@ -45,6 +46,22 @@ class StaffRepositoryImpl extends BaseRepository
   ) {
     return executeRequest(
       () => _provider.updateStaff(id, model),
+      GeneralApiResponseParser(UserModel.fromDynamic),
+    );
+  }
+
+  @override
+  Future<Result<List>> deactivateStaff(int idStaff) {
+    return executeRequest(
+      () => _provider.deactivateStaff(idStaff),
+      SimpleApiResponseParser((res) => []),
+    );
+  }
+
+  @override
+  Future<Result<UserModel>> promoteDemoteStaff(int idStaff, bool promote) {
+    return executeRequest(
+      () => _provider.promoteDemoteStaff(idStaff, promote),
       GeneralApiResponseParser(UserModel.fromDynamic),
     );
   }

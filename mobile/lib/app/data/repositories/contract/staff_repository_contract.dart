@@ -12,4 +12,8 @@ abstract class StaffRepositoryContract {
   Future<Result<UserModel>> getStaffById(int id);
 
   Future<Result<UserModel>> updateStaffById(int id, Map<String, dynamic> model);
+
+  Future<Result<List>> deactivateStaff(int idStaff);
+
+  Future<Result<UserModel>> promoteDemoteStaff(int idStaff, bool promote);
 }

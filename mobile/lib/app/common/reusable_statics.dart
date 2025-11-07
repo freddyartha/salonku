@@ -49,6 +49,8 @@ class ReusableStatics {
       val = "Salon Owner";
     } else if (level == 2) {
       val = "Staff Salon";
+    } else if (level == 3) {
+      val = "Co-Owner";
     }
     return val;
   }

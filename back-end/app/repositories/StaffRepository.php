@@ -12,6 +12,19 @@ class StaffRepository
         return UserSalon::with('cabangs',)->find($id);
     }
 
+    public function deactivateStaff($id)
+    {
+        $res = $this->findById($id);
+        return $res->update(['aktif' => false]);
+    }
+
+    public function promoteStaff($id, bool $promote): UserSalon
+    {
+        $res = $this->findById($id);
+        $res->update(['level' => $promote ?  3 : 2]);
+        return $res->load('cabangs');
+    }
+
     public function update(array $data, $id): UserSalon
     {
         $res = $this->findById($id);
@@ -26,7 +39,7 @@ class StaffRepository
         $search = $options['search'];
         $sort = $options['sort'] ?? 'desc';
 
-        $query = UserSalon::query()->with('cabangs')->where("id_Salon", $salonId)->where("level", "!=", "1");
+        $query = UserSalon::query()->with('cabangs')->where("id_Salon", $salonId)->where("level", "!=", 1)->where("aktif", 1);
 
         if ($search) {
             $query->where(function ($q) use ($search) {

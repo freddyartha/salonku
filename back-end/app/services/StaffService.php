@@ -24,6 +24,16 @@ class StaffService
         return $this->repository->update($data, $id);
     }
 
+    public function deactivateStaff(int $id)
+    {
+        return $this->repository->deactivateStaff($id);
+    }
+
+    public function promoteStaff(int $id, bool $promote)
+    {
+        return $this->repository->promoteStaff($id, $promote);
+    }
+
     public function getPaginatedBySalonId(int $id, Request $request)
     {
         $options = [

@@ -212,4 +212,9 @@ class ApiConstants {
 
   static String putStaffById(int id) => '$api/salon/staff/$id';
   static String getStaffById(int id) => '$api/salon/staff/$id';
+  static String deactivateStaff(int idStaff) =>
+      '$api/salon/staff/$idStaff/deactivate-staff';
+  static String promoteDemoteStaff(int idStaff, bool promote) => promote
+      ? '$api/salon/staff/$idStaff/promote-staff'
+      : '$api/salon/staff/$idStaff/demote-staff';
 }

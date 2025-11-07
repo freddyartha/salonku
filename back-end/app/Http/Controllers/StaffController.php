@@ -27,6 +27,37 @@ class StaffController extends Controller
         );
     }
 
+    public function deactivateStaff($id)
+    {
+        $this->service->deactivateStaff($id);
+
+        return ApiResponse::success(
+            message: "staff deactivated successfully",
+        );
+    }
+
+    public function demoteStaff($id)
+    {
+        $response =  $this->service->promoteStaff($id, false);
+
+        $resource = new UserSalonResource($response);
+
+        return ApiResponse::success(
+            data: $resource,
+        );
+    }
+
+    public function promoteStaff($id)
+    {
+        $response =  $this->service->promoteStaff($id, true);
+
+        $resource = new UserSalonResource($response);
+
+        return ApiResponse::success(
+            data: $resource,
+        );
+    }
+
     // Menampilkan data berdasarkan ID
     public function readById($id)
     {

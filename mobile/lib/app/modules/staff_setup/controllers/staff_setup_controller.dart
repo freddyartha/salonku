@@ -19,6 +19,7 @@ import 'package:salonku/app/models/user_model.dart';
 class StaffSetupController extends SetupBaseController {
   final approvedDate = InputDatetimeController();
   final namaCon = InputTextController();
+  final levelCon = InputTextController();
   final emailCon = InputTextController(type: InputTextType.email);
   final phoneCon = InputPhoneController();
   final nikCon = InputTextController();
@@ -28,10 +29,12 @@ class StaffSetupController extends SetupBaseController {
   final tanggalLahirCon = InputDatetimeController();
   final alamatCon = InputTextController(type: InputTextType.paragraf);
 
-  final LocalDataSource _localDataSource = Get.find();
+  final LocalDataSource localDataSource = Get.find();
   final SalonRepositoryContract _salonRepository = Get.find();
   final StaffRepositoryContract _repository;
   StaffSetupController(this._repository);
+
+  RxInt userLevel = 2.obs;
 
   UserModel? model;
 
@@ -49,6 +52,7 @@ class StaffSetupController extends SetupBaseController {
   void addValueInputFields(UserModel? model) {
     if (model != null) {
       namaCon.value = model.nama;
+      levelCon.value = ReusableStatics.getLevelUser(model.level);
       emailCon.value = model.email;
       phoneCon.value = model.phone;
       nikCon.value = model.nik;
@@ -67,12 +71,28 @@ class StaffSetupController extends SetupBaseController {
     }
   }
 
+  Future<void> promoteDemoteStaff(bool promote) async {
+    await handleRequest(
+      () => _repository.promoteDemoteStaff(
+        InputFormatter.dynamicToInt(itemId) ?? 0,
+        promote,
+      ),
+      onSuccess: (res) {
+        model = res;
+        userLevel(res.level);
+        addValueInputFields(res);
+      },
+      showErrorSnackbar: false,
+    );
+  }
+
   Future<void> getById() async {
     await handleRequest(
       showLoading: true,
       () => _repository.getStaffById(InputFormatter.dynamicToInt(itemId) ?? 0),
       onSuccess: (res) {
         model = res;
+        userLevel(res.level);
         addValueInputFields(res);
       },
       showErrorSnackbar: false,
@@ -88,31 +108,33 @@ class StaffSetupController extends SetupBaseController {
     if (!tanggalLahirCon.isValid) return;
     if (!alamatCon.isValid) return;
 
-    // final model = UserModel(
-    // id: 0,
-    // idSalon: _localDataSource.salonData.id,
-    // idSupplier: selectSupplierCon.value?.value,
-    // brand: brandCon.value,
-    // nama: namaCon.value,
-    // satuan: satuanCon.value,
-    // ukuran: ukuranCon.value,
-    // hargaSatuan: hargaSatuanCon.value,
-    // currencyCode: "",
-    // );
+    final model = UserModel(
+      id: 0,
+      aktif: true,
+      idUserFirebase: "",
+      level: 2,
+      nama: namaCon.value,
+      email: emailCon.value,
+      phone: phoneCon.value,
+      nik: nikCon.value,
+      jenisKelamin: jenisKelaminCon.value,
+      tanggalLahir: tanggalLahirCon.value,
+      alamat: alamatCon.value,
+    );
 
-    // await handleRequest(
-    //   showLoading: false,
-    //   () => _repository.updateStaffById(
-    //           InputFormatter.dynamicToInt(itemId) ?? 0,
-    //           userModelToJson(model),
-    //         ),
-    //   onSuccess: (res) {
-    //     isEditable(false);
-    //     itemId = res.id;
-    //     addValueInputFields(res);
-    //   },
-    //   showErrorSnackbar: false,
-    // );
+    await handleRequest(
+      showLoading: false,
+      () => _repository.updateStaffById(
+        InputFormatter.dynamicToInt(itemId) ?? 0,
+        userModelToJson(model),
+      ),
+      onSuccess: (res) {
+        isEditable(false);
+        itemId = res.id;
+        addValueInputFields(res);
+      },
+      showErrorSnackbar: false,
+    );
   }
 
   bool showConfirmationCondition() {
@@ -137,7 +159,7 @@ class StaffSetupController extends SetupBaseController {
       Success<List<SelectItemModel>> returnData = Success([]);
       await handlePaginationRequest(
         () => _salonRepository.getCabangByIdSalon(
-          idSalon: _localDataSource.salonData.id,
+          idSalon: localDataSource.salonData.id,
           pageIndex: pageIndex,
           pageSize: 10,
           keyword: selectCabangCon.keyword,

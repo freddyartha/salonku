@@ -85,4 +85,7 @@ Route::middleware('firebase.auth')->group(function () {
     Route::get('/salon/{id}/staff/list', [StaffController::class, 'getPaginatedBySalonId']);
     Route::get('/salon/staff/{id}', [StaffController::class, 'readById']);
     Route::put('/salon/staff/{id}', [StaffController::class, 'update']);
+    Route::patch('/salon/staff/{id}/deactivate-staff', [StaffController::class, 'deactivateStaff']);
+    Route::patch('/salon/staff/{id}/promote-staff', [StaffController::class, 'promoteStaff']);
+    Route::patch('/salon/staff/{id}/demote-staff', [StaffController::class, 'demoteStaff']);
 });

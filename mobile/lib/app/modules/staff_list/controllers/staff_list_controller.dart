@@ -51,15 +51,16 @@ class StaffListController extends ListBaseController {
   }
 
   Future<void> deletData(int id) async {
-    // await deleteData(
-    //   () async => await handleRequest(
-    //     showLoading: true,
-    //     () => _repository.deleteProductById(id),
-    //     onSuccess: (res) {
-    //       listCon.refresh();
-    //     },
-    //     showErrorSnackbar: false,
-    //   ),
-    // );
+    await deleteData(
+      title: "deactivate_staff_confirm".tr,
+      () async => await handleRequest(
+        showLoading: true,
+        () => _repository.deactivateStaff(id),
+        onSuccess: (res) {
+          listCon.refresh();
+        },
+        showErrorSnackbar: false,
+      ),
+    );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl_phone_field/phone_number.dart';
 import 'package:salonku/app/common/font_size.dart';
@@ -10,18 +11,20 @@ import 'package:salonku/app/extension/theme_extension.dart';
 class InputPhoneController extends ChangeNotifier {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
   final TextEditingController _con = TextEditingController();
+  late IntlPhoneField _phoneFormField;
+
   late Function(VoidCallback fn) setState;
 
-  InputPhoneController({this.onTap});
-
   bool _required = false;
-  final String _countryCode = "ID";
-
+  String _localValue = "";
+  String _countryCode = "+62";
   VoidCallback? onEditingComplete;
   ValueChanged<PhoneNumber>? onChanged;
   GestureTapCallback? onTap;
   ValueChanged<String>? onFieldSubmitted;
   FormFieldSetter<PhoneNumber>? onSaved;
+
+  InputPhoneController({this.onTap});
 
   String? _validator(
     PhoneNumber? v, {
@@ -50,18 +53,15 @@ class InputPhoneController extends ChangeNotifier {
   }
 
   dynamic get value {
-    return _con.value.text;
+    return _localValue;
   }
 
   set value(dynamic value) {
     if (value != null) {
-      // setState(() {
-      // String beforeDash = "$value".split('-').first;
+      String beforeDash = "$value".split('-').first;
       String afterDash = "$value".split('-').last;
-      _con.text = afterDash;
-      // _countryCode = beforeDash;
-      //   print(_con.text);
-      // });
+      _phoneFormField.controller?.text = afterDash;
+      _countryCode = beforeDash;
     }
   }
 
@@ -134,6 +134,15 @@ class _InputPhoneState extends State<InputPhoneComponent> {
         ),
         borderSide: BorderSide(color: context.contrast, width: .1),
       ),
+      disabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.all(
+          widget.borderRadius ?? Radius.circular(Radiuses.large),
+        ),
+        borderSide: BorderSide(
+          color: context.contrast,
+          width: widget.editable ? .1 : .3,
+        ),
+      ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.all(
           widget.borderRadius ?? Radius.circular(Radiuses.large),
@@ -147,8 +156,14 @@ class _InputPhoneState extends State<InputPhoneComponent> {
       suffixIconConstraints: const BoxConstraints(minHeight: 30, minWidth: 30),
     );
 
-    var phoneFormField = IntlPhoneField(
-      initialValue: widget.controller._con.text,
+    widget.controller._phoneFormField = IntlPhoneField(
+      flagsButtonPadding: EdgeInsetsGeometry.only(
+        left: widget.editable ? 0 : 10,
+      ),
+      controller: widget.controller._con,
+      dropdownTextStyle: GoogleFonts.quicksand(
+        textStyle: TextStyle(fontSize: FontSizes.normal, color: context.text),
+      ),
       cursorColor: context.text,
       decoration: decoration,
       initialCountryCode: widget.controller._countryCode,
@@ -156,24 +171,22 @@ class _InputPhoneState extends State<InputPhoneComponent> {
       onTap: widget.controller.onTap,
       onSubmitted: widget.controller.onFieldSubmitted,
       obscureText: widget.isPassword,
-      style: TextStyle(color: context.text),
+      style: GoogleFonts.quicksand(
+        textStyle: TextStyle(fontSize: FontSizes.normal, color: context.text),
+      ),
       onChanged: (phone) {
-        widget.controller._con.value = TextEditingValue(
-          text: "${phone.countryCode}-${phone.number}",
-        );
+        widget.controller._localValue = "${phone.countryCode}-${phone.number}";
         if (widget.controller.onChanged != null) {
           widget.controller.onChanged!(phone);
         }
       },
       onCountryChanged: (value) {
         String afterDash = widget.controller._con.value.text.split('-').last;
-        widget.controller._con.value = TextEditingValue(
-          text: "+${value.dialCode}-$afterDash",
-        );
+        widget.controller._localValue = "+${value.dialCode}-$afterDash";
       },
       validator: (v) =>
           widget.controller._validator(v, otherValidator: widget.validator),
-      readOnly: !widget.editable,
+      enabled: widget.editable,
       autovalidateMode: AutovalidateMode.always,
     );
 
@@ -183,7 +196,10 @@ class _InputPhoneState extends State<InputPhoneComponent> {
       marginBottom: widget.marginBottom,
       childText: widget.controller._con.text,
       isRequired: widget.required,
-      children: Form(key: widget.controller._key, child: phoneFormField),
+      children: Form(
+        key: widget.controller._key,
+        child: widget.controller._phoneFormField,
+      ),
     );
   }
 }

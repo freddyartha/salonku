@@ -9,11 +9,14 @@ import 'package:salonku/app/core/base/base_controller.dart';
 abstract class ListBaseController extends BaseController {
   final InputTextController searchController = InputTextController();
 
-  Future<void> deleteData(dynamic Function() confirmOnTap) async {
+  Future<void> deleteData(
+    dynamic Function() confirmOnTap, {
+    String? title,
+  }) async {
     var r = await ReusableWidgets.confirmationBottomSheet(
       children: [
         TextComponent(
-          value: "delete_confirmation".tr,
+          value: title ?? "delete_confirmation".tr,
           textAlign: TextAlign.center,
         ),
       ],

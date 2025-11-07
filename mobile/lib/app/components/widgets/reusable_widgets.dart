@@ -1035,6 +1035,7 @@ class ReusableWidgets {
     dynamic Function()? saveOnTap,
     dynamic Function()? cancelEditOnTap,
     bool withBottomSafeArea = true,
+    bool allowEdit = true,
   }) {
     return Stack(
       children: [
@@ -1049,42 +1050,44 @@ class ReusableWidgets {
             backgroundColor: Colors.transparent,
             appBar: ReusableWidgets.generalAppBarWidget(
               title: title.tr,
-              actions: [
-                if (controller.isEditable.value &&
-                    controller.itemId != null) ...[
-                  Container(
-                    margin: EdgeInsets.only(right: 10),
-                    decoration: BoxDecoration(
-                      color: context.accent2,
-                      shape: BoxShape.circle,
-                    ),
-                    child: IconButton(
-                      onPressed: () {
-                        controller.isEditable.value = false;
-                        if (cancelEditOnTap != null) {
-                          cancelEditOnTap();
-                        }
-                      },
-                      icon: Icon(Icons.close),
-                    ),
-                  ),
-                ] else if (!controller.isEditable.value &&
-                    controller.itemId != null) ...[
-                  Container(
-                    margin: EdgeInsets.only(right: 10),
-                    decoration: BoxDecoration(
-                      color: context.accent2,
-                      shape: BoxShape.circle,
-                    ),
-                    child: IconButton(
-                      onPressed: () {
-                        controller.isEditable.value = true;
-                      },
-                      icon: Icon(Icons.edit),
-                    ),
-                  ),
-                ],
-              ],
+              actions: allowEdit
+                  ? [
+                      if (controller.isEditable.value &&
+                          controller.itemId != null) ...[
+                        Container(
+                          margin: EdgeInsets.only(right: 10),
+                          decoration: BoxDecoration(
+                            color: context.accent2,
+                            shape: BoxShape.circle,
+                          ),
+                          child: IconButton(
+                            onPressed: () {
+                              controller.isEditable.value = false;
+                              if (cancelEditOnTap != null) {
+                                cancelEditOnTap();
+                              }
+                            },
+                            icon: Icon(Icons.close),
+                          ),
+                        ),
+                      ] else if (!controller.isEditable.value &&
+                          controller.itemId != null) ...[
+                        Container(
+                          margin: EdgeInsets.only(right: 10),
+                          decoration: BoxDecoration(
+                            color: context.accent2,
+                            shape: BoxShape.circle,
+                          ),
+                          child: IconButton(
+                            onPressed: () {
+                              controller.isEditable.value = true;
+                            },
+                            icon: Icon(Icons.edit),
+                          ),
+                        ),
+                      ],
+                    ]
+                  : null,
             ),
             body: SafeArea(
               bottom: withBottomSafeArea,

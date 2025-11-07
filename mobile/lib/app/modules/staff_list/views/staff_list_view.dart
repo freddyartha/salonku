@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:salonku/app/common/font_size.dart';
 import 'package:salonku/app/common/font_weight.dart';
 import 'package:salonku/app/common/radiuses.dart';
+import 'package:salonku/app/common/reusable_statics.dart';
 import 'package:salonku/app/components/inputs/input_text_component.dart';
 import 'package:salonku/app/components/others/list_component.dart';
 import 'package:salonku/app/components/texts/text_component.dart';
@@ -38,7 +39,6 @@ class StaffListView extends GetView<StaffListController> {
           ),
           ListComponent(
             controller: controller.listCon,
-            editAction: (item) => controller.itemOnTap(item.id, true),
             deleteAction: (item) => controller.deletData(item.id),
             itemBuilder: (item) => ListTile(
               contentPadding: EdgeInsets.symmetric(horizontal: 15),
@@ -48,7 +48,9 @@ class StaffListView extends GetView<StaffListController> {
                 fontWeight: FontWeights.semiBold,
                 fontSize: FontSizes.h6,
               ),
-              subtitle: TextComponent(value: item.nama, maxLines: 3),
+              subtitle: TextComponent(
+                value: ReusableStatics.getLevelUser(item.level),
+              ),
               trailing: TextComponent(value: item.phone),
             ),
           ),
