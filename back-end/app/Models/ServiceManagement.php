@@ -38,6 +38,16 @@ class ServiceManagement extends Model
         )->withTimestamps();
     }
 
+    public function promos()
+    {
+        return $this->belongsToMany(
+            Promo::class,
+            'tr_service_promo', // nama tabel pivot
+            'id_service_management',    // foreign key ke ServiceManagement
+            'id_promo'                // foreign key ke Service
+        )->withTimestamps();
+    }
+
     public function salon()
     {
         return $this->belongsTo(Salon::class, 'id_salon');

@@ -66,17 +66,23 @@ class SettingsView extends GetView<SettingsController> {
                 TextComponent(
                   value: controller.salonModel.value.alamat,
                   textAlign: TextAlign.center,
-                ),
-                Center(
-                  child: ButtonComponent(
-                    onTap: controller.showEditSalon,
-                    text: "Edit Salon",
-                    width: Get.width / 2,
-                    margin: EdgeInsets.only(top: 10, bottom: 30),
-                    padding: EdgeInsets.symmetric(vertical: 5),
-                    borderRadius: Radiuses.large,
+                  margin: EdgeInsetsGeometry.only(
+                    bottom: controller.userData.level == 1 ? 0 : 30,
                   ),
                 ),
+
+                if (controller.userData.level == 1) ...[
+                  Center(
+                    child: ButtonComponent(
+                      onTap: controller.showEditSalon,
+                      text: "Edit Salon",
+                      width: Get.width / 2,
+                      margin: EdgeInsets.only(top: 10, bottom: 30),
+                      padding: EdgeInsets.symmetric(vertical: 5),
+                      borderRadius: Radiuses.large,
+                    ),
+                  ),
+                ],
                 Container(
                   padding: EdgeInsets.all(10),
                   margin: EdgeInsets.only(bottom: 20),

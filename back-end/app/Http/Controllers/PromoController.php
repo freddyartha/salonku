@@ -3,40 +3,37 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ApiResponse;
-use App\Http\Requests\ProductRequest;
-use App\Http\Requests\ServiceManagementRequest;
-use App\Http\Resources\ListServiceManagementResource;
-use App\Http\Resources\ProductResource;
-use App\Http\Resources\ServiceManagementResource;
-use App\Services\ServiceManagementService;
+use App\Http\Requests\PromoRequest;
+use App\Http\Resources\PromoResource;
+use App\Services\PromoService;
 use Illuminate\Http\Request;
 
-class ServiceManagementController extends Controller
+class PromoController extends Controller
 {
     protected $service;
 
-    public function __construct(ServiceManagementService $service)
+    public function __construct(PromoService $service)
     {
         $this->service = $service;
     }
 
     //create
-    public function store(ServiceManagementRequest $request)
+    public function store(PromoRequest $request)
     {
         $salon = $this->service->store($request->validated());
 
         return ApiResponse::success(
-            data: new ServiceManagementResource($salon)
+            data: new PromoResource($salon)
         );
     }
 
-    //update
-    public function update(ServiceManagementRequest $request, int $id)
+    //create
+    public function update(PromoRequest $request, int $id)
     {
         $salon = $this->service->update($request->validated(), $id);
 
         return ApiResponse::success(
-            data: new ServiceManagementResource($salon)
+            data: new PromoResource($salon)
         );
     }
 
@@ -45,7 +42,7 @@ class ServiceManagementController extends Controller
         $this->service->deleteById($id);
 
         return ApiResponse::success(
-            message: "Service deleted successfully",
+            message: "Promo deleted successfully",
         );
     }
 
@@ -54,7 +51,7 @@ class ServiceManagementController extends Controller
     {
         $response = $this->service->getById($id);
 
-        $resource = new ServiceManagementResource($response);
+        $resource = new PromoResource($response);
 
         return ApiResponse::success(
             data: $resource,
@@ -68,10 +65,10 @@ class ServiceManagementController extends Controller
         if ($response->isEmpty()) {
             return response()->json([
                 'data' => [],
-                'message' => 'No Service Management found',
+                'message' => 'No promo found',
             ], 200);
         }
 
-        return ListServiceManagementResource::collection($response);
+        return PromoResource::collection($response);
     }
 }

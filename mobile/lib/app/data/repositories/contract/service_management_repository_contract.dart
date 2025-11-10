@@ -1,8 +1,10 @@
 import 'package:salonku/app/data/models/result.dart';
+import 'package:salonku/app/models/list_service_management_model.dart';
 import 'package:salonku/app/models/service_management_model.dart';
 
 abstract class ServiceManagementRepositoryContract {
-  Future<Result<List<ServiceManagementModel>>> getServiceManagementByIdSalon({
+  Future<Result<List<ListServiceManagementModel>>>
+  getServiceManagementByIdSalon({
     required int idSalon,
     required int pageIndex,
     required int pageSize,

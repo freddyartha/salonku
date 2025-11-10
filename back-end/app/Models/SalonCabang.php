@@ -47,4 +47,14 @@ class SalonCabang extends Model
             'id_service'
         )->withTimestamps();
     }
+
+    public function promos()
+    {
+        return $this->belongsToMany(
+            Promo::class,
+            'm_promo_cabang',
+            'id_cabang',
+            'id_promo'
+        )->withTimestamps();
+    }
 }

@@ -3,6 +3,7 @@ import 'package:salonku/app/common/input_formatter.dart';
 import 'package:salonku/app/components/others/list_component.dart';
 import 'package:salonku/app/core/base/list_base_controller.dart';
 import 'package:salonku/app/data/models/result.dart';
+import 'package:salonku/app/data/providers/local/local_data_source.dart';
 import 'package:salonku/app/data/repositories/contract/staff_repository_contract.dart';
 import 'package:salonku/app/models/user_model.dart';
 import 'package:salonku/app/routes/app_pages.dart';
@@ -11,6 +12,7 @@ class StaffListController extends ListBaseController {
   final int idSalon =
       InputFormatter.dynamicToInt(Get.arguments['idSalon']) ?? 0;
 
+  final LocalDataSource localDataSource = Get.find();
   final StaffRepositoryContract _repository;
   StaffListController(this._repository);
 

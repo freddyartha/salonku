@@ -61,6 +61,7 @@ dependencies:
   flutter_slidable: ^4.0.3
   currency_picker: ^2.0.21
   url_launcher: ^6.3.2
+  calendar_date_picker2: ^2.0.1
 
 dev_dependencies:
   flutter_test:

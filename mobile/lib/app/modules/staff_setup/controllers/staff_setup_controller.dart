@@ -131,7 +131,7 @@ class StaffSetupController extends SetupBaseController {
       onSuccess: (res) {
         isEditable(false);
         itemId = res.id;
-        addValueInputFields(res);
+        Get.back();
       },
       showErrorSnackbar: false,
     );

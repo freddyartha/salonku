@@ -32,6 +32,9 @@ abstract class Routes {
   static const SERVICE_MANAGEMENT_SETUP = _Paths.SERVICE_MANAGEMENT_SETUP;
   static const STAFF_LIST = _Paths.STAFF_LIST;
   static const STAFF_SETUP = _Paths.STAFF_SETUP;
+  static const NOTIFICATION_LIST = _Paths.NOTIFICATION_LIST;
+  static const NOTIFICATION_SETUP = _Paths.NOTIFICATION_SETUP;
+  static const SCHEDULE_CALENDAR = _Paths.SCHEDULE_CALENDAR;
 }
 
 abstract class _Paths {
@@ -63,4 +66,7 @@ abstract class _Paths {
   static const SERVICE_MANAGEMENT_SETUP = '/service-management-setup';
   static const STAFF_LIST = '/staff-list';
   static const STAFF_SETUP = '/staff-setup';
+  static const NOTIFICATION_LIST = '/notification-list';
+  static const NOTIFICATION_SETUP = '/notification-setup';
+  static const SCHEDULE_CALENDAR = '/schedule-calendar';
 }

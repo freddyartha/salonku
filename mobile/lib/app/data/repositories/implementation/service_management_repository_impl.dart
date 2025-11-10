@@ -6,6 +6,7 @@ import 'package:salonku/app/data/network/simple_api_response_parser.dart';
 import 'package:salonku/app/data/network/general_api_response_parser.dart';
 import 'package:salonku/app/data/providers/api/service_management_provider.dart';
 import 'package:salonku/app/data/repositories/contract/service_management_repository_contract.dart';
+import 'package:salonku/app/models/list_service_management_model.dart';
 import 'package:salonku/app/models/service_management_model.dart';
 
 class ServiceManagementRepositoryImpl extends BaseRepository
@@ -13,7 +14,8 @@ class ServiceManagementRepositoryImpl extends BaseRepository
   final ServiceManagementProvider _provider = Get.find();
 
   @override
-  Future<Result<List<ServiceManagementModel>>> getServiceManagementByIdSalon({
+  Future<Result<List<ListServiceManagementModel>>>
+  getServiceManagementByIdSalon({
     required int idSalon,
     required int pageIndex,
     required int pageSize,
@@ -28,7 +30,7 @@ class ServiceManagementRepositoryImpl extends BaseRepository
         keyword: keyword,
         idCabang: idCabang,
       ),
-      PagedApiResponseParser(ServiceManagementModel.fromDynamic),
+      PagedApiResponseParser(ListServiceManagementModel.fromDynamic),
     );
   }
 

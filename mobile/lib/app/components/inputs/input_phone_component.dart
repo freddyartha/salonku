@@ -58,9 +58,10 @@ class InputPhoneController extends ChangeNotifier {
 
   set value(dynamic value) {
     if (value != null) {
+      _localValue = value;
       String beforeDash = "$value".split('-').first;
       String afterDash = "$value".split('-').last;
-      _phoneFormField.controller?.text = afterDash;
+      _con.text = afterDash;
       _countryCode = beforeDash;
     }
   }

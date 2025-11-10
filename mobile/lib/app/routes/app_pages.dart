@@ -10,6 +10,10 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/notification_list/bindings/notification_list_binding.dart';
+import '../modules/notification_list/views/notification_list_view.dart';
+import '../modules/notification_setup/bindings/notification_setup_binding.dart';
+import '../modules/notification_setup/views/notification_setup_view.dart';
 import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
 import '../modules/owner_approval/bindings/owner_approval_binding.dart';
@@ -34,6 +38,8 @@ import '../modules/salon_cabang_list/bindings/salon_cabang_list_binding.dart';
 import '../modules/salon_cabang_list/views/salon_cabang_list_view.dart';
 import '../modules/salon_cabang_setup/bindings/salon_cabang_setup_binding.dart';
 import '../modules/salon_cabang_setup/views/salon_cabang_setup_view.dart';
+import '../modules/schedule_calendar/bindings/schedule_calendar_binding.dart';
+import '../modules/schedule_calendar/views/schedule_calendar_view.dart';
 import '../modules/service_list/bindings/service_list_binding.dart';
 import '../modules/service_list/views/service_list_view.dart';
 import '../modules/service_management_list/bindings/service_management_list_binding.dart';
@@ -199,6 +205,21 @@ class AppPages {
       name: _Paths.STAFF_SETUP,
       page: () => const StaffSetupView(),
       binding: StaffSetupBinding(),
+    ),
+    GetPage(
+      name: _Paths.NOTIFICATION_LIST,
+      page: () => const NotificationListView(),
+      binding: NotificationListBinding(),
+    ),
+    GetPage(
+      name: _Paths.NOTIFICATION_SETUP,
+      page: () => const NotificationSetupView(),
+      binding: NotificationSetupBinding(),
+    ),
+    GetPage(
+      name: _Paths.SCHEDULE_CALENDAR,
+      page: () => const ScheduleCalendarView(),
+      binding: ScheduleCalendarBinding(),
     ),
   ];
 }

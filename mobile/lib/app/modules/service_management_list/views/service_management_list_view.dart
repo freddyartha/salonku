@@ -68,17 +68,17 @@ class ServiceManagementListView
                 contentPadding: EdgeInsets.symmetric(horizontal: 15),
                 onTap: () => controller.itemOnTap(item.id, false),
                 title: TextComponent(
-                  value: item.client?.nama ?? "anonymous".tr,
+                  value: item.client ?? "anonymous".tr,
                   fontWeight: FontWeights.semiBold,
                   fontSize: FontSizes.h6,
                 ),
 
                 trailing: TextComponent(
                   value:
-                      "${item.salon?.currencyCode} ${InputFormatter.toCurrency(totalServices)}",
+                      "${item.currencyCode} ${InputFormatter.toCurrency(totalServices)}",
                   fontWeight: FontWeights.semiBold,
                 ),
-                subtitle: TextComponent(value: item.cabang?.nama ?? ""),
+                subtitle: TextComponent(value: item.cabang),
               );
             },
           ),

@@ -169,4 +169,8 @@ const Map<String, String> idID = {
       "Apakah Anda yakin ingin menonaktifkan staff ini? Setelah dinonaktifkan, staff dianggap sudah selesai bekerja dan tidak dapat lagi menginput data.",
   "promote_staff_to_coowner": "Promosikan staff menjadi co-owner",
   "demote_coowner_to_staff": "Turunkan co-owner menjadi staff",
+  "email": "Email",
+  "email_placeholder": "Masukkan alamat email",
+  "notification": "Notifikasi",
+  "schedule_calendar": "Kalender Jadwal",
 };

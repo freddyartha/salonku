@@ -6,7 +6,7 @@ import 'package:salonku/app/core/base/list_base_controller.dart';
 import 'package:salonku/app/data/models/result.dart';
 import 'package:salonku/app/data/providers/local/local_data_source.dart';
 import 'package:salonku/app/data/repositories/contract/service_management_repository_contract.dart';
-import 'package:salonku/app/models/service_management_model.dart';
+import 'package:salonku/app/models/list_service_management_model.dart';
 import 'package:salonku/app/routes/app_pages.dart';
 
 class ServiceManagementListController extends ListBaseController {
@@ -17,21 +17,23 @@ class ServiceManagementListController extends ListBaseController {
   final LocalDataSource _localDataSource = Get.find();
   ServiceManagementListController(this._repository);
 
-  late final ListComponentController<ServiceManagementModel> listCon;
+  late final ListComponentController<ListServiceManagementModel> listCon;
 
   @override
   void onInit() {
     listCon = ListComponentController(
       getDataResult: _getList,
-      fromDynamic: ServiceManagementModel.fromDynamic,
+      fromDynamic: ListServiceManagementModel.fromDynamic,
     );
 
     searchController.onChanged = (v) => listCon.refresh();
     super.onInit();
   }
 
-  Future<Success<List<ServiceManagementModel>>> _getList(int pageIndex) async {
-    Success<List<ServiceManagementModel>> returnData = Success([]);
+  Future<Success<List<ListServiceManagementModel>>> _getList(
+    int pageIndex,
+  ) async {
+    Success<List<ListServiceManagementModel>> returnData = Success([]);
     await handlePaginationRequest(
       () => _repository.getServiceManagementByIdSalon(
         idSalon: idSalon,

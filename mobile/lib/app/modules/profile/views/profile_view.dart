@@ -51,7 +51,7 @@ class ProfileView extends GetView<ProfileController> {
             ),
             Center(
               child: ButtonComponent(
-                onTap: () {},
+                onTap: controller.editProfileOnTap,
                 text: "Edit Profile",
                 width: Get.width / 2,
                 margin: EdgeInsets.only(top: 10, bottom: 30),

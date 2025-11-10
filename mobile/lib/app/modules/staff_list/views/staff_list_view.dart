@@ -39,7 +39,10 @@ class StaffListView extends GetView<StaffListController> {
           ),
           ListComponent(
             controller: controller.listCon,
-            deleteAction: (item) => controller.deletData(item.id),
+            deleteAction: (item) =>
+                controller.localDataSource.userData.level == 2
+                ? controller.deletData(item.id)
+                : null,
             itemBuilder: (item) => ListTile(
               contentPadding: EdgeInsets.symmetric(horizontal: 15),
               onTap: () => controller.itemOnTap(item.id, false),

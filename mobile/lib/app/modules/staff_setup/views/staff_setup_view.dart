@@ -23,7 +23,7 @@ class StaffSetupView extends GetView<StaffSetupController> {
       () => ReusableWidgets.generalSetupPageWidget(
         context,
         controller,
-        title: "staff".tr,
+        title: controller.isEditable.value ? "Edit Profile" : "staff".tr,
         allowEdit: ReusableStatics.userIsStaff(
           controller.localDataSource.userData,
         ),
@@ -32,7 +32,8 @@ class StaffSetupView extends GetView<StaffSetupController> {
           if (!controller.isLoading.value &&
               !ReusableStatics.userIsStaff(
                 controller.localDataSource.userData,
-              )) ...[
+              ) &&
+              !controller.isEditable.value) ...[
             Container(
               margin: EdgeInsets.only(bottom: 20),
               padding: EdgeInsets.all(15),
@@ -81,6 +82,13 @@ class StaffSetupView extends GetView<StaffSetupController> {
             required: true,
             editable: controller.isEditable.value,
           ),
+          InputTextComponent(
+            label: "email".tr,
+            controller: controller.emailCon,
+            placeHolder: "email_placeholder".tr,
+            required: true,
+            editable: controller.isEditable.value,
+          ),
           InputPhoneComponent(
             controller: controller.phoneCon,
             label: "nomor_hp".tr,
@@ -114,11 +122,17 @@ class StaffSetupView extends GetView<StaffSetupController> {
             required: true,
             editable: controller.isEditable.value,
           ),
-
-          SelectSingleComponent(
-            controller: controller.selectCabangCon,
-            label: "select_branch".tr,
-            editable: controller.isEditable.value,
+          Visibility(
+            visible:
+                (controller.isEditable.value &&
+                    controller.userLevel.value == 2) ||
+                (!controller.isEditable.value &&
+                    controller.userLevel.value == 1),
+            child: SelectSingleComponent(
+              controller: controller.selectCabangCon,
+              label: "select_branch".tr,
+              editable: controller.isEditable.value,
+            ),
           ),
         ],
         saveOnTap: controller.saveOnTap,

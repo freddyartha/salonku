@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 import 'package:salonku/app/models/menu_item_model.dart';
 import 'package:salonku/app/modules/home/controllers/home_controller.dart';
 import 'package:salonku/app/modules/home/views/home_view.dart';
+import 'package:salonku/app/modules/notification_list/views/notification_list_view.dart';
 import 'package:salonku/app/modules/profile/controllers/profile_controller.dart';
 import 'package:salonku/app/modules/profile/views/profile_view.dart';
+import 'package:salonku/app/modules/schedule_calendar/views/schedule_calendar_view.dart';
 import 'package:salonku/app/modules/settings/controllers/settings_controller.dart';
 import 'package:salonku/app/modules/settings/views/settings_view.dart';
 
@@ -21,8 +23,8 @@ class BasePageController extends GetxController {
   final List<Widget Function()> pages = [
     () => const HomeView(),
     () => const SettingsView(),
-    () => const ProfileView(),
-    () => const ProfileView(),
+    () => const ScheduleCalendarView(),
+    () => const NotificationListView(),
     () => const ProfileView(),
   ];
 
