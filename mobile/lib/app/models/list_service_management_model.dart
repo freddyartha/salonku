@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:salonku/app/common/input_formatter.dart';
+import 'package:salonku/app/models/service_management_model.dart';
 
 class ListServiceManagementModel {
   int id;
@@ -9,6 +10,7 @@ class ListServiceManagementModel {
   String cabang;
   List<ListServicesModel>? services;
   List<ListServicesModel>? serviceItems;
+  List<PromoItemModel>? promos;
 
   ListServiceManagementModel({
     required this.id,
@@ -17,6 +19,7 @@ class ListServiceManagementModel {
     this.client,
     required this.cabang,
     this.services,
+    this.promos,
   });
 
   static ListServiceManagementModel fromJson(String jsonString) {
@@ -45,6 +48,14 @@ class ListServiceManagementModel {
       model.serviceItems = [];
       for (var i = 0; i < detailT.length; i++) {
         model.serviceItems!.add(ListServicesModel.fromDynamic(detailT[i]));
+      }
+    }
+
+    if (dynamicData['promos'] != null) {
+      final detailT = dynamicData['promos'] as List;
+      model.promos = [];
+      for (var i = 0; i < detailT.length; i++) {
+        model.promos!.add(PromoItemModel.fromDynamic(detailT[i]));
       }
     }
 

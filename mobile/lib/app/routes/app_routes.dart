@@ -35,6 +35,8 @@ abstract class Routes {
   static const NOTIFICATION_LIST = _Paths.NOTIFICATION_LIST;
   static const NOTIFICATION_SETUP = _Paths.NOTIFICATION_SETUP;
   static const SCHEDULE_CALENDAR = _Paths.SCHEDULE_CALENDAR;
+  static const PROMO_LIST = _Paths.PROMO_LIST;
+  static const PROMO_SETUP = _Paths.PROMO_SETUP;
 }
 
 abstract class _Paths {
@@ -69,4 +71,6 @@ abstract class _Paths {
   static const NOTIFICATION_LIST = '/notification-list';
   static const NOTIFICATION_SETUP = '/notification-setup';
   static const SCHEDULE_CALENDAR = '/schedule-calendar';
+  static const PROMO_LIST = '/promo-list';
+  static const PROMO_SETUP = '/promo-setup';
 }

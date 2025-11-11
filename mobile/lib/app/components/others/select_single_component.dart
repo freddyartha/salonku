@@ -176,6 +176,7 @@ class SelectSingleController<T> extends ChangeNotifier {
       _searchCon.value = null;
       if (v == true) {
         _selectedItem = selectedItemsTmp;
+        // print(_selectedItem?.subtitle);
         if (onChanged != null) {
           onChanged!(_selectedItem);
         }

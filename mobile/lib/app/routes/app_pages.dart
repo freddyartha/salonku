@@ -28,6 +28,10 @@ import '../modules/product_setup/bindings/product_setup_binding.dart';
 import '../modules/product_setup/views/product_setup_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
+import '../modules/promo_list/bindings/promo_list_binding.dart';
+import '../modules/promo_list/views/promo_list_view.dart';
+import '../modules/promo_setup/bindings/promo_setup_binding.dart';
+import '../modules/promo_setup/views/promo_setup_view.dart';
 import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
 import '../modules/register_salon/bindings/register_salon_binding.dart';
@@ -220,6 +224,16 @@ class AppPages {
       name: _Paths.SCHEDULE_CALENDAR,
       page: () => const ScheduleCalendarView(),
       binding: ScheduleCalendarBinding(),
+    ),
+    GetPage(
+      name: _Paths.PROMO_LIST,
+      page: () => const PromoListView(),
+      binding: PromoListBinding(),
+    ),
+    GetPage(
+      name: _Paths.PROMO_SETUP,
+      page: () => const PromoSetupView(),
+      binding: PromoSetupBinding(),
     ),
   ];
 }

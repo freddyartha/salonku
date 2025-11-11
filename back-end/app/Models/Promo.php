@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,6 +18,8 @@ class Promo extends Model
         'deskripsi',
         'potongan_harga',
         'potongan_persen',
+        'berlaku_mulai',
+        'berlaku_sampai',
     ];
 
     // 🔗 Relasi ke Salon
@@ -37,5 +40,23 @@ class Promo extends Model
     {
         return $this->belongsToMany(ServiceManagement::class, 'tr_service_promo', 'id_promo', 'id_service_management')
             ->withTimestamps();
+    }
+
+    //scopes
+    public function scopeAktif($query)
+    {
+        $now = Carbon::now();
+        return $query->where('berlaku_mulai', '<=', $now)
+            ->where('berlaku_sampai', '>=', $now);
+    }
+
+    public function scopeMendatang($query)
+    {
+        return $query->where('berlaku_mulai', '>', Carbon::now());
+    }
+
+    public function scopeBerakhir($query)
+    {
+        return $query->where('berlaku_sampai', '<', Carbon::now());
     }
 }

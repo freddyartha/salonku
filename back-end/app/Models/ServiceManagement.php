@@ -15,6 +15,7 @@ class ServiceManagement extends Model
         'id_salon',
         'id_cabang',
         'catatan',
+        'id_promo',
     ];
 
     // Relasi

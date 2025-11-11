@@ -37,7 +37,7 @@ class ProductListController extends ListBaseController {
         keyword: searchController.value,
       ),
       onSuccess: (res) {
-        returnData = res;
+        if (res.data.isNotEmpty) returnData = res;
       },
     );
     return returnData;

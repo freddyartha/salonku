@@ -16,12 +16,14 @@ import 'package:salonku/app/data/models/result.dart';
 import 'package:salonku/app/data/providers/local/local_data_source.dart';
 import 'package:salonku/app/data/repositories/contract/client_repository_contract.dart';
 import 'package:salonku/app/data/repositories/contract/payment_method_repository_contract.dart';
+import 'package:salonku/app/data/repositories/contract/promo_repository_contract.dart';
 import 'package:salonku/app/data/repositories/contract/salon_repository_contract.dart';
 import 'package:salonku/app/data/repositories/contract/service_management_repository_contract.dart';
 import 'package:salonku/app/data/repositories/contract/service_repository_contract.dart';
 import 'package:salonku/app/extension/theme_extension.dart';
 import 'package:salonku/app/models/client_model.dart';
 import 'package:salonku/app/models/payment_method_model.dart';
+import 'package:salonku/app/models/promo_model.dart';
 import 'package:salonku/app/models/salon_cabang_model.dart';
 import 'package:salonku/app/models/select_item_model.dart';
 import 'package:salonku/app/models/service_item_model.dart';
@@ -35,6 +37,8 @@ class ServiceManagementSetupController extends SetupBaseController {
   final catatanCon = InputTextController(type: InputTextType.paragraf);
   late final SelectSingleController selectClientCon;
   late final SelectSingleController selectPaymentCon;
+  late final SelectSingleController selectPromoCon;
+
   late final SelectMultipleController selectServicesCon;
   final showCustomServiceCon = InputRadioController(
     items: [
@@ -49,12 +53,14 @@ class ServiceManagementSetupController extends SetupBaseController {
 
   double totalServices = 0.0;
   double totalCustomService = 0.0;
+  double totalPromo = 0.0;
   RxDouble grandTotal = 0.0.obs;
 
   final ClientRepositoryContract _clientRepository;
   final PaymentMethodRepositoryContract _paymentMethodRepository;
   final ServiceRepositoryContract _serviceRepository;
   final ServiceManagementRepositoryContract _serviceManagementRepository;
+  final PromoRepositoryContract _promoRepositoryContract;
   final SalonRepositoryContract _salonRepository = Get.find();
   final LocalDataSource _localDataSource = Get.find();
   ServiceManagementSetupController(
@@ -62,6 +68,7 @@ class ServiceManagementSetupController extends SetupBaseController {
     this._paymentMethodRepository,
     this._serviceRepository,
     this._serviceManagementRepository,
+    this._promoRepositoryContract,
   );
 
   late final String currencyCode = _localDataSource.salonData.currencyCode;
@@ -133,6 +140,24 @@ class ServiceManagementSetupController extends SetupBaseController {
             )
             .toList();
       }
+
+      if (model.promos != null && model.promos!.isNotEmpty) {
+        var item = model.promos!.last;
+        totalPromo = item.potonganHarga != null
+            ? item.potonganHarga!
+            : (grandTotal.value * (item.potonganPersen ?? 0) / 100);
+
+        grandTotal.value -= totalPromo;
+
+        selectPromoCon.value = SelectItemModel(
+          title: item.nama,
+          subtitle: item.potonganHarga != null
+              ? "$currencyCode ${item.potonganHarga}"
+              : "${item.potonganPersen}%",
+          value: item.id,
+        );
+      }
+
       if (model.paymentMethod != null) {
         selectPaymentCon.value = SelectItemModel(
           title: model.paymentMethod!.nama,
@@ -178,6 +203,7 @@ class ServiceManagementSetupController extends SetupBaseController {
   Future<void> saveOnTap() async {
     if (!selectClientCon.isValid) return;
     if (!selectServicesCon.isValid) return;
+    if (!selectPromoCon.isValid) return;
     if (!selectPaymentCon.isValid) return;
     if (!showCustomServiceCon.isValid) return;
     if (customService.value) {
@@ -197,6 +223,14 @@ class ServiceManagementSetupController extends SetupBaseController {
       id: 0,
       idClient: selectClientCon.value?.value,
       idPaymentMethod: selectPaymentCon.value?.value,
+      promos: selectPromoCon.value != null
+          ? [
+              PromoItemModel(
+                id: selectPromoCon.value?.value ?? 0,
+                nama: selectPromoCon.value?.title ?? "",
+              ),
+            ]
+          : null,
       idSalon: _localDataSource.salonData.id,
       idCabang: selectCabangCon.value?.value,
       services: selectServicesCon.values
@@ -256,6 +290,7 @@ class ServiceManagementSetupController extends SetupBaseController {
   void _initSelectComponents() {
     setupSelectLayananKhusus();
     setupSelectClientController();
+    setupSelectPromoController();
     setupSelectPaymentController();
     setupSelectServiceController();
     setupSelectCabangController();
@@ -358,7 +393,15 @@ class ServiceManagementSetupController extends SetupBaseController {
     );
     customServicesCon.onChanged = (items) {
       totalCustomService = items.fold(0.0, (sum, item) => sum + item.harga);
-      grandTotal(totalServices + totalCustomService);
+
+      if (selectPromoCon.value != null) {
+        final percentValue = InputFormatter.stringPercentToDouble(
+          selectPromoCon.value!.subtitle.toString(),
+        );
+        totalPromo = grandTotal.value * percentValue / 100;
+      }
+
+      grandTotal(totalServices + totalCustomService - totalPromo);
     };
   }
 
@@ -401,6 +444,54 @@ class ServiceManagementSetupController extends SetupBaseController {
       addOnTap: () =>
           Get.toNamed(Routes.CLIENT_SETUP)?.then((v) => listCon.refresh()),
     );
+  }
+
+  void setupSelectPromoController() {
+    Future<Success<List<SelectItemModel>>> getListData(int pageIndex) async {
+      Success<List<SelectItemModel>> returnData = Success([]);
+      await handlePaginationRequest(
+        () => _promoRepositoryContract.getPromoByIdSalon(
+          idSalon: _localDataSource.salonData.id,
+          pageIndex: pageIndex,
+          pageSize: 10,
+          keyword: selectCabangCon.keyword,
+        ),
+        onSuccess: (res) {
+          returnData = Success(
+            res.data
+                .map(
+                  (e) => SelectItemModel(
+                    value: e.id,
+                    title: e.nama,
+                    subtitle: e.potonganHarga != null
+                        ? "$currencyCode ${e.potonganHarga}"
+                        : "${e.potonganPersen}%",
+                  ),
+                )
+                .toList(),
+            meta: res.meta,
+            message: res.message,
+          );
+        },
+      );
+      return returnData;
+    }
+
+    final listCon = ListComponentController(
+      getDataResult: getListData,
+      fromDynamic: PromoModel.fromDynamic,
+    );
+    selectPromoCon = SelectSingleController(listController: listCon);
+
+    selectPromoCon.onChanged = (item) {
+      if (item != null) {
+        final percentValue = InputFormatter.stringPercentToDouble(
+          item.subtitle.toString(),
+        );
+        totalPromo = grandTotal.value * percentValue / 100;
+        grandTotal.value -= totalPromo;
+      }
+    };
   }
 
   void setupSelectPaymentController() {
@@ -536,7 +627,17 @@ class ServiceManagementSetupController extends SetupBaseController {
         0.0,
         (sum, item) => sum + (item.addedValue as num).toDouble(),
       );
-      grandTotal(totalServices + totalCustomService);
+
+      if (selectPromoCon.value != null) {
+        final percentValue = InputFormatter.stringPercentToDouble(
+          selectPromoCon.value!.subtitle.toString(),
+        );
+
+        totalPromo = grandTotal.value * percentValue / 100;
+      }
+      print(totalPromo);
+
+      grandTotal(totalServices + totalCustomService - totalPromo);
     };
   }
 }

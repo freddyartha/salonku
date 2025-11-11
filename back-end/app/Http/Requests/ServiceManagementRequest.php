@@ -33,6 +33,7 @@ class ServiceManagementRequest extends FormRequest
             'service_items.*.nama_service' => 'required|string',
             'service_items.*.deskripsi' => 'nullable|string',
             'service_items.*.harga' => 'required|numeric',
+            'id_promo' => 'nullable|exists:m_promo,id',
         ];
     }
 }

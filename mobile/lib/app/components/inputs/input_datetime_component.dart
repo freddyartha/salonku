@@ -1,6 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:salonku/app/common/app_themes.dart';
+import 'package:salonku/app/common/font_size.dart';
+import 'package:salonku/app/common/font_weight.dart';
 import 'package:salonku/app/common/input_formatter.dart';
 import 'package:salonku/app/common/lang/translation_service.dart';
 import 'package:salonku/app/common/radiuses.dart';
@@ -77,6 +81,35 @@ class InputDatetimeController {
     return true;
   }
 
+  Theme _dateTheme(BuildContext context, Widget child) => Theme(
+    data: ThemeData(
+      brightness: context.isDark ? Brightness.dark : Brightness.light,
+      colorScheme: context.isDark
+          ? AppThemes.darkTheme.colorScheme
+          : AppThemes.lightTheme.colorScheme,
+      textTheme: GoogleFonts.quicksandTextTheme(
+        TextTheme(bodyMedium: TextStyle(color: context.text)),
+      ),
+      datePickerTheme: DatePickerThemeData(
+        backgroundColor: context.accent2,
+        surfaceTintColor: context.accent,
+        headerBackgroundColor: context.primary,
+        headerForegroundColor: context.contrast,
+        dayStyle: TextStyle(color: context.text),
+        yearStyle: TextStyle(
+          color: context.text,
+          fontSize: FontSizes.h6,
+          fontWeight: FontWeights.semiBold,
+        ),
+        todayBackgroundColor: WidgetStatePropertyAll(context.primary),
+        todayForegroundColor: WidgetStatePropertyAll(context.contrast),
+        rangeSelectionBackgroundColor: context.accent,
+        rangeSelectionOverlayColor: WidgetStatePropertyAll(context.accent),
+      ),
+    ),
+    child: child,
+  );
+
   void _onTab(bool editable) async {
     Get.focusScope!.unfocus();
     if (!editable) return;
@@ -91,7 +124,7 @@ class InputDatetimeController {
           cancelText: "cancel".tr,
           confirmText: "ok".tr,
           builder: (context, child) {
-            return Theme(data: Theme.of(context), child: child!);
+            return _dateTheme(context, child!);
           },
         );
         if (picked != null && _date != picked) {
@@ -177,7 +210,7 @@ class InputDatetimeController {
         context: _context,
         initialTime: _time ?? TimeOfDay.now(),
         builder: (context, child) {
-          return Theme(data: Theme.of(context), child: child!);
+          return _dateTheme(context, child!);
         },
       );
       if (picked != null && _time != picked) {
@@ -193,7 +226,7 @@ class InputDatetimeController {
         firstDate: DateTime(1900),
         lastDate: DateTime.now().add(Duration(days: 3650)),
         builder: (context, child) {
-          return Theme(data: Theme.of(context), child: child!);
+          return _dateTheme(context, child!);
         },
       );
       if (picked != null && _dateRange != picked) {

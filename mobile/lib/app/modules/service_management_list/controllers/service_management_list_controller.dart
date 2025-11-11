@@ -48,7 +48,7 @@ class ServiceManagementListController extends ListBaseController {
             : null,
       ),
       onSuccess: (res) {
-        returnData = res;
+        if (res.data.isNotEmpty) returnData = res;
       },
     );
     return returnData;

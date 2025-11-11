@@ -3,18 +3,21 @@
 namespace App\Repositories;
 
 use App\Models\Promo;
+use Carbon\Carbon;
+use GPBMetadata\Google\Type\Datetime;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class PromoRepository
 {
     public function findById(int $id)
     {
-        return Promo::find($id);
+        return Promo::with('salon')->find($id);
     }
 
     public function create(array $data): Promo
     {
-        return Promo::create($data);
+        $res = Promo::create($data);
+        return $res->load('salon');
     }
 
     public function update(array $data, $id): Promo
@@ -22,7 +25,7 @@ class PromoRepository
         $res = $this->findById($id);
         $res->update($data);
 
-        return $res;
+        return $res->load('salon');;
     }
 
     public function delete(int $id)
@@ -37,7 +40,7 @@ class PromoRepository
         $search = $options['search'];
         $sort = $options['sort'] ?? 'desc';
 
-        $query = Promo::query()->where("id_Salon", $salonId);
+        $query = Promo::query()->with('salon')->where("id_Salon", $salonId)->aktif();
 
         if ($search) {
             $query->where(function ($q) use ($search) {

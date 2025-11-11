@@ -3,34 +3,34 @@ import 'package:salonku/app/common/input_formatter.dart';
 import 'package:salonku/app/components/others/list_component.dart';
 import 'package:salonku/app/core/base/list_base_controller.dart';
 import 'package:salonku/app/data/models/result.dart';
-import 'package:salonku/app/data/repositories/contract/client_repository_contract.dart';
-import 'package:salonku/app/models/client_model.dart';
+import 'package:salonku/app/data/repositories/contract/promo_repository_contract.dart';
+import 'package:salonku/app/models/promo_model.dart';
 import 'package:salonku/app/routes/app_pages.dart';
 
-class ClientListController extends ListBaseController {
+class PromoListController extends ListBaseController {
   final int idSalon =
       InputFormatter.dynamicToInt(Get.arguments['idSalon']) ?? 0;
 
-  final ClientRepositoryContract _repository;
-  ClientListController(this._repository);
+  final PromoRepositoryContract _repository;
+  PromoListController(this._repository);
 
-  late final ListComponentController<ClientModel> listCon;
+  late final ListComponentController<PromoModel> listCon;
 
   @override
   void onInit() {
     listCon = ListComponentController(
       getDataResult: _getList,
-      fromDynamic: ClientModel.fromDynamic,
+      fromDynamic: PromoModel.fromDynamic,
     );
 
     searchController.onChanged = (v) => listCon.refresh();
     super.onInit();
   }
 
-  Future<Success<List<ClientModel>>> _getList(int pageIndex) async {
-    Success<List<ClientModel>> returnData = Success([]);
+  Future<Success<List<PromoModel>>> _getList(int pageIndex) async {
+    Success<List<PromoModel>> returnData = Success([]);
     await handlePaginationRequest(
-      () => _repository.getClientByIdSalon(
+      () => _repository.getPromoByIdSalon(
         idSalon: idSalon,
         pageIndex: pageIndex,
         pageSize: 10,
@@ -45,7 +45,7 @@ class ClientListController extends ListBaseController {
 
   void itemOnTap(int id, bool isEdit) {
     Get.toNamed(
-      Routes.CLIENT_SETUP,
+      Routes.PROMO_SETUP,
       arguments: {"id": "$id", "isEdit": "$isEdit"},
     )?.then((v) => listCon.refresh());
   }
@@ -54,7 +54,7 @@ class ClientListController extends ListBaseController {
     await deleteData(
       () async => await handleRequest(
         showLoading: true,
-        () => _repository.deleteClientById(id),
+        () => _repository.deletePromoById(id),
         onSuccess: (res) {
           listCon.refresh();
         },

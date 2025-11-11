@@ -4,6 +4,13 @@ import 'package:intl/intl.dart';
 import 'package:salonku/app/common/lang/translation_service.dart';
 
 class InputFormatter {
+  static double stringPercentToDouble(String value) {
+    if (value.isEmpty) return 0;
+    final subtitle = value.toString().trim();
+    final percentString = subtitle.replaceAll("%", "");
+    return double.tryParse(percentString) ?? 0.0;
+  }
+
   static String displayDate(
     DateTime? date, {
     bool mini = false,

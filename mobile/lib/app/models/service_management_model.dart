@@ -28,6 +28,7 @@ class ServiceManagementModel {
   List<ServiceModel>? services;
   SalonCabangModel? cabang;
   List<ServiceItemModel>? serviceItems;
+  List<PromoItemModel>? promos;
 
   ServiceManagementModel({
     required this.id,
@@ -42,6 +43,7 @@ class ServiceManagementModel {
     this.services,
     this.cabang,
     this.serviceItems,
+    this.promos,
   });
 
   static ServiceManagementModel fromJson(String jsonString) {
@@ -80,6 +82,11 @@ class ServiceManagementModel {
               data['service_items'].map((x) => ServiceItemModel.fromDynamic(x)),
             )
           : [],
+      promos: data['promos'] != null
+          ? List<PromoItemModel>.from(
+              data['promos'].map((x) => PromoItemModel.fromDynamic(x)),
+            )
+          : [],
     );
 
     return model;
@@ -98,5 +105,38 @@ class ServiceManagementModel {
     // 'cabang': cabang?.toJson(),
     'services': services?.map((item) => item.id).toList() ?? [],
     'service_items': serviceItems?.map((item) => item.toJson()).toList() ?? [],
+    'id_promo': promos?.last.id,
   };
+}
+
+class PromoItemModel {
+  int id;
+  String nama;
+  double? potonganHarga;
+  double? potonganPersen;
+
+  PromoItemModel({
+    required this.id,
+    required this.nama,
+    this.potonganHarga,
+    this.potonganPersen,
+  });
+
+  static PromoItemModel fromJson(String jsonString) {
+    final data = json.decode(jsonString);
+    return fromDynamic(data);
+  }
+
+  static PromoItemModel fromDynamic(dynamic dynamicData) {
+    return PromoItemModel(
+      id: InputFormatter.dynamicToInt(dynamicData['id']) ?? 0,
+      nama: dynamicData['nama'],
+      potonganHarga: InputFormatter.dynamicToDouble(
+        dynamicData["potongan_harga"],
+      ),
+      potonganPersen: InputFormatter.dynamicToDouble(
+        dynamicData["potongan_persen"],
+      ),
+    );
+  }
 }

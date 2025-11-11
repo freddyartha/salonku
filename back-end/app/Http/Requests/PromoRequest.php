@@ -25,8 +25,10 @@ class PromoRequest extends FormRequest
             'id_salon'          => 'required|integer|exists:m_salon,id',
             'nama'              => 'required|string|max:255',
             'deskripsi'         => 'required|string|max:500',
-            'potongan_harga'    => 'nullable|numeric|min:0',
-            'potongan_persen'   => 'nullable|numeric|min:0',
+            'potongan_harga'    => 'nullable|numeric',
+            'potongan_persen'   => 'nullable|numeric',
+            'berlaku_mulai'     => 'required|date',
+            'berlaku_sampai'    => 'required|date',
         ];
     }
 }

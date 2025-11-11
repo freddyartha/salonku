@@ -12,7 +12,7 @@ class ServiceManagementRepository
 {
     public function findById(int $id)
     {
-        return ServiceManagement::with(['serviceItems', 'client', 'services', 'paymentMethod', 'salon', 'cabang'])->find($id);
+        return ServiceManagement::with(['serviceItems', 'client', 'services', 'paymentMethod', 'salon', 'cabang', 'promos'])->find($id);
     }
 
     public function create(array $data): ServiceManagement
@@ -23,6 +23,8 @@ class ServiceManagementRepository
 
             $services = $data['services'] ?? [];
             unset($data['services']);
+
+            $idPromo = $data['id_promo'] ?? null;
 
             // Simpan data utama ke tabel service_management
             $management = ServiceManagement::create($data);
@@ -50,8 +52,13 @@ class ServiceManagementRepository
                 }
             }
 
+            $management->promos()->attach($idPromo, [
+                'id_service_management' => $management->id,
+                'created_at' => now(),
+            ]);
+
             // Load relasi yang dibutuhkan
-            return $management->load(['serviceItems', 'client', 'services', 'paymentMethod', 'salon', 'cabang']);
+            return $management->load(['serviceItems', 'client', 'services', 'paymentMethod', 'salon', 'cabang', 'promos']);
         });
     }
 
@@ -104,7 +111,7 @@ class ServiceManagementRepository
             }
 
             // Load relasi yang dibutuhkan untuk response
-            return $management->load(['serviceItems', 'client', 'services', 'paymentMethod', 'salon', 'cabang']);
+            return $management->load(['serviceItems', 'client', 'services', 'paymentMethod', 'salon', 'cabang', 'promos']);
         });
     }
 
@@ -121,7 +128,7 @@ class ServiceManagementRepository
         $search = $options['search'];
         $sort = $options['sort'] ?? 'desc';
 
-        $query = ServiceManagement::with(['serviceItems', 'client', 'services', 'paymentMethod', 'salon', 'cabang'])->where("id_Salon", $salonId);
+        $query = ServiceManagement::with(['serviceItems', 'client', 'services', 'paymentMethod', 'salon', 'cabang', 'promos'])->where("id_Salon", $salonId);
 
         if ($cabangId != null) {
             $query->where("id_cabang", $cabangId);

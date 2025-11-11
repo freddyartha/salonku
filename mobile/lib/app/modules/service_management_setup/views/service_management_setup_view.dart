@@ -60,6 +60,11 @@ class ServiceManagementSetupView
                   ),
                 ),
                 SelectSingleComponent(
+                  controller: controller.selectPromoCon,
+                  label: "select_promo".tr,
+                  editable: controller.isEditable.value,
+                ),
+                SelectSingleComponent(
                   controller: controller.selectPaymentCon,
                   required: true,
                   label: "select_payment_method".tr,

@@ -89,6 +89,17 @@ class ServiceManagementResource extends JsonResource
                     ];
                 });
             }),
+
+            'promos' => $this->whenLoaded('promos', function () {
+                return $this->promos->map(function ($promo) {
+                    return [
+                        'id'              => $promo->id,
+                        'nama'            => $promo->nama,
+                        'potongan_harga'  => $promo->potongan_harga,
+                        'potongan_persen' => $promo->potongan_persen,
+                    ];
+                });
+            }),
         ];
     }
 }

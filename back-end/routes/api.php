@@ -5,6 +5,7 @@ use App\Http\Controllers\FirebaseAuthController;
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PromoController;
 use App\Http\Controllers\SalonCabangController;
 use App\Http\Controllers\SalonController;
 use App\Http\Controllers\ServiceController;
@@ -88,4 +89,11 @@ Route::middleware('firebase.auth')->group(function () {
     Route::patch('/salon/staff/{id}/deactivate-staff', [StaffController::class, 'deactivateStaff']);
     Route::patch('/salon/staff/{id}/promote-staff', [StaffController::class, 'promoteStaff']);
     Route::patch('/salon/staff/{id}/demote-staff', [StaffController::class, 'demoteStaff']);
+
+    //Promo
+    Route::get('/salon/{id}/promo/list', [PromoController::class, 'getPaginatedBySalonId']);
+    Route::get('/salon/promo/{id}', [PromoController::class, 'readById']);
+    Route::post('/salon/promo', [PromoController::class, 'store']);
+    Route::put('/salon/promo/{id}', [PromoController::class, 'update']);
+    Route::delete('/salon/promo/{id}/delete', [PromoController::class, 'delete']);
 });
