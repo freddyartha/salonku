@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:salonku/app/common/input_formatter.dart';
 import 'package:salonku/app/components/inputs/input_datetime_component.dart';
+import 'package:salonku/app/components/inputs/input_radio_component.dart';
 import 'package:salonku/app/components/inputs/input_text_component.dart';
 import 'package:salonku/app/components/widgets/reusable_widgets.dart';
 import 'package:salonku/app/core/base/setup_base_controller.dart';
@@ -15,6 +16,13 @@ class PromoSetupController extends SetupBaseController {
   final potonganHargaCon = InputTextController(type: InputTextType.money);
   final potonganPersenCon = InputTextController(type: InputTextType.number);
   final berlakuCon = InputDatetimeController(type: InputDatetimeType.dateRange);
+  final selectJenisPromoCon = InputRadioController(
+    items: [
+      RadioButtonItem(text: "potongan_persen".tr, value: 1),
+      RadioButtonItem(text: "potongan_harga".tr, value: 2),
+    ],
+  );
+  RxInt selectedJenisPromo = 0.obs;
 
   final LocalDataSource _localDataSource = Get.find();
   final PromoRepositoryContract _repository;
@@ -28,14 +36,23 @@ class PromoSetupController extends SetupBaseController {
     if (itemId != null) {
       getById();
     }
+    selectJenisPromoCon.onChanged = (v) => selectedJenisPromo(v.value);
   }
 
   void addValueInputFields(PromoModel? model) {
     if (model != null) {
       namaCon.value = model.nama;
       deskripsiCon.value = model.deskripsi;
-      potonganHargaCon.value = model.potonganHarga;
-      potonganPersenCon.value = model.potonganPersen;
+      if (model.potonganPersen != null) {
+        selectJenisPromoCon.value = 1;
+        selectedJenisPromo(1);
+        potonganPersenCon.value = model.potonganPersen;
+      }
+      if (model.potonganHarga != null) {
+        selectJenisPromoCon.value = 2;
+        selectedJenisPromo(2);
+        potonganHargaCon.value = model.potonganHarga;
+      }
       berlakuCon.value = DateTimeRange(
         start: model.berlakuMulai,
         end: model.berlakuSampai,
@@ -58,6 +75,9 @@ class PromoSetupController extends SetupBaseController {
   Future<void> saveOnTap() async {
     if (!namaCon.isValid) return;
     if (!deskripsiCon.isValid) return;
+    if (!selectJenisPromoCon.isValid) return;
+    if (!potonganPersenCon.isValid) return;
+    if (!potonganHargaCon.isValid) return;
     if (!berlakuCon.isValid) return;
 
     if (potonganHargaCon.value == null && potonganPersenCon.value == null) {

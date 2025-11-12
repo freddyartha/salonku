@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:salonku/app/components/inputs/input_datetime_component.dart';
+import 'package:salonku/app/components/inputs/input_radio_component.dart';
 import 'package:salonku/app/components/inputs/input_text_component.dart';
 import 'package:salonku/app/components/widgets/reusable_widgets.dart';
 
@@ -31,18 +32,28 @@ class PromoSetupView extends GetView<PromoSetupController> {
             controller: controller.deskripsiCon,
             editable: controller.isEditable.value,
           ),
-          InputTextComponent(
-            label: "potongan_harga".tr,
-            placeHolder: "placeholder_potongan_harga".tr,
-            controller: controller.potonganHargaCon,
+          InputRadioComponent(
+            controller: controller.selectJenisPromoCon,
+            label: "pilih_jenis_promo".tr,
+            required: true,
             editable: controller.isEditable.value,
           ),
-          InputTextComponent(
-            label: "potongan_persen".tr,
-            placeHolder: "placeholder_potongan_persen".tr,
-            controller: controller.potonganPersenCon,
-            editable: controller.isEditable.value,
-          ),
+          if (controller.selectedJenisPromo.value == 1)
+            InputTextComponent(
+              label: "potongan_persen".tr,
+              placeHolder: "placeholder_potongan_persen".tr,
+              controller: controller.potonganPersenCon,
+              editable: controller.isEditable.value,
+              required: controller.selectedJenisPromo.value == 1 ? true : false,
+            ),
+          if (controller.selectedJenisPromo.value == 2)
+            InputTextComponent(
+              label: "potongan_harga".tr,
+              placeHolder: "placeholder_potongan_harga".tr,
+              controller: controller.potonganHargaCon,
+              editable: controller.isEditable.value,
+              required: controller.selectedJenisPromo.value == 2 ? true : false,
+            ),
           InputDatetimeComponent(
             label: "masa_berlaku".tr,
             placeHolder: "placeholder_masa_berlaku".tr,

@@ -185,4 +185,6 @@ const Map<String, String> idID = {
   "masa_berlaku": "Masa Berlaku",
   "placeholder_masa_berlaku": "Pilih masa berlaku promo",
   "select_promo": "Pilih Promo",
+  "total_services": "Total Layanan",
+  "total_discount": "Total Diskon",
 };

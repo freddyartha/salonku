@@ -48,14 +48,15 @@ class SettingsController extends BaseController {
           arguments: {"idSalon": "${userData.idSalon}"},
         ),
       ),
-      MenuItemModel(
-        title: "promo",
-        imageLocation: "assets/images/png/settings.png",
-        onTab: () => Get.toNamed(
-          Routes.PROMO_LIST,
-          arguments: {"idSalon": "${userData.idSalon}"},
+      if (userData.level != 3)
+        MenuItemModel(
+          title: "promo",
+          imageLocation: "assets/images/png/settings.png",
+          onTab: () => Get.toNamed(
+            Routes.PROMO_LIST,
+            arguments: {"idSalon": "${userData.idSalon}"},
+          ),
         ),
-      ),
       MenuItemModel(
         title: "product",
         imageLocation: "assets/images/png/settings.png",

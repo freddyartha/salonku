@@ -181,4 +181,6 @@ const Map<String, String> enUS = {
   "masa_berlaku": "Validity Period",
   "placeholder_masa_berlaku": "Select the promo validity period",
   "select_promo": "Select Promo",
+  "total_services": "Total Services",
+  "total_discount": "Total Discount",
 };

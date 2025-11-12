@@ -64,6 +64,14 @@ class ServiceManagementListView
                   (sum, item) => sum + item.harga,
                 );
               }
+
+              if (item.promos != null && item.promos!.isNotEmpty) {
+                var promo = item.promos!.last;
+                totalServices -= promo.potonganHarga != null
+                    ? (promo.potonganHarga ?? 0)
+                    : (totalServices * (promo.potonganPersen ?? 0) / 100);
+              }
+
               return ListTile(
                 contentPadding: EdgeInsets.symmetric(horizontal: 15),
                 onTap: () => controller.itemOnTap(item.id, false),

@@ -34,7 +34,7 @@ class CustomMultipleController<T> {
   set values(List<T> value) {
     _selectedItemList.clear();
     _selectedItemList.addAll(value);
-    setState(() {});
+    // setState(() {});
   }
 
   void init(Function(VoidCallback fn) setStateX, BuildContext context) {

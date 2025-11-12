@@ -95,23 +95,67 @@ class ServiceManagementSetupView
           SafeArea(
             top: false,
             child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+              margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(Radiuses.large)),
                 border: Border.all(color: context.contrast),
               ),
-              child: ListTile(
-                contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                title: TextComponent(
-                  value: "grand_total".tr,
-                  fontWeight: FontWeights.semiBold,
-                ),
-                trailing: TextComponent(
-                  fontWeight: FontWeights.bold,
-                  fontSize: FontSizes.h4,
-                  value:
-                      "${controller.currencyCode} ${InputFormatter.toCurrency(controller.grandTotal.value)}",
-                ),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                    child: Row(
+                      children: [
+                        TextComponent(value: "total_services".tr),
+                        Expanded(
+                          child: TextComponent(
+                            fontWeight: FontWeights.bold,
+                            textAlign: TextAlign.right,
+                            fontSize: FontSizes.h6,
+                            value:
+                                "${controller.currencyCode} ${InputFormatter.toCurrency(controller.totalServices + controller.totalCustomService)}",
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Row(
+                      children: [
+                        TextComponent(value: "total_discount".tr),
+                        Expanded(
+                          child: TextComponent(
+                            fontWeight: FontWeights.bold,
+                            textAlign: TextAlign.right,
+                            fontSize: FontSizes.h6,
+                            value:
+                                controller.selectPromoCon.value != null &&
+                                    controller.selectPromoCon.value!.addedValue
+                                        .toString()
+                                        .contains("%")
+                                ? "(${controller.selectPromoCon.value!.subtitle}) ${controller.currencyCode} ${InputFormatter.toCurrency(controller.totalPromo)}"
+                                : "${controller.currencyCode} ${InputFormatter.toCurrency(controller.totalPromo)}",
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  ListTile(
+                    visualDensity: VisualDensity.compact,
+                    contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                    title: TextComponent(
+                      value: "grand_total".tr,
+                      fontWeight: FontWeights.semiBold,
+                    ),
+                    trailing: TextComponent(
+                      fontWeight: FontWeights.bold,
+                      fontSize: FontSizes.h4,
+                      value:
+                          "${controller.currencyCode} ${InputFormatter.toCurrency(controller.grandTotal.value)}",
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

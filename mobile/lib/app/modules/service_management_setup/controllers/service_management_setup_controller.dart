@@ -99,7 +99,7 @@ class ServiceManagementSetupController extends SetupBaseController {
     super.onReady();
   }
 
-  void addValueInputFields(ServiceManagementModel? model) {
+  void addValueInputFields(ServiceManagementModel? model) async {
     if (model != null) {
       if (model.cabang != null) {
         selectCabangCon.value = SelectItemModel(
@@ -141,23 +141,6 @@ class ServiceManagementSetupController extends SetupBaseController {
             .toList();
       }
 
-      if (model.promos != null && model.promos!.isNotEmpty) {
-        var item = model.promos!.last;
-        totalPromo = item.potonganHarga != null
-            ? item.potonganHarga!
-            : (grandTotal.value * (item.potonganPersen ?? 0) / 100);
-
-        grandTotal.value -= totalPromo;
-
-        selectPromoCon.value = SelectItemModel(
-          title: item.nama,
-          subtitle: item.potonganHarga != null
-              ? "$currencyCode ${item.potonganHarga}"
-              : "${item.potonganPersen}%",
-          value: item.id,
-        );
-      }
-
       if (model.paymentMethod != null) {
         selectPaymentCon.value = SelectItemModel(
           title: model.paymentMethod!.nama,
@@ -182,6 +165,24 @@ class ServiceManagementSetupController extends SetupBaseController {
               ),
             )
             .toList();
+      }
+
+      if (model.promos != null && model.promos!.isNotEmpty) {
+        var item = model.promos!.last;
+        totalPromo = item.potonganHarga != null
+            ? item.potonganHarga!
+            : (grandTotal.value * (item.potonganPersen ?? 0) / 100);
+
+        grandTotal.value -= totalPromo;
+
+        selectPromoCon.value = SelectItemModel(
+          title: item.nama,
+          subtitle: item.potonganHarga != null
+              ? "$currencyCode ${InputFormatter.toCurrency(item.potonganHarga)}"
+              : "${item.potonganPersen}%",
+          value: item.id,
+          addedValue: item.potonganHarga ?? "${item.potonganPersen}%",
+        );
       }
     }
   }
@@ -395,10 +396,18 @@ class ServiceManagementSetupController extends SetupBaseController {
       totalCustomService = items.fold(0.0, (sum, item) => sum + item.harga);
 
       if (selectPromoCon.value != null) {
-        final percentValue = InputFormatter.stringPercentToDouble(
-          selectPromoCon.value!.subtitle.toString(),
-        );
-        totalPromo = grandTotal.value * percentValue / 100;
+        if (selectPromoCon.value!.addedValue.toString().contains("%")) {
+          final percentValue = InputFormatter.stringPercentToDouble(
+            selectPromoCon.value!.addedValue.toString(),
+          );
+          totalPromo =
+              (totalServices + totalCustomService) * percentValue / 100;
+        } else {
+          final priceValue = InputFormatter.dynamicToDouble(
+            selectPromoCon.value!.addedValue,
+          );
+          totalPromo = priceValue ?? 0;
+        }
       }
 
       grandTotal(totalServices + totalCustomService - totalPromo);
@@ -464,8 +473,9 @@ class ServiceManagementSetupController extends SetupBaseController {
                     value: e.id,
                     title: e.nama,
                     subtitle: e.potonganHarga != null
-                        ? "$currencyCode ${e.potonganHarga}"
+                        ? "$currencyCode ${InputFormatter.toCurrency(e.potonganHarga)}"
                         : "${e.potonganPersen}%",
+                    addedValue: e.potonganHarga ?? "${e.potonganPersen}%",
                   ),
                 )
                 .toList(),
@@ -485,11 +495,22 @@ class ServiceManagementSetupController extends SetupBaseController {
 
     selectPromoCon.onChanged = (item) {
       if (item != null) {
-        final percentValue = InputFormatter.stringPercentToDouble(
-          item.subtitle.toString(),
-        );
-        totalPromo = grandTotal.value * percentValue / 100;
+        if (item.addedValue.toString().contains("%")) {
+          final percentValue = InputFormatter.stringPercentToDouble(
+            item.addedValue.toString(),
+          );
+          totalPromo =
+              (totalServices + totalCustomService) * percentValue / 100;
+        } else {
+          final priceValue = InputFormatter.dynamicToDouble(
+            item.addedValue.toString(),
+          );
+          totalPromo = priceValue ?? 0;
+        }
         grandTotal.value -= totalPromo;
+      } else {
+        totalPromo = 0;
+        grandTotal.value = totalServices + totalCustomService - totalPromo;
       }
     };
   }
@@ -629,13 +650,19 @@ class ServiceManagementSetupController extends SetupBaseController {
       );
 
       if (selectPromoCon.value != null) {
-        final percentValue = InputFormatter.stringPercentToDouble(
-          selectPromoCon.value!.subtitle.toString(),
-        );
-
-        totalPromo = grandTotal.value * percentValue / 100;
+        if (selectPromoCon.value!.addedValue.toString().contains("%")) {
+          final percentValue = InputFormatter.stringPercentToDouble(
+            selectPromoCon.value!.addedValue.toString(),
+          );
+          totalPromo =
+              (totalServices + totalCustomService) * percentValue / 100;
+        } else {
+          final priceValue = InputFormatter.dynamicToDouble(
+            selectPromoCon.value!.addedValue,
+          );
+          totalPromo = priceValue ?? 0;
+        }
       }
-      print(totalPromo);
 
       grandTotal(totalServices + totalCustomService - totalPromo);
     };

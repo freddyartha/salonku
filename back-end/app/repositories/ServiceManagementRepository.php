@@ -25,6 +25,7 @@ class ServiceManagementRepository
             unset($data['services']);
 
             $idPromo = $data['id_promo'] ?? null;
+            unset($data['id_promo']);
 
             // Simpan data utama ke tabel service_management
             $management = ServiceManagement::create($data);
@@ -71,6 +72,9 @@ class ServiceManagementRepository
             $services = $data['services'] ?? [];
             unset($data['services']);
 
+            $idPromo = $data['id_promo'] ?? null;
+            unset($data['id_promo']);
+
             // Ambil data utama
             $management = ServiceManagement::findOrFail($id);
 
@@ -108,6 +112,15 @@ class ServiceManagementRepository
             } else {
                 // Jika tidak ada services dikirim, kosongkan relasi
                 $management->services()->detach();
+            }
+
+            if ($idPromo != null) {
+                $management->promos()->sync($idPromo, [
+                    'id_service_management' => $management->id,
+                    'created_at' => now(),
+                ]);
+            } else {
+                $management->promos()->detach();
             }
 
             // Load relasi yang dibutuhkan untuk response
