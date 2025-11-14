@@ -78,6 +78,7 @@ abstract class BaseController extends GetxController {
   Future<Success<T>?> handlePaginationRequest<T>(
     Future<Result<T>> Function() request, {
     bool showLoading = true,
+    bool showEasyLoading = false,
     bool showErrorSnackbar = true,
     VoidCallback? onInit,
     Function(Success<T> data)? onSuccess,
@@ -86,6 +87,10 @@ abstract class BaseController extends GetxController {
   }) async {
     if (onInit != null) onInit();
     if (showLoading) isLoading.value = true;
+    if (showEasyLoading) {
+      if (EasyLoading.isShow) EasyLoading.dismiss();
+      EasyLoading.show();
+    }
     error.value = null;
 
     try {
@@ -128,6 +133,7 @@ abstract class BaseController extends GetxController {
       return null;
     } finally {
       if (showLoading) isLoading.value = false;
+      if (showEasyLoading) EasyLoading.dismiss();
       if (onFinish != null) onFinish();
     }
   }

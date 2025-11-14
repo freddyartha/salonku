@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\FirebaseAuthController;
 use App\Http\Controllers\GeneralController;
@@ -96,4 +97,13 @@ Route::middleware('firebase.auth')->group(function () {
     Route::post('/salon/promo', [PromoController::class, 'store']);
     Route::put('/salon/promo/{id}', [PromoController::class, 'update']);
     Route::delete('/salon/promo/{id}/delete', [PromoController::class, 'delete']);
+
+    //Booking
+    Route::get('/salon/booking/staff/{id}/list', [BookingController::class, 'getPaginatedByUserId']);
+    // Route::get('/salon/{id}/booking/list', [BookingController::class, 'getPaginatedBySalonId']);
+    // Route::get('/salon/booking/{id}', [BookingController::class, 'readById']);
+    // Route::post('/salon/Booking', [BookingController::class, 'store']);
+    // Route::put('/salon/booking/{id}', [BookingController::class, 'update']);
+    // Route::delete('/salon/booking/{id}/delete', [BookingController::class, 'delete']);
+
 });

@@ -140,6 +140,7 @@ const Map<String, String> idID = {
   "jumlah_cabang": "Jumlah Cabang",
   "jumlah_staff": "Jumlah Staff",
   "client": "Klien",
+  "client_phone": "No. Telp Klien",
   "client_name": "Nama Klien",
   "placeholder_client_name": "Masukkan nama klien",
   "client_email": "Email Klien",
@@ -187,4 +188,5 @@ const Map<String, String> idID = {
   "select_promo": "Pilih Promo",
   "total_services": "Total Layanan",
   "total_discount": "Total Diskon",
+  "time": "Waktu",
 };

@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:salonku/app/data/providers/api/booking_provider.dart';
+import 'package:salonku/app/data/repositories/contract/booking_repository_contract.dart';
+import 'package:salonku/app/data/repositories/implementation/booking_repository_impl.dart';
 import 'package:salonku/app/models/menu_item_model.dart';
 import 'package:salonku/app/modules/home/controllers/home_controller.dart';
 import 'package:salonku/app/modules/home/views/home_view.dart';
 import 'package:salonku/app/modules/notification_list/views/notification_list_view.dart';
 import 'package:salonku/app/modules/profile/controllers/profile_controller.dart';
 import 'package:salonku/app/modules/profile/views/profile_view.dart';
+import 'package:salonku/app/modules/schedule_calendar/controllers/schedule_calendar_controller.dart';
 import 'package:salonku/app/modules/schedule_calendar/views/schedule_calendar_view.dart';
 import 'package:salonku/app/modules/settings/controllers/settings_controller.dart';
 import 'package:salonku/app/modules/settings/views/settings_view.dart';
@@ -40,10 +44,26 @@ class BasePageController extends GetxController {
       ? Get.find<ProfileController>()
       : Get.put(ProfileController());
 
+  final scheduleProvider = Get.lazyPut<BookingProvider>(
+    () => BookingProvider(),
+  );
+  final scheduleRepository = Get.lazyPut<BookingRepositoryContract>(
+    () => BookingRepositoryImpl(),
+  );
+  final ScheduleCalendarController scheduleController =
+      Get.isRegistered<ScheduleCalendarController>()
+      ? Get.find<ScheduleCalendarController>()
+      : Get.put(
+          ScheduleCalendarController(Get.find<BookingRepositoryContract>()),
+        );
+
   void itemOnTap(int id) {
     selectedId.value = id;
     if (selectedId.value == 1) {
       settingController.getSalonSummary();
+    }
+    if (selectedId.value == 2) {
+      scheduleController.getBookingByUserId();
     }
   }
 }

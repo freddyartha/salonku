@@ -136,6 +136,7 @@ const Map<String, String> enUS = {
   "jumlah_cabang": "Total Branches",
   "jumlah_staff": "Total Staff",
   "client": "Client",
+  "client_phone": "Client Phone",
   "client_name": "Client Name",
   "placeholder_client_name": "Enter client name",
   "client_email": "Client Email",
@@ -183,4 +184,5 @@ const Map<String, String> enUS = {
   "select_promo": "Select Promo",
   "total_services": "Total Services",
   "total_discount": "Total Discount",
+  "time": "Time",
 };

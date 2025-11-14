@@ -240,4 +240,43 @@ class ApiConstants {
   static String putPromoById(int id) => '$api/salon/promo/$id';
   static String getPromoById(int id) => '$api/salon/promo/$id';
   static String deletePromoById(int id) => '$api/salon/promo/$id/delete';
+
+  //Booking
+  static String getBookingByUserId({
+    required int idUser,
+    required int pageIndex,
+    required int pageSize,
+    int? idCabang,
+    String? keyword,
+  }) {
+    final queryParams = <String, String>{
+      'page': '$pageIndex',
+      'per_page': '$pageSize',
+      if (keyword != null && keyword.isNotEmpty) 'search': keyword,
+    };
+
+    final queryString = Uri(queryParameters: queryParams).query;
+    return "$api/salon/booking/staff/$idUser/list?$queryString";
+  }
+  // static String getPromoByIdSalon({
+  //   required int idSalon,
+  //   required int pageIndex,
+  //   required int pageSize,
+  //   int? idCabang,
+  //   String? keyword,
+  // }) {
+  //   final queryParams = <String, String>{
+  //     'page': '$pageIndex',
+  //     'per_page': '$pageSize',
+  //     if (keyword != null && keyword.isNotEmpty) 'search': keyword,
+  //   };
+
+  //   final queryString = Uri(queryParameters: queryParams).query;
+  //   return "$api/salon/$idSalon/promo/list?$queryString";
+  // }
+
+  // static String postPromo = '$api/salon/promo';
+  // static String putPromoById(int id) => '$api/salon/promo/$id';
+  // static String getPromoById(int id) => '$api/salon/promo/$id';
+  // static String deletePromoById(int id) => '$api/salon/promo/$id/delete';
 }

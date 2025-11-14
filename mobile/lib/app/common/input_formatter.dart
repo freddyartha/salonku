@@ -92,20 +92,8 @@ class InputFormatter {
     return "${dateToString(date)}T${timeToString(time)}";
   }
 
-  static String displayTime(TimeOfDay? time, {bool twentyFour = true}) {
-    if (time == null) return "-";
-    var hour = twentyFour
-        ? time.hour
-        : (time.hour > 12 ? time.hour - 12 : time.hour);
-    if (hour == 0 && !twentyFour) {
-      hour = 12;
-    }
-    var minute = time.minute;
-    var strHour = hour > 9 ? '$hour' : '0$hour';
-    var strMinute = minute > 9 ? '$minute' : '0$minute';
-    var r = "$strHour:$strMinute";
-    return twentyFour ? r : '$r ${time.hour > 12 ? 'PM' : 'AM'}';
-  }
+  static String displayTimeFromDateTime(DateTime value) =>
+      DateFormat('h:mm a').format(value);
 
   static DateTime? stringToDateTime(String? stringDate) {
     if (stringDate == null) return null;
