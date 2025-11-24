@@ -5,6 +5,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\FirebaseAuthController;
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\PaymentMethodController;
+use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PromoController;
 use App\Http\Controllers\SalonCabangController;
@@ -106,4 +107,10 @@ Route::middleware('firebase.auth')->group(function () {
     // Route::put('/salon/booking/{id}', [BookingController::class, 'update']);
     // Route::delete('/salon/booking/{id}/delete', [BookingController::class, 'delete']);
 
+    //Pengeluarann
+    Route::get('/pengeluaran/{salonId}/list', [PengeluaranController::class, 'getPaginatedBySalonId']);
+    Route::get('/pengeluaran/{id}', [PengeluaranController::class, 'readById']);
+    Route::post('/pengeluaran', [PengeluaranController::class, 'store']);
+    Route::put('/pengeluaran/{id}', [PengeluaranController::class, 'update']);
+    Route::delete('/pengeluaran/{id}/delete', [PengeluaranController::class, 'delete']);
 });

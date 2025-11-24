@@ -37,6 +37,8 @@ abstract class Routes {
   static const SCHEDULE_CALENDAR = _Paths.SCHEDULE_CALENDAR;
   static const PROMO_LIST = _Paths.PROMO_LIST;
   static const PROMO_SETUP = _Paths.PROMO_SETUP;
+  static const PENGELUARAN_LIST = _Paths.PENGELUARAN_LIST;
+  static const PENGELUARAN_SETUP = _Paths.PENGELUARAN_SETUP;
 }
 
 abstract class _Paths {
@@ -73,4 +75,6 @@ abstract class _Paths {
   static const SCHEDULE_CALENDAR = '/schedule-calendar';
   static const PROMO_LIST = '/promo-list';
   static const PROMO_SETUP = '/promo-setup';
+  static const PENGELUARAN_LIST = '/pengeluaran-list';
+  static const PENGELUARAN_SETUP = '/pengeluaran-setup';
 }

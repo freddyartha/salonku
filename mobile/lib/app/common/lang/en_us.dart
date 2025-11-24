@@ -185,4 +185,11 @@ const Map<String, String> enUS = {
   "total_services": "Total Services",
   "total_discount": "Total Discount",
   "time": "Time",
+  "expense": "Expense",
+  "nama_pengeluaran": "Expense Name",
+  "deskripsi_pengeluaran": "Expense Description",
+  "jumlah_pengeluaran": "Expense Amount",
+  "placeholder_nama_pengeluaran": "Enter expense name",
+  "placeholder_deskripsi_pengeluaran": "Enter expense description",
+  "placeholder_jumlah_pengeluaran": "Enter amount",
 };

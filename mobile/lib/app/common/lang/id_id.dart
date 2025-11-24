@@ -189,4 +189,11 @@ const Map<String, String> idID = {
   "total_services": "Total Layanan",
   "total_discount": "Total Diskon",
   "time": "Waktu",
+  "expense": "Pengeluaran",
+  "nama_pengeluaran": "Nama Pengeluaran",
+  "deskripsi_pengeluaran": "Deskripsi Pengeluaran",
+  "jumlah_pengeluaran": "Jumlah Pengeluaran",
+  "placeholder_nama_pengeluaran": "Masukkan nama pengeluaran",
+  "placeholder_deskripsi_pengeluaran": "Masukkan deskripsi pengeluaran",
+  "placeholder_jumlah_pengeluaran": "Masukkan jumlah pengeluaran",
 };

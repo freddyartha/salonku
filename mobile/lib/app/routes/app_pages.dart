@@ -22,6 +22,10 @@ import '../modules/payment_method_list/bindings/payment_method_list_binding.dart
 import '../modules/payment_method_list/views/payment_method_list_view.dart';
 import '../modules/payment_method_setup/bindings/payment_method_setup_binding.dart';
 import '../modules/payment_method_setup/views/payment_method_setup_view.dart';
+import '../modules/pengeluaran_list/bindings/pengeluaran_list_binding.dart';
+import '../modules/pengeluaran_list/views/pengeluaran_list_view.dart';
+import '../modules/pengeluaran_setup/bindings/pengeluaran_setup_binding.dart';
+import '../modules/pengeluaran_setup/views/pengeluaran_setup_view.dart';
 import '../modules/product_list/bindings/product_list_binding.dart';
 import '../modules/product_list/views/product_list_view.dart';
 import '../modules/product_setup/bindings/product_setup_binding.dart';
@@ -234,6 +238,16 @@ class AppPages {
       name: _Paths.PROMO_SETUP,
       page: () => const PromoSetupView(),
       binding: PromoSetupBinding(),
+    ),
+    GetPage(
+      name: _Paths.PENGELUARAN_LIST,
+      page: () => const PengeluaranListView(),
+      binding: PengeluaranListBinding(),
+    ),
+    GetPage(
+      name: _Paths.PENGELUARAN_SETUP,
+      page: () => const PengeluaranSetupView(),
+      binding: PengeluaranSetupBinding(),
     ),
   ];
 }

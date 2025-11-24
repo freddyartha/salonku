@@ -22,7 +22,7 @@ class TextComponent extends StatelessWidget {
   final FontStyle? fontStyle;
   const TextComponent({
     super.key,
-    @required this.value,
+    required this.value,
     this.fontColor,
     this.isLoading = false,
     this.onTap,

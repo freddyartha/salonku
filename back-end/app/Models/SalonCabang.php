@@ -48,6 +48,16 @@ class SalonCabang extends Model
         )->withTimestamps();
     }
 
+    // public function pengeluarans()
+    // {
+    //     return $this->belongsToMany(
+    //         Pengeluaran::class,
+    //         'tr_pengeluaran_cabang',
+    //         'id_cabang',
+    //         'id_pengeluaran'
+    //     )->withTimestamps();
+    // }
+
     public function promos()
     {
         return $this->belongsToMany(
