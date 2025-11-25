@@ -57,7 +57,9 @@ class PengeluaranListView extends GetView<PengeluaranListController> {
                 fontWeight: FontWeights.semiBold,
                 fontSize: FontSizes.h6,
               ),
-              subtitle: TextComponent(value: item.deskripsi, maxLines: 3),
+              subtitle: TextComponent(
+                value: InputFormatter.displayDate(item.createdAt),
+              ),
               trailing: TextComponent(
                 value:
                     "${item.currencyCode} ${InputFormatter.toCurrency(item.harga)}",

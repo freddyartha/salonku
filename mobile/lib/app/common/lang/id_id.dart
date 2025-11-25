@@ -196,4 +196,12 @@ const Map<String, String> idID = {
   "placeholder_nama_pengeluaran": "Masukkan nama pengeluaran",
   "placeholder_deskripsi_pengeluaran": "Masukkan deskripsi pengeluaran",
   "placeholder_jumlah_pengeluaran": "Masukkan jumlah pengeluaran",
+  "today_transaction": "Transaksi Hari Ini",
+  "income": "Pemasukan",
+  "need_approval": "Belum Approve",
+  "approve": "Setujui",
+  "decline": "Tolak",
+  "staff_need_approval":
+      "Staff ini belum mendapat persetujuan untuk menggunakan fitur-fitur di salon kamu. Jika ini benar staff kamu, silakan selesaikan proses approval terlebih dahulu",
+  "approve_staff": "Setujui Staff",
 };

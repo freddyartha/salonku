@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\ServiceItem;
 use App\Models\ServiceManagement;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class ServiceManagementRepository
@@ -163,5 +164,32 @@ class ServiceManagementRepository
         $query->orderBy('created_at', $sort);
 
         return $query->paginate($perPage);
+    }
+
+    public function readWithPeriod($salonId, $cabangId, $fromDate, $toDate)
+    {
+        $query = ServiceManagement::with([
+            'services',
+            'serviceItems',
+            'promos',
+            'client',
+            'paymentMethod',
+            'salon',
+            'cabang'
+        ])
+            ->where('id_Salon', $salonId)
+            ->whereBetween('created_at', [
+                Carbon::parse($fromDate)->startOfDay()->utc(),
+                Carbon::parse($toDate)->endOfDay()->utc()
+            ]);
+
+        if ($cabangId !== null) {
+            $query->where('id_cabang', $cabangId);
+        }
+
+        $transactions = $query->get();
+
+        $grandTotal = $transactions->sum(fn($trx) => $trx->total_final);
+        return $grandTotal;
     }
 }

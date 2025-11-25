@@ -98,6 +98,6 @@ class UserModel {
     'tanggal_lahir': InputFormatter.dateToString(tanggalLahir),
     'alamat': alamat,
     'avatar_url': avatarUrl,
-    'cabangs': cabangs?.map((item) => item.toJson()).toList() ?? [],
+    'cabangs': cabangs?.map((item) => item.id).toList() ?? [],
   };
 }

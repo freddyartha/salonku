@@ -10,4 +10,10 @@ abstract class UserSalonRepositoryContract {
   Future<Result<UserModel>> userAddSalon(int userId, int salonId);
 
   Future<Result<UserModel>> userRemoveSalon(int userId);
+
+  Future<Result<UserModel>> staffApproval(
+    int staffId,
+    List<int> cabangs,
+    bool approval,
+  );
 }

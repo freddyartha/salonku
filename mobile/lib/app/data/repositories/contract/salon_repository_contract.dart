@@ -1,4 +1,5 @@
 import 'package:salonku/app/data/models/result.dart';
+import 'package:salonku/app/models/income_expense_model.dart';
 import 'package:salonku/app/models/salon_cabang_model.dart';
 import 'package:salonku/app/models/salon_model.dart';
 import 'package:salonku/app/models/salon_summary_model.dart';
@@ -36,4 +37,11 @@ abstract class SalonRepositoryContract {
   );
 
   Future<Result<List>> deleteCabangById(int id);
+
+  Future<Result<IncomeExpenseModel>> getIncomeExpenseSummary(
+    int idSalon,
+    int? idCabang,
+    DateTime fromDate,
+    DateTime toDate,
+  );
 }

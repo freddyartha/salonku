@@ -31,9 +31,13 @@ Route::middleware('firebase.auth')->group(function () {
     Route::get('/user-salon/{id}', [UserSalonController::class, 'readUserSalonByFirebaseId']);
     Route::patch('/user-salon/{id}/add-salon', [UserSalonController::class, 'userAddSalon']);
     Route::patch('/user-salon/{id}/remove-salon', [UserSalonController::class, 'userRemoveSalon']);
+    Route::patch('/user-salon/staff-approval/{staffId}', [UserSalonController::class, 'userStaffApproval']);
 
     //General 
     Route::get('/general/salon-summary/{id}', [GeneralController::class, 'getSalonSummary']);
+    Route::get('/general/income-expense-summary/{salonId}', [GeneralController::class, 'getIncomeExpenseWithPeriod']);
+
+
 
     //Service
     Route::get('/service/{salonId}/list', [ServiceController::class, 'getPaginatedService']);

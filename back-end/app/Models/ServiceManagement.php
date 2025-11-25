@@ -71,4 +71,45 @@ class ServiceManagement extends Model
             $management->serviceItems()->delete();
         });
     }
+
+    //get total
+    public function getTotalServicesAttribute()
+    {
+        return $this->services->sum(fn($srv) => (float) $srv->harga);
+    }
+
+    public function getTotalServiceItemsAttribute()
+    {
+        return $this->serviceItems->sum(fn($item) => (float) $item->harga);
+    }
+
+    public function getSubtotalAttribute()
+    {
+        return $this->total_services + $this->total_service_items;
+    }
+
+    public function getPromoDiscountAttribute()
+    {
+        $discount = 0;
+
+        foreach ($this->promos as $promo) {
+
+            // Promo persen
+            if ($promo->potongan_persen !== null) {
+                $discount += ($this->subtotal * ($promo->potongan_persen / 100));
+            }
+
+            // Promo nominal
+            if ($promo->potongan_harga !== null) {
+                $discount += $promo->potongan_harga;
+            }
+        }
+
+        return $discount;
+    }
+
+    public function getTotalFinalAttribute()
+    {
+        return max($this->subtotal - $this->promo_discount, 0);
+    }
 }

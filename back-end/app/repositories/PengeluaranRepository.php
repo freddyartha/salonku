@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Pengeluaran;
 use App\Models\Service;
+use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class PengeluaranRepository
@@ -82,5 +83,29 @@ class PengeluaranRepository
         }
 
         return $service->load('cabangs', 'salon');
+    }
+
+    public function readWithPeriod($salonId,  $cabangId, $fromDate, $toDate)
+    {
+        $query = Pengeluaran::with('cabangs')
+            ->where('id_salon', $salonId)
+            ->whereBetween('created_at', [
+                Carbon::parse($fromDate)->startOfDay()->utc(),
+                Carbon::parse($toDate)->endOfDay()->utc()
+            ]);
+
+        // Filter cabang jika diberikan
+        if ($cabangId != null) {
+            $query->whereHas('cabangs', function ($q) use ($cabangId) {
+                $q->where('id_cabang', $cabangId);
+            });
+        }
+
+        $data = $query->get();
+
+        // Total dari field harga
+        $total = $data->sum('harga');
+
+        return $total;
     }
 }

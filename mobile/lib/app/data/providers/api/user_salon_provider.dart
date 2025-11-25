@@ -40,4 +40,17 @@ class UserSalonProvider extends ApiProvider {
       includeFirebaseToken: true,
     );
   }
+
+  Future<Response> staffApproval(
+    int staffId,
+    List<int> cabangs,
+    bool approval,
+  ) async {
+    return await patch(
+      ApiConstants.staffApproval(staffId),
+      data: {"cabangs": cabangs, "approval": approval},
+      requiresAuth: true,
+      includeFirebaseToken: true,
+    );
+  }
 }

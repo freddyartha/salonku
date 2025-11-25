@@ -50,6 +50,21 @@ class UserSalonRepository
         return $user->fresh();
     }
 
+    public function userStaffApproval($Idcabangs, $approval, $staffId)
+    {
+        $staff = UserSalon::findOrFail($staffId);
+        $staff->update([
+            'owner_approval' => $approval,
+            'approved_date' => now(),
+        ]);
+        if ($approval) {
+            $staff->cabangs()->sync($Idcabangs);
+        } else {
+            $staff->cabangs()->detach();
+        }
+        return $staff->fresh();
+    }
+
 
 
     // public function update(array $data, $id): Salon

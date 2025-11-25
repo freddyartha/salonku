@@ -24,7 +24,7 @@ class PengeluaranRequest extends FormRequest
         return [
             'id_salon'   => 'required|integer',
             'nama'       => 'required|string|max:255',
-            'deskripsi'  => 'required|string|max:500',
+            'deskripsi'  => 'nullable|string|max:500',
             'harga'      => 'required|numeric|min:0',
             'cabangs'    => 'array',
             'cabangs.*'  => 'integer|exists:m_salon_cabang,id',

@@ -18,6 +18,7 @@ class ListPengeluaranResource extends JsonResource
             'currency_code' => $this->whenLoaded('salon', function () {
                 return $this->salon ? $this->salon->currency_code : null;
             }),
+            'created_at' => $this->created_at,
         ];
     }
 }

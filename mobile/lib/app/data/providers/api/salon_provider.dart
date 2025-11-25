@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:salonku/app/common/input_formatter.dart';
 import 'package:salonku/app/core/constants/api_constants.dart';
 import 'package:salonku/app/data/providers/network/api_provider.dart';
 
@@ -45,6 +46,24 @@ class SalonProvider extends ApiProvider {
   Future<Response> getSalonSummary(int idSalon) async {
     return await get(
       ApiConstants.getSalonSummary(idSalon),
+      requiresAuth: true,
+      includeFirebaseToken: true,
+    );
+  }
+
+  Future<Response> getIncomeExpenseSummary(
+    int idSalon,
+    int? idCabang,
+    DateTime fromDate,
+    DateTime toDate,
+  ) async {
+    return await get(
+      ApiConstants.getIncomeExpenseSummary(idSalon),
+      data: {
+        "id_cabang": idCabang,
+        "from_date": InputFormatter.dateToString(fromDate),
+        "to_date": InputFormatter.dateToString(toDate),
+      },
       requiresAuth: true,
       includeFirebaseToken: true,
     );

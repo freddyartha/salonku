@@ -30,6 +30,8 @@ class StaffRequest extends FormRequest
             'tanggal_lahir'     => 'required|date',
             'alamat'            => 'required|string',
             'logo_url'          => 'nullable|url|max:255',
+            'cabangs'    => 'array',
+            'cabangs.*'  => 'integer|exists:m_salon_cabang,id',
         ];
     }
 }

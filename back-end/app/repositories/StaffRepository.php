@@ -27,9 +27,19 @@ class StaffRepository
 
     public function update(array $data, $id): UserSalon
     {
+        // pisahkan cabangs dari data utama
+        $cabangs = $data['cabangs'] ?? [];
+
+        // hapus cabangs dari data utama sebelum create
+        unset($data['cabangs']);
+
         $res = $this->findById($id);
         $res->update($data);
 
+        // jika ada cabang, attach ke pivot
+        if (!empty($cabangs)) {
+            $res->cabangs()->sync($cabangs);
+        }
         return $res->load('cabangs');
     }
 

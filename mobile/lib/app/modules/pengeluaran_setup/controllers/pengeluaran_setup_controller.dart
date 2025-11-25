@@ -31,6 +31,7 @@ class PengeluaranSetupController extends SetupBaseController {
   PengeluaranSetupController(this._pengeluaranRepositoryContract);
 
   late final String currencyCode = _localDataSource.salonData.currencyCode;
+  late final userModel = _localDataSource.userData;
   ServiceModel? model;
 
   late final SelectMultipleController selectCabangCon;
@@ -101,16 +102,25 @@ class PengeluaranSetupController extends SetupBaseController {
       deskripsi: deskripsiCon.value,
       harga: hargaCon.value,
       currencyCode: "",
-      cabang: selectCabangCon.values
-          .map(
-            (e) => ServiceCabangModel(
-              id: e.value,
-              nama: e.title,
-              alamat: "",
-              phone: e.subtitle ?? "",
-            ),
-          )
-          .toList(),
+      cabang: ReusableStatics.userIsStaff(userModel)
+          ? [
+              ServiceCabangModel(
+                id: userModel.cabangs!.first.id,
+                nama: "",
+                alamat: "",
+                phone: "",
+              ),
+            ]
+          : selectCabangCon.values
+                .map(
+                  (e) => ServiceCabangModel(
+                    id: e.value,
+                    nama: e.title,
+                    alamat: "",
+                    phone: e.subtitle ?? "",
+                  ),
+                )
+                .toList(),
     );
 
     await handleRequest(
@@ -153,11 +163,8 @@ class PengeluaranSetupController extends SetupBaseController {
           idSalon: _localDataSource.salonData.id,
           pageIndex: pageIndex,
           pageSize: 10,
-          idCabang:
-              ReusableStatics.checkIsUserStaffWithCabang(
-                _localDataSource.userData,
-              )
-              ? _localDataSource.userData.cabangs!.first.id
+          idCabang: ReusableStatics.checkIsUserStaffWithCabang(userModel)
+              ? userModel.cabangs!.first.id
               : null,
           keyword: selectCabangCon.keyword,
         ),

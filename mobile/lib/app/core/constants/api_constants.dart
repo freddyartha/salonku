@@ -26,8 +26,14 @@ class ApiConstants {
       '$api/salon/kode/$kodeSalon';
   static String userRemoveSalon(int userId) =>
       '$api/user-salon/$userId/remove-salon';
+  static String staffApproval(int staffId) =>
+      '$api/user-salon/staff-approval/$staffId';
+
+  //general
   static String getSalonSummary(int salonId) =>
       '$api/general/salon-summary/$salonId';
+  static String getIncomeExpenseSummary(int salonId) =>
+      '$api/general/income-expense-summary/$salonId';
 
   //service
   static String getServiceList({

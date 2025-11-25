@@ -192,4 +192,12 @@ const Map<String, String> enUS = {
   "placeholder_nama_pengeluaran": "Enter expense name",
   "placeholder_deskripsi_pengeluaran": "Enter expense description",
   "placeholder_jumlah_pengeluaran": "Enter amount",
+  "today_transaction": "Today's Transaction",
+  "income": "Income",
+  "need_approval": "Need Approval",
+  "approve": "Approve",
+  "decline": "Decline",
+  "staff_need_approval":
+      "This staff member has not yet been approved to use your salon's features. If this is indeed your staff, please complete the approval process first",
+  "approve_staff": "Approve Staff",
 };

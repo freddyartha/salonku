@@ -33,6 +33,11 @@ class UserSalonService
         return $this->userSalonRepository->userRemoveSalon($id);
     }
 
+    public function userStaffApproval($Idcabangs, $approval, $staffId)
+    {
+        return $this->userSalonRepository->userStaffApproval($Idcabangs, $approval, $staffId);
+    }
+
 
 
     // public function update(array $data, int $id)

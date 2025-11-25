@@ -2,7 +2,9 @@ import 'package:get/get.dart';
 import 'package:salonku/app/common/app_colors.dart';
 import 'package:salonku/app/core/base/base_controller.dart';
 import 'package:salonku/app/data/providers/local/local_data_source.dart';
+import 'package:salonku/app/data/repositories/contract/salon_repository_contract.dart';
 import 'package:salonku/app/models/chart_model.dart';
+import 'package:salonku/app/models/income_expense_model.dart';
 import 'package:salonku/app/models/menu_item_model.dart';
 import 'package:salonku/app/models/user_model.dart';
 import 'package:salonku/app/routes/app_pages.dart';
@@ -12,11 +14,14 @@ class HomeController extends BaseController {
   List<MenuItemModel> homeBaseMenus = [];
   final List<ChartModel> chartMingguanList = [];
 
-  final LocalDataSource _localDataSource = Get.find();
+  final LocalDataSource localDataSource = Get.find();
+  final SalonRepositoryContract _salonRepository = Get.find();
+
+  IncomeExpenseModel? model;
 
   @override
   void onInit() {
-    userData = _localDataSource.userData;
+    userData = localDataSource.userData;
     homeBaseMenus.addAll([
       MenuItemModel(
         title: "client",
@@ -57,6 +62,29 @@ class HomeController extends BaseController {
         color: AppColors.success,
       ),
     ]);
+
+    getTotalIncomeExpense();
+
     super.onInit();
+  }
+
+  Future<void> getTotalIncomeExpense() async {
+    await handleRequest(
+      showLoading: true,
+      () => _salonRepository.getIncomeExpenseSummary(
+        localDataSource.salonData.id,
+        localDataSource.userData.cabangs != null &&
+                localDataSource.userData.cabangs!.isNotEmpty
+            ? localDataSource.userData.cabangs!.first.id
+            : null,
+        DateTime.now(),
+        DateTime.now(),
+      ),
+      onSuccess: (res) {
+        model = res;
+        update();
+      },
+      showErrorSnackbar: false,
+    );
   }
 }

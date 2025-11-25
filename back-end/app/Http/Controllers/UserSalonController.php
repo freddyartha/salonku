@@ -61,4 +61,20 @@ class UserSalonController extends Controller
             data: new UserSalonResource($response),
         );
     }
+
+    public function userStaffApproval(Request $request, $staffId)
+    {
+        $request->validate([
+            'cabangs'    => 'array',
+            'cabangs.*'  => 'integer|exists:m_salon_cabang,id',
+            'approval'   => 'required|boolean',
+
+        ]);
+
+        $response = $this->userSalonService->userStaffApproval($request->cabangs, $request->approval, $staffId);
+
+        return ApiResponse::success(
+            data: new UserSalonResource($response),
+        );
+    }
 }

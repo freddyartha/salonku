@@ -5,6 +5,7 @@ import 'package:salonku/app/data/network/paged_api_response_parser.dart';
 import 'package:salonku/app/data/network/simple_api_response_parser.dart';
 import 'package:salonku/app/data/providers/api/salon_provider.dart';
 import 'package:salonku/app/data/repositories/contract/salon_repository_contract.dart';
+import 'package:salonku/app/models/income_expense_model.dart';
 import 'package:salonku/app/models/salon_cabang_model.dart';
 import 'package:salonku/app/models/salon_model.dart';
 import 'package:salonku/app/data/network/general_api_response_parser.dart';
@@ -109,6 +110,24 @@ class SalonRepositoryImpl extends BaseRepository
     return executeRequest(
       () => _provider.deleteCabangById(id),
       SimpleApiResponseParser((res) => []),
+    );
+  }
+
+  @override
+  Future<Result<IncomeExpenseModel>> getIncomeExpenseSummary(
+    int idSalon,
+    int? idCabang,
+    DateTime fromDate,
+    DateTime toDate,
+  ) {
+    return executeRequest(
+      () => _provider.getIncomeExpenseSummary(
+        idSalon,
+        idCabang,
+        fromDate,
+        toDate,
+      ),
+      GeneralApiResponseParser(IncomeExpenseModel.fromDynamic),
     );
   }
 }

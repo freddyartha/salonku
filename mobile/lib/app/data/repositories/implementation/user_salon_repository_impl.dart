@@ -43,4 +43,16 @@ class UserSalonRepositoryImpl extends BaseRepository
       GeneralApiResponseParser(UserModel.fromDynamic),
     );
   }
+
+  @override
+  Future<Result<UserModel>> staffApproval(
+    int staffId,
+    List<int> cabangs,
+    bool approval,
+  ) {
+    return executeRequest(
+      () => _provider.staffApproval(staffId, cabangs, approval),
+      GeneralApiResponseParser(UserModel.fromDynamic),
+    );
+  }
 }

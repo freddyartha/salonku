@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:salonku/app/common/app_colors.dart';
 import 'package:salonku/app/common/font_size.dart';
 import 'package:salonku/app/common/font_weight.dart';
 import 'package:salonku/app/common/radiuses.dart';
@@ -54,7 +55,24 @@ class StaffListView extends GetView<StaffListController> {
               subtitle: TextComponent(
                 value: ReusableStatics.getLevelUser(item.level),
               ),
-              trailing: TextComponent(value: item.phone),
+              trailing: item.approvedDate == null
+                  ? Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.danger,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(Radiuses.large),
+                        ),
+                      ),
+                      child: TextComponent(
+                        value: "need_approval".tr,
+                        fontColor: AppColors.darkText,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 3,
+                        ),
+                      ),
+                    )
+                  : TextComponent(value: item.phone),
             ),
           ),
         ],

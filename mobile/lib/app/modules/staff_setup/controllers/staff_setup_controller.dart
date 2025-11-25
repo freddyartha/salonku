@@ -6,12 +6,13 @@ import 'package:salonku/app/components/inputs/input_phone_component.dart';
 import 'package:salonku/app/components/inputs/input_radio_component.dart';
 import 'package:salonku/app/components/inputs/input_text_component.dart';
 import 'package:salonku/app/components/others/list_component.dart';
-import 'package:salonku/app/components/others/select_single_component.dart';
+import 'package:salonku/app/components/others/select_multiple_component.dart';
 import 'package:salonku/app/core/base/setup_base_controller.dart';
 import 'package:salonku/app/data/models/result.dart';
 import 'package:salonku/app/data/providers/local/local_data_source.dart';
 import 'package:salonku/app/data/repositories/contract/salon_repository_contract.dart';
 import 'package:salonku/app/data/repositories/contract/staff_repository_contract.dart';
+import 'package:salonku/app/data/repositories/contract/user_salon_repository_contract.dart';
 import 'package:salonku/app/models/salon_cabang_model.dart';
 import 'package:salonku/app/models/select_item_model.dart';
 import 'package:salonku/app/models/user_model.dart';
@@ -32,21 +33,31 @@ class StaffSetupController extends SetupBaseController {
   final LocalDataSource localDataSource = Get.find();
   final SalonRepositoryContract _salonRepository = Get.find();
   final StaffRepositoryContract _repository;
-  StaffSetupController(this._repository);
+  final UserSalonRepositoryContract _userSalonRepository;
+  StaffSetupController(this._repository, this._userSalonRepository);
 
   RxInt userLevel = 2.obs;
 
   UserModel? model;
 
-  late final SelectSingleController selectCabangCon;
+  final approveCon = InputRadioController(
+    items: [
+      RadioButtonItem(text: "approve".tr, value: true),
+      RadioButtonItem(text: "decline".tr, value: false),
+    ],
+  );
+  late final SelectMultipleController selectCabangCon;
 
   @override
   void onInit() {
     super.onInit();
-    setupSelectCabangController();
+    setupSelectMultipleController();
     if (itemId != null) {
       getById();
     }
+    localDataSource.userData.level == 1 && model?.approvedDate != null
+        ? isEditable(true)
+        : isEditable(false);
   }
 
   void addValueInputFields(UserModel? model) {
@@ -62,13 +73,35 @@ class StaffSetupController extends SetupBaseController {
       alamatCon.value = model.alamat;
 
       if (model.cabangs != null && model.cabangs!.isNotEmpty) {
-        selectCabangCon.value = SelectItemModel(
-          title: model.cabangs!.first.nama,
-          subtitle: model.cabangs!.first.phone,
-          value: model.cabangs!.first.id,
-        );
+        selectCabangCon.values = model.cabangs!
+            .map(
+              (e) => SelectItemModel(
+                title: e.nama,
+                subtitle: e.phone,
+                value: e.id,
+              ),
+            )
+            .toList();
       }
     }
+  }
+
+  Future<void> staffApproval() async {
+    if (!approveCon.isValid) return;
+    if (!selectCabangCon.isValid) return;
+
+    await handleRequest(
+      () => _userSalonRepository.staffApproval(
+        model?.id ?? 0,
+        selectCabangCon.values.map((e) => e.value as int).toList(),
+        approveCon.value,
+      ),
+      onSuccess: (res) {
+        model = res;
+        addValueInputFields(res);
+      },
+      showErrorSnackbar: false,
+    );
   }
 
   Future<void> promoteDemoteStaff(bool promote) async {
@@ -120,6 +153,17 @@ class StaffSetupController extends SetupBaseController {
       jenisKelamin: jenisKelaminCon.value,
       tanggalLahir: tanggalLahirCon.value,
       alamat: alamatCon.value,
+      cabangs: selectCabangCon.values
+          .map(
+            (e) => SalonCabangModel(
+              id: e.value,
+              idSalon: localDataSource.salonData.id,
+              nama: e.title,
+              alamat: "",
+              phone: e.subtitle ?? "",
+            ),
+          )
+          .toList(),
     );
 
     await handleRequest(
@@ -129,7 +173,9 @@ class StaffSetupController extends SetupBaseController {
         userModelToJson(model),
       ),
       onSuccess: (res) {
-        isEditable(false);
+        localDataSource.userData.level == 1
+            ? isEditable(true)
+            : isEditable(false);
         itemId = res.id;
         Get.back();
       },
@@ -152,12 +198,13 @@ class StaffSetupController extends SetupBaseController {
     }
   }
 
-  void setupSelectCabangController() {
+  void setupSelectMultipleController() {
     Future<Success<List<SelectItemModel>>> getCabangByIdSalon(
       int pageIndex,
     ) async {
       Success<List<SelectItemModel>> returnData = Success([]);
       await handlePaginationRequest(
+        showLoading: false,
         () => _salonRepository.getCabangByIdSalon(
           idSalon: localDataSource.salonData.id,
           pageIndex: pageIndex,
@@ -187,6 +234,9 @@ class StaffSetupController extends SetupBaseController {
       getDataResult: getCabangByIdSalon,
       fromDynamic: SalonCabangModel.fromDynamic,
     );
-    selectCabangCon = SelectSingleController(listController: listCon);
+    selectCabangCon = SelectMultipleController(
+      listController: listCon,
+      onChanged: (items) => update(),
+    );
   }
 }

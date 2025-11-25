@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 import 'package:salonku/app/common/app_colors.dart';
 import 'package:salonku/app/common/font_size.dart';
 import 'package:salonku/app/common/font_weight.dart';
+import 'package:salonku/app/common/input_formatter.dart';
 import 'package:salonku/app/common/radiuses.dart';
 import 'package:salonku/app/common/reusable_statics.dart';
 import 'package:salonku/app/components/images/image_component.dart';
-import 'package:salonku/app/components/others/pie_chart_component.dart';
 import 'package:salonku/app/components/texts/text_component.dart';
 import 'package:salonku/app/components/widgets/reusable_widgets.dart';
 
@@ -153,60 +153,70 @@ class HomeView extends GetView<HomeController> {
                       ],
                     ),
                   ),
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    margin: EdgeInsets.only(left: 10, right: 10, bottom: 20),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(Radiuses.large),
-                      color: context.accent,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TextComponent(
-                          value: "today_transaction".tr,
-                          fontWeight: FontWeights.semiBold,
-                          margin: EdgeInsetsGeometry.only(bottom: 10),
+                  GetBuilder<HomeController>(
+                    builder: (controller) => GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 10,
                         ),
-                        Row(
-                          spacing: 20,
+                        margin: EdgeInsets.only(
+                          left: 10,
+                          right: 10,
+                          bottom: 20,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(Radiuses.large),
+                          color: context.accent,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  TextComponent(value: "income".tr),
-                                  TextComponent(
-                                    value: "IDR 1.500.000",
-                                    fontSize: FontSizes.h6,
-                                    fontWeight: FontWeights.semiBold,
-                                  ),
-                                ],
-                              ),
+                            TextComponent(
+                              value: "today_transaction".tr,
+                              fontWeight: FontWeights.semiBold,
+                              fontSize: FontSizes.h6,
+                              margin: EdgeInsetsGeometry.only(bottom: 10),
                             ),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  TextComponent(value: "expense".tr),
-                                  TextComponent(
-                                    value: "IDR 500.000",
-                                    fontSize: FontSizes.h6,
-                                    fontWeight: FontWeights.semiBold,
+                            Row(
+                              spacing: 20,
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      TextComponent(value: "income".tr),
+                                      TextComponent(
+                                        value:
+                                            "${controller.localDataSource.salonData.currencyCode} ${InputFormatter.toCurrency(controller.model?.totalIncome ?? 0)}",
+                                        fontSize: FontSizes.h6,
+                                        fontWeight: FontWeights.semiBold,
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      TextComponent(value: "expense".tr),
+                                      TextComponent(
+                                        value:
+                                            "${controller.localDataSource.salonData.currencyCode} ${InputFormatter.toCurrency(controller.model?.totalExpense ?? 0)}",
+                                        fontSize: FontSizes.h6,
+                                        fontWeight: FontWeights.semiBold,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 20),
-                          child: PieChartComponent(
-                            label: "today_transaction".tr,
-                            model: controller.chartMingguanList,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ],

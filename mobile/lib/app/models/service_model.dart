@@ -7,19 +7,21 @@ class ServiceModel {
   int id;
   int idSalon;
   String nama;
-  String deskripsi;
+  String? deskripsi;
   double harga;
   String? currencyCode;
   List<ServiceCabangModel>? cabang;
+  DateTime? createdAt;
 
   ServiceModel({
     required this.id,
     required this.idSalon,
     required this.nama,
-    required this.deskripsi,
+    this.deskripsi,
     required this.harga,
     required this.currencyCode,
     this.cabang,
+    this.createdAt,
   });
 
   static ServiceModel fromJson(String jsonString) {
@@ -35,6 +37,9 @@ class ServiceModel {
       deskripsi: dynamicData['deskripsi'],
       harga: InputFormatter.dynamicToDouble(dynamicData['harga']) ?? 0,
       currencyCode: dynamicData['currency_code'],
+      createdAt:
+          InputFormatter.dynamicToDateTime(dynamicData['created_at']) ??
+          DateTime.now(),
     );
 
     if (dynamicData['cabang'] != null) {
