@@ -204,4 +204,5 @@ const Map<String, String> idID = {
   "staff_need_approval":
       "Staff ini belum mendapat persetujuan untuk menggunakan fitur-fitur di salon kamu. Jika ini benar staff kamu, silakan selesaikan proses approval terlebih dahulu",
   "approve_staff": "Setujui Staff",
+  "this_month_transaction": "Transaksi Bulan Ini",
 };

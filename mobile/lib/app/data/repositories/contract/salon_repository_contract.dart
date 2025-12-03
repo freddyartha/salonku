@@ -1,4 +1,5 @@
 import 'package:salonku/app/data/models/result.dart';
+import 'package:salonku/app/models/income_expense_list_model.dart';
 import 'package:salonku/app/models/income_expense_model.dart';
 import 'package:salonku/app/models/salon_cabang_model.dart';
 import 'package:salonku/app/models/salon_model.dart';
@@ -44,4 +45,14 @@ abstract class SalonRepositoryContract {
     DateTime fromDate,
     DateTime toDate,
   );
+
+  Future<Result<List<IncomeExpenseListModel>>> getIncomeExpenseList({
+    required int idSalon,
+    required int pageIndex,
+    required int pageSize,
+    required DateTime fromDate,
+    required DateTime toDate,
+    int? idCabang,
+    String? keyword,
+  });
 }

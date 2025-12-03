@@ -39,6 +39,7 @@ abstract class Routes {
   static const PROMO_SETUP = _Paths.PROMO_SETUP;
   static const PENGELUARAN_LIST = _Paths.PENGELUARAN_LIST;
   static const PENGELUARAN_SETUP = _Paths.PENGELUARAN_SETUP;
+  static const TRANSACTION_LIST = _Paths.TRANSACTION_LIST;
 }
 
 abstract class _Paths {
@@ -77,4 +78,5 @@ abstract class _Paths {
   static const PROMO_SETUP = '/promo-setup';
   static const PENGELUARAN_LIST = '/pengeluaran-list';
   static const PENGELUARAN_SETUP = '/pengeluaran-setup';
+  static const TRANSACTION_LIST = '/transaction-list';
 }

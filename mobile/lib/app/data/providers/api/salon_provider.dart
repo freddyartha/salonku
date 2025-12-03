@@ -69,6 +69,28 @@ class SalonProvider extends ApiProvider {
     );
   }
 
+  Future<Response> getIncomeExpenseList({
+    required int idSalon,
+    required int pageIndex,
+    required int pageSize,
+    required DateTime fromDate,
+    required DateTime toDate,
+    int? idCabang,
+    String? keyword,
+  }) async {
+    return await get(
+      ApiConstants.getIncomeExpenseList(
+        idSalon: idSalon,
+        pageIndex: pageIndex,
+        pageSize: pageSize,
+        fromDate: fromDate,
+        toDate: toDate,
+      ),
+      requiresAuth: true,
+      includeFirebaseToken: true,
+    );
+  }
+
   //Salon Cabang
   Future<Response> getCabangByIdSalon({
     required int idSalon,

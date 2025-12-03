@@ -1,3 +1,5 @@
+import 'package:salonku/app/common/input_formatter.dart';
+
 import '../../config/environment.dart';
 
 class ApiConstants {
@@ -34,6 +36,27 @@ class ApiConstants {
       '$api/general/salon-summary/$salonId';
   static String getIncomeExpenseSummary(int salonId) =>
       '$api/general/income-expense-summary/$salonId';
+  static String getIncomeExpenseList({
+    required int idSalon,
+    required int pageIndex,
+    required int pageSize,
+    required DateTime fromDate,
+    required DateTime toDate,
+    int? idCabang,
+    String? keyword,
+  }) {
+    final queryParams = <String, String>{
+      'page': '$pageIndex',
+      'per_page': '$pageSize',
+      'from_date': InputFormatter.dateToString(fromDate) ?? '',
+      'to_date': InputFormatter.dateToString(toDate) ?? '',
+      if (keyword != null && keyword.isNotEmpty) 'search': keyword,
+      if (idCabang != null) 'cabang_id': '$idCabang',
+    };
+
+    final queryString = Uri(queryParameters: queryParams).query;
+    return '$api/general/income-expense/$idSalon/list?$queryString';
+  }
 
   //service
   static String getServiceList({

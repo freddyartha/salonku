@@ -68,6 +68,8 @@ import '../modules/supplier_list/bindings/supplier_list_binding.dart';
 import '../modules/supplier_list/views/supplier_list_view.dart';
 import '../modules/supplier_setup/bindings/supplier_setup_binding.dart';
 import '../modules/supplier_setup/views/supplier_setup_view.dart';
+import '../modules/transaction_list/bindings/transaction_list_binding.dart';
+import '../modules/transaction_list/views/transaction_list_view.dart';
 
 // ignore_for_file: constant_identifier_names
 
@@ -248,6 +250,11 @@ class AppPages {
       name: _Paths.PENGELUARAN_SETUP,
       page: () => const PengeluaranSetupView(),
       binding: PengeluaranSetupBinding(),
+    ),
+    GetPage(
+      name: _Paths.TRANSACTION_LIST,
+      page: () => const TransactionListView(),
+      binding: TransactionListBinding(),
     ),
   ];
 }

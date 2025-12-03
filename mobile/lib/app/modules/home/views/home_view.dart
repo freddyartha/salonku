@@ -153,9 +153,18 @@ class HomeView extends GetView<HomeController> {
                       ],
                     ),
                   ),
+
+                  //today transaction summary
                   GetBuilder<HomeController>(
                     builder: (controller) => GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Get.toNamed(
+                          Routes.TRANSACTION_LIST,
+                          arguments: {
+                            "idSalon": "${controller.userData.idSalon}",
+                          },
+                        );
+                      },
                       child: Container(
                         padding: EdgeInsets.symmetric(
                           horizontal: 20,
@@ -179,40 +188,123 @@ class HomeView extends GetView<HomeController> {
                               fontSize: FontSizes.h6,
                               margin: EdgeInsetsGeometry.only(bottom: 10),
                             ),
-                            Row(
-                              spacing: 20,
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      TextComponent(value: "income".tr),
-                                      TextComponent(
-                                        value:
-                                            "${controller.localDataSource.salonData.currencyCode} ${InputFormatter.toCurrency(controller.model?.totalIncome ?? 0)}",
-                                        fontSize: FontSizes.h6,
-                                        fontWeight: FontWeights.semiBold,
-                                      ),
-                                    ],
+                            Obx(
+                              () => Row(
+                                spacing: 20,
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        TextComponent(value: "income".tr),
+                                        TextComponent(
+                                          isLoading: controller.isLoading.value,
+                                          value:
+                                              "${controller.localDataSource.salonData.currencyCode} ${InputFormatter.toCurrency(controller.todayTransactionModel?.totalIncome ?? 0)}",
+                                          fontSize: FontSizes.h6,
+                                          fontWeight: FontWeights.semiBold,
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      TextComponent(value: "expense".tr),
-                                      TextComponent(
-                                        value:
-                                            "${controller.localDataSource.salonData.currencyCode} ${InputFormatter.toCurrency(controller.model?.totalExpense ?? 0)}",
-                                        fontSize: FontSizes.h6,
-                                        fontWeight: FontWeights.semiBold,
-                                      ),
-                                    ],
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        TextComponent(value: "expense".tr),
+                                        TextComponent(
+                                          isLoading: controller.isLoading.value,
+                                          value:
+                                              "${controller.localDataSource.salonData.currencyCode} ${InputFormatter.toCurrency(controller.todayTransactionModel?.totalExpense ?? 0)}",
+                                          fontSize: FontSizes.h6,
+                                          fontWeight: FontWeights.semiBold,
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  //this month transaction summary
+                  GetBuilder<HomeController>(
+                    builder: (controller) => GestureDetector(
+                      onTap: () {
+                        Get.toNamed(
+                          Routes.TRANSACTION_LIST,
+                          arguments: {
+                            "idSalon": "${controller.userData.idSalon}",
+                          },
+                        );
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 10,
+                        ),
+                        margin: EdgeInsets.only(
+                          left: 10,
+                          right: 10,
+                          bottom: 20,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(Radiuses.large),
+                          color: context.accent,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TextComponent(
+                              value: "this_month_transaction".tr,
+                              fontWeight: FontWeights.semiBold,
+                              fontSize: FontSizes.h6,
+                              margin: EdgeInsetsGeometry.only(bottom: 10),
+                            ),
+                            Obx(
+                              () => Row(
+                                spacing: 20,
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        TextComponent(value: "income".tr),
+                                        TextComponent(
+                                          isLoading: controller.isLoading.value,
+                                          value:
+                                              "${controller.localDataSource.salonData.currencyCode} ${InputFormatter.toCurrency(controller.thisMonthTransactionModel?.totalIncome ?? 0)}",
+                                          fontSize: FontSizes.h6,
+                                          fontWeight: FontWeights.semiBold,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        TextComponent(value: "expense".tr),
+                                        TextComponent(
+                                          isLoading: controller.isLoading.value,
+                                          value:
+                                              "${controller.localDataSource.salonData.currencyCode} ${InputFormatter.toCurrency(controller.thisMonthTransactionModel?.totalExpense ?? 0)}",
+                                          fontSize: FontSizes.h6,
+                                          fontWeight: FontWeights.semiBold,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),

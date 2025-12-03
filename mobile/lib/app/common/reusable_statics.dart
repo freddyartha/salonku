@@ -127,4 +127,8 @@ class ReusableStatics {
       return false;
     }
   }
+
+  static DateTime lastDayOfMonth(DateTime date) {
+    return DateTime(date.year, date.month + 1, 0);
+  }
 }

@@ -192,4 +192,39 @@ class ServiceManagementRepository
         $grandTotal = $transactions->sum(fn($trx) => $trx->total_final);
         return $grandTotal;
     }
+
+    public function baseQueryBySalonId(int $salonId, array $options)
+    {
+        return ServiceManagement::with([
+            'services',
+            'serviceItems',
+            'promos',
+            'client',
+            'paymentMethod',
+            'salon',
+            'cabang'
+        ])
+            ->where('id_Salon', $salonId)
+            ->when($options['cabang_id'], fn($q) => $q->where('id_cabang', $options['cabang_id']))
+            ->when(
+                $options['from_date'] && $options['to_date'],
+                fn($q) =>
+                $q->whereBetween('created_at', [
+                    Carbon::parse($options['from_date'])->startOfDay(),
+                    Carbon::parse($options['to_date'])->endOfDay()
+                ])
+            )
+            ->when(
+                $options['search'],
+                fn($q) =>
+                $q->where('catatan', 'like', "%{$options['search']}%")
+            )
+            ->select(
+                'id',
+                'created_at',
+                DB::raw('0 as nominal'),
+                DB::raw('catatan as keterangan'),
+                DB::raw("'Pemasukan' as type")
+            );
+    }
 }

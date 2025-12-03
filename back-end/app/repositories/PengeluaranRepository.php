@@ -6,6 +6,7 @@ use App\Models\Pengeluaran;
 use App\Models\Service;
 use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
 
 class PengeluaranRepository
 {
@@ -107,5 +108,32 @@ class PengeluaranRepository
         $total = $data->sum('harga');
 
         return $total;
+    }
+
+    public function baseQueryBySalonId(int $salonId, array $options)
+    {
+        return Pengeluaran::with('cabangs')
+            ->where('id_salon', $salonId)
+            ->when($options['cabang_id'], fn($q) => $q->where('id_cabang', $options['cabang_id']))
+            ->when(
+                $options['from_date'] && $options['to_date'],
+                fn($q) =>
+                $q->whereBetween('created_at', [
+                    Carbon::parse($options['from_date'])->startOfDay()->utc(),
+                    Carbon::parse($options['to_date'])->endOfDay()->utc()
+                ])
+            )
+            ->when(
+                $options['search'],
+                fn($q) =>
+                $q->where('nama', 'like', "%{$options['search']}%")
+            )
+            ->select(
+                'id',
+                'created_at',
+                'harga as nominal',
+                'nama as keterangan',
+                DB::raw("'Pengeluaran' as type")
+            );
     }
 }
