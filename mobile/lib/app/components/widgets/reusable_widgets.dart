@@ -1206,6 +1206,7 @@ class ReusableWidgets {
 
   static Widget generalNotFoundWidget({
     required double width,
+    required BuildContext context,
     bool isOffset = true,
   }) {
     return Column(
@@ -1217,9 +1218,10 @@ class ReusableWidgets {
       children: [
         if (isOffset) SizedBox(height: Get.height * 0.1),
         Image.asset(
-          'packages/gawat_darurat/assets/png/not_found.png',
+          'assets/images/png/not_found.png',
           width: width,
           fit: BoxFit.contain,
+          color: context.text,
         ),
         TextComponent(
           value: "data_not_found".tr,

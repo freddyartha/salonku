@@ -222,7 +222,7 @@ class SettingsView extends GetView<SettingsController> {
                                     ),
                                   ),
                                   Container(
-                                    padding: EdgeInsets.all(10),
+                                    padding: EdgeInsets.all(15),
                                     width: Get.width / 6,
                                     height: Get.width / 6,
                                     decoration: BoxDecoration(

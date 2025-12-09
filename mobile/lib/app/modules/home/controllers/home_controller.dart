@@ -24,7 +24,7 @@ class HomeController extends BaseController {
     homeBaseMenus.addAll([
       MenuItemModel(
         title: "client",
-        imageLocation: "assets/images/png/settings.png",
+        imageLocation: "assets/images/png/clients.png",
         onTab: () => Get.toNamed(
           Routes.CLIENT_LIST,
           arguments: {"idSalon": "${userData.idSalon}"},
@@ -32,7 +32,7 @@ class HomeController extends BaseController {
       ),
       MenuItemModel(
         title: "transaction",
-        imageLocation: "assets/images/png/settings.png",
+        imageLocation: "assets/images/png/transaction.png",
         onTab: () => Get.toNamed(
           Routes.SERVICE_MANAGEMENT_LIST,
           arguments: {"idSalon": "${userData.idSalon}"},
@@ -40,7 +40,7 @@ class HomeController extends BaseController {
       ),
       MenuItemModel(
         title: "expense",
-        imageLocation: "assets/images/png/settings.png",
+        imageLocation: "assets/images/png/expense.png",
         onTab: () => Get.toNamed(
           Routes.PENGELUARAN_LIST,
           arguments: {"idSalon": "${userData.idSalon}"},

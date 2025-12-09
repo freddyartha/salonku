@@ -152,7 +152,8 @@ class _ListComponentState<T> extends State<ListComponent<T>> {
               ? widget.customEmptyWidget != null
                     ? widget.customEmptyWidget!
                     : ReusableWidgets.generalNotFoundWidget(
-                        width: MediaQuery.of(context).size.width * 0.7,
+                        width: MediaQuery.of(context).size.width * 0.6,
+                        context: context,
                       )
               : ListView.separated(
                   keyboardDismissBehavior:

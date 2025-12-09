@@ -125,7 +125,7 @@ class HomeView extends GetView<HomeController> {
                                         ),
                                       ),
                                       Container(
-                                        padding: EdgeInsets.all(10),
+                                        padding: EdgeInsets.all(15),
                                         width: Get.width / 6.5,
                                         height: Get.width / 6.5,
                                         decoration: BoxDecoration(

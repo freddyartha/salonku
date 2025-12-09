@@ -29,10 +29,6 @@ class ReusableStatics {
     end: Alignment.bottomCenter,
   );
 
-  static Widget imageErrorBuilder = Image.asset(
-    'packages/gawat_darurat/assets/png/not_found.png',
-  );
-
   static RefreshIndicator refreshIndicator({
     required Future<void> Function() onRefresh,
     required Widget child,

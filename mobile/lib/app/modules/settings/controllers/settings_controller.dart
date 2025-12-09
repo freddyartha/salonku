@@ -42,7 +42,7 @@ class SettingsController extends BaseController {
     dataUtamaList.addAll([
       MenuItemModel(
         title: "service",
-        imageLocation: "assets/images/png/settings.png",
+        imageLocation: "assets/images/png/services.png",
         onTab: () => Get.toNamed(
           Routes.SERVICE_LIST,
           arguments: {"idSalon": "${userData.idSalon}"},
@@ -51,7 +51,7 @@ class SettingsController extends BaseController {
       if (userData.level != 3)
         MenuItemModel(
           title: "promo",
-          imageLocation: "assets/images/png/settings.png",
+          imageLocation: "assets/images/png/promos.png",
           onTab: () => Get.toNamed(
             Routes.PROMO_LIST,
             arguments: {"idSalon": "${userData.idSalon}"},
@@ -59,7 +59,7 @@ class SettingsController extends BaseController {
         ),
       MenuItemModel(
         title: "product",
-        imageLocation: "assets/images/png/settings.png",
+        imageLocation: "assets/images/png/products.png",
         onTab: () => Get.toNamed(
           Routes.PRODUCT_LIST,
           arguments: {"idSalon": "${userData.idSalon}"},
@@ -67,7 +67,7 @@ class SettingsController extends BaseController {
       ),
       MenuItemModel(
         title: "supplier",
-        imageLocation: "assets/images/png/settings.png",
+        imageLocation: "assets/images/png/supplier.png",
         onTab: () => Get.toNamed(
           Routes.SUPPLIER_LIST,
           arguments: {"idSalon": "${userData.idSalon}"},
@@ -78,7 +78,7 @@ class SettingsController extends BaseController {
       dataUtamaList.add(
         MenuItemModel(
           title: "metode_pembayaran",
-          imageLocation: "assets/images/png/settings.png",
+          imageLocation: "assets/images/png/payment_method.png",
           onTab: () => Get.toNamed(
             Routes.PAYMENT_METHOD_LIST,
             arguments: {"idSalon": "${userData.idSalon}"},
