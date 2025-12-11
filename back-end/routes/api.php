@@ -37,7 +37,7 @@ Route::middleware('firebase.auth')->group(function () {
     Route::get('/general/salon-summary/{id}', [GeneralController::class, 'getSalonSummary']);
     Route::get('/general/income-expense-summary/{salonId}', [GeneralController::class, 'getIncomeExpenseWithPeriod']);
     Route::get('/general/income-expense/{salonId}/list', [GeneralController::class, 'getPemasukanPengeluaranPaginated']);
-
+    Route::get('/general/transaction-report/{salonId}', [GeneralController::class, 'generateTransaksiReportPdf']);
 
     //Service
     Route::get('/service/{salonId}/list', [ServiceController::class, 'getPaginatedService']);

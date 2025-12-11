@@ -81,4 +81,24 @@ class GeneralService
             ->orderBy('created_at', $options['sort'])
             ->paginate($options['per_page']);
     }
+
+    public function getPemasukanPengeluaranReport(int $id, Request $request)
+    {
+        $options = [
+            'cabang_id' => $request->query('cabang_id'),
+            'from_date' => $request->query('from_date'),
+            'to_date'   => $request->query('to_date'),
+        ];
+
+        $pengeluaranQuery = $this->pengeluaranRepository->baseQueryBySalonId($id, $options);
+        $pemasukanQuery   = $this->serviceManagementRepository->baseQueryBySalonId($id, $options);
+
+        $unionQuery = $pengeluaranQuery
+            ->unionAll($pemasukanQuery);
+
+        return DB::query()
+            ->fromSub($unionQuery, 'cashflow')
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
 }

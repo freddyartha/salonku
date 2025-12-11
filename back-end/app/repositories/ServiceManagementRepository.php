@@ -215,7 +215,7 @@ class ServiceManagementRepository
                 ])
             )
             ->when(
-                $options['search'],
+                $options['search'] ?? null,
                 fn($q) =>
                 $q->where('catatan', 'like', "%{$options['search']}%")
             )

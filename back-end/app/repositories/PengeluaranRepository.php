@@ -124,7 +124,7 @@ class PengeluaranRepository
                 ])
             )
             ->when(
-                $options['search'],
+                $options['search'] ?? null,
                 fn($q) =>
                 $q->where('nama', 'like', "%{$options['search']}%")
             )
