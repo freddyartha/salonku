@@ -157,14 +157,7 @@ class HomeView extends GetView<HomeController> {
                   //today transaction summary
                   GetBuilder<HomeController>(
                     builder: (controller) => GestureDetector(
-                      onTap: () {
-                        Get.toNamed(
-                          Routes.TRANSACTION_LIST,
-                          arguments: {
-                            "idSalon": "${controller.userData.idSalon}",
-                          },
-                        );
-                      },
+                      onTap: () => controller.toTransactionListPage(false),
                       child: Container(
                         padding: EdgeInsets.symmetric(
                           horizontal: 20,
@@ -236,14 +229,7 @@ class HomeView extends GetView<HomeController> {
                   //this month transaction summary
                   GetBuilder<HomeController>(
                     builder: (controller) => GestureDetector(
-                      onTap: () {
-                        Get.toNamed(
-                          Routes.TRANSACTION_LIST,
-                          arguments: {
-                            "idSalon": "${controller.userData.idSalon}",
-                          },
-                        );
-                      },
+                      onTap: () => controller.toTransactionListPage(true),
                       child: Container(
                         padding: EdgeInsets.symmetric(
                           horizontal: 20,

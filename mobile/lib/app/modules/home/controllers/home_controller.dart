@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:salonku/app/common/input_formatter.dart';
 import 'package:salonku/app/common/reusable_statics.dart';
 import 'package:salonku/app/core/base/base_controller.dart';
 import 'package:salonku/app/data/providers/local/local_data_source.dart';
@@ -87,5 +88,25 @@ class HomeController extends BaseController {
       showErrorSnackbar: false,
     );
     return returnModel;
+  }
+
+  void toTransactionListPage(bool isMonthly) {
+    Get.toNamed(
+      Routes.TRANSACTION_LIST,
+      arguments: {
+        "idSalon": "${userData.idSalon}",
+        "fromDate": InputFormatter.dateToString(DateTime.now()),
+        "toDate": InputFormatter.dateToString(
+          isMonthly
+              ? ReusableStatics.lastDayOfMonth(DateTime.now())
+              : DateTime.now(),
+        ),
+        "idCabang":
+            localDataSource.userData.cabangs != null &&
+                localDataSource.userData.cabangs!.isNotEmpty
+            ? localDataSource.userData.cabangs!.first.id
+            : null,
+      },
+    );
   }
 }

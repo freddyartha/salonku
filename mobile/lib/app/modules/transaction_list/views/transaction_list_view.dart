@@ -19,7 +19,23 @@ class TransactionListView extends GetView<TransactionListController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ReusableWidgets.generalAppBarWidget(title: "transaction".tr),
+      appBar: ReusableWidgets.generalAppBarWidget(
+        title: "transaction".tr,
+        actions: [
+          GestureDetector(
+            onTap: controller.downloadReportOnTap,
+            child: Container(
+              margin: EdgeInsets.only(right: 10),
+              padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: context.accent2,
+                shape: BoxShape.circle,
+              ),
+              child: Icon(Icons.document_scanner_outlined, color: context.text),
+            ),
+          ),
+        ],
+      ),
       body: Column(
         children: [
           Container(

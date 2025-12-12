@@ -58,6 +58,22 @@ class ApiConstants {
     return '$api/general/income-expense/$idSalon/list?$queryString';
   }
 
+  static String getTransactionReport({
+    required int idSalon,
+    required DateTime fromDate,
+    required DateTime toDate,
+    int? idCabang,
+  }) {
+    final queryParams = <String, String>{
+      'from_date': InputFormatter.dateToString(fromDate) ?? '',
+      'to_date': InputFormatter.dateToString(toDate) ?? '',
+      if (idCabang != null) 'cabang_id': '$idCabang',
+    };
+
+    final queryString = Uri(queryParameters: queryParams).query;
+    return '$api/general/transaction-report/$idSalon?$queryString';
+  }
+
   //service
   static String getServiceList({
     required int idSalon,

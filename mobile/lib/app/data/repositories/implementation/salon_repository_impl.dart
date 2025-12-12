@@ -149,8 +149,28 @@ class SalonRepositoryImpl extends BaseRepository
         pageSize: pageSize,
         fromDate: fromDate,
         toDate: toDate,
+        idCabang: idCabang,
+        keyword: keyword,
       ),
       PagedApiResponseParser(IncomeExpenseListModel.fromDynamic),
+    );
+  }
+
+  @override
+  Future<Result<String>> getTransactionReport({
+    required int idSalon,
+    required DateTime fromDate,
+    required DateTime toDate,
+    int? idCabang,
+  }) {
+    return executeRequest(
+      () => _provider.getTransactionReport(
+        idSalon: idSalon,
+        fromDate: fromDate,
+        toDate: toDate,
+        idCabang: idCabang,
+      ),
+      SimpleApiResponseParser((res) => res["data"].toString()),
     );
   }
 }

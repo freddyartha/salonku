@@ -201,4 +201,5 @@ const Map<String, String> enUS = {
       "This staff member has not yet been approved to use your salon's features. If this is indeed your staff, please complete the approval process first",
   "approve_staff": "Approve Staff",
   "this_month_transaction": "This Month's Transaction",
+  "transaction_report": "Transaction Report",
 };

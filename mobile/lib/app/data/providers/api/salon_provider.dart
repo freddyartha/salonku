@@ -85,6 +85,26 @@ class SalonProvider extends ApiProvider {
         pageSize: pageSize,
         fromDate: fromDate,
         toDate: toDate,
+        idCabang: idCabang,
+        keyword: keyword,
+      ),
+      requiresAuth: true,
+      includeFirebaseToken: true,
+    );
+  }
+
+  Future<Response> getTransactionReport({
+    required int idSalon,
+    required DateTime fromDate,
+    required DateTime toDate,
+    int? idCabang,
+  }) async {
+    return await get(
+      ApiConstants.getTransactionReport(
+        idSalon: idSalon,
+        fromDate: fromDate,
+        toDate: toDate,
+        idCabang: idCabang,
       ),
       requiresAuth: true,
       includeFirebaseToken: true,

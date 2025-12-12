@@ -55,4 +55,11 @@ abstract class SalonRepositoryContract {
     int? idCabang,
     String? keyword,
   });
+
+  Future<Result<String>> getTransactionReport({
+    required int idSalon,
+    required DateTime fromDate,
+    required DateTime toDate,
+    int? idCabang,
+  });
 }
