@@ -11,33 +11,33 @@ use Illuminate\Validation\ValidationException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
-        web: __DIR__.'/../routes/web.php',
+        web: __DIR__ . '/../routes/web.php',
         api: __DIR__ . '/../routes/api.php',
-        commands: __DIR__.'/../routes/console.php',
+        commands: __DIR__ . '/../routes/console.php',
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-         $middleware->alias([
-            'firebase.auth' => \App\Http\Middleware\API\FirebaseAuthMiddleware::class,
+        $middleware->alias([
+            'firebase.auth' => \App\Http\Middleware\Api\FirebaseAuthMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->render(function (NotFoundHttpException $e, $request) {
             return ExceptionHelper::handleNotFound($e, $request);
         });
-        
+
         $exceptions->render(function (MethodNotAllowedHttpException $e, $request) {
             return ExceptionHelper::handleMethodNotAllowed($e, $request);
         });
-        
+
         $exceptions->render(function (AuthenticationException $e, $request) {
             return ExceptionHelper::handleAuthentication($e, $request);
         });
-        
+
         $exceptions->render(function (ValidationException $e, $request) {
             return ExceptionHelper::handleValidation($e, $request);
         });
-        
+
         $exceptions->render(function (Throwable $e, $request) {
             return ExceptionHelper::handleGeneric($e, $request);
         });

@@ -32,11 +32,11 @@ class GeneralController extends Controller
 
     public function getIncomeExpenseWithPeriod(Request $request, $salonId)
     {
+        $request->merge($request->query());
         $request->validate([
             'id_cabang'   => 'nullable|integer|exists:m_salon_cabang,id',
             'from_date'  => 'required|date',
             'to_date'    => 'required|date|after_or_equal:from_date',
-
         ]);
 
         $response = $this->generalService->getIncomeExpenseWithPeriod(

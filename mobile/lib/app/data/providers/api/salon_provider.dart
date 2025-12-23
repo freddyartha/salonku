@@ -59,8 +59,8 @@ class SalonProvider extends ApiProvider {
   ) async {
     return await get(
       ApiConstants.getIncomeExpenseSummary(idSalon),
-      data: {
-        "id_cabang": idCabang,
+      queryParameters: {
+        if (idCabang != null) "id_cabang": idCabang,
         "from_date": InputFormatter.dateToString(fromDate),
         "to_date": InputFormatter.dateToString(toDate),
       },

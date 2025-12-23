@@ -56,7 +56,6 @@ abstract class ApiProvider {
   /// GET request
   Future<Response> get(
     String path, {
-    dynamic data,
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
     CancelToken? cancelToken,
@@ -72,7 +71,6 @@ abstract class ApiProvider {
 
     return await _dio.get(
       path,
-      data: data,
       queryParameters: queryParameters,
       options: Options(
         headers: await requestHeaders,

@@ -1,4 +1,4 @@
-import 'package:flutter/src/widgets/basic.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:salonku/app/common/input_formatter.dart';
 import 'package:salonku/app/common/reusable_statics.dart';

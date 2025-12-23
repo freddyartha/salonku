@@ -13,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-       $this->app->singleton(Auth::class, function ($app) {
+        $this->app->singleton(Auth::class, function ($app) {
             $credentialsPath = config('firebase.projects.app.credentials.file');
 
             if (!$credentialsPath || !file_exists($credentialsPath)) {

@@ -10,7 +10,7 @@ class ApiConstants {
   // Headers
   static const String headerContentType = 'Content-Type';
   static const String headerAccept = 'Accept';
-  static const String headerAuthorization = 'Authorization';
+  static const String headerAuthorization = 'X-Authorization';
   // -- Endpoint --
   static final api = "${EnvironmentConfig.hostUrl}/api";
 

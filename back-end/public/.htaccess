@@ -4,11 +4,18 @@
     </IfModule>
 
     RewriteEngine On
-
-    # Handle Authorization Header
+    
+    # === FIX AUTHORIZATION HEADER ===
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
+    # === FALLBACK UNTUK SERVER YANG BANDAL ===
+    RewriteCond %{HTTP:Authorization} ^(.*)
+    RewriteRule .* - [E=Authorization:%1]
+
+    # Untuk beberapa server CGI/FastCGI
+    SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+    
     # Handle X-XSRF-Token Header
     RewriteCond %{HTTP:x-xsrf-token} .
     RewriteRule .* - [E=HTTP_X_XSRF_TOKEN:%{HTTP:X-XSRF-Token}]

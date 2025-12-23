@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Middleware\Api;
 
 use Closure;
@@ -6,7 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Kreait\Firebase\Auth as FirebaseAuth;
 use App\Helpers\ApiResponse;
-
+use Illuminate\Support\Facades\Log;
 
 class FirebaseAuthMiddleware
 {
@@ -19,10 +20,17 @@ class FirebaseAuthMiddleware
 
     public function handle(Request $request, Closure $next): Response
     {
-        $header = $request->header('Authorization');
+        $header = $request->header('X-Authorization')
+            ?? $request->server('HTTP_AUTHORIZATION')
+            ?? $request->server('Authorization')
+            ?? $request->server('REDIRECT_HTTP_AUTHORIZATION');
 
         if (!$header || !str_starts_with($header, 'Bearer ')) {
-             return ApiResponse::error( 'Missing Bearer Token',  401);
+            Log::info('AUTH HEADER DEBUG', [
+                'header' => $request->header('Authorization'),
+                'server' => $request->server('HTTP_AUTHORIZATION'),
+            ]);
+            return ApiResponse::error('Missing Bearer Token',  401);
         }
 
         $idToken = trim(preg_replace('/^Bearer\s+/i', '', $header));

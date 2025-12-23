@@ -135,10 +135,10 @@ class AuthController extends BaseController {
   Future<bool> requestNotificationPermission() async {
     NotificationSettings settings = await _messaging.requestPermission();
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      // Dapatkan token FCM (yang juga mengandalkan APNs di iOS)
-      notificationToken = await _messaging.getToken();
       // Dapatkan APNs token (iOS only)
-      await _messaging.getAPNSToken();
+      // await _messaging.getAPNSToken();
+      // Dapatkan token FCM (yang juga mengandalkan APNs di iOS)
+      // notificationToken = await _messaging.getToken();
     }
     return true;
   }
